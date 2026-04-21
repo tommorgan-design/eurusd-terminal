@@ -772,7 +772,7 @@ What invalidates this bias? Binary headline risk? Position sizing implications g
 What confirmation does a structure trader need before acting? How does the 45-minute rule apply? What is the retest methodology for today?`;
 
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
     const d=await r.json();
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error generating classification.';
     const lvl=text.includes('LEVEL 3')?3:text.includes('LEVEL 2')?2:1;
@@ -894,7 +894,7 @@ The single most impactful piece of intelligence for EUR/USD today and why.
 Explain the alignment or conflict between findings. Is the consensus score high enough to trade the primary theme?`;
 
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]})});
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01","anthropic-beta":"web-search-2025-03-05"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]})});
     const d=await r.json();
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'No analysis generated.';
     setTimeout(()=>{
@@ -1032,7 +1032,7 @@ What changes would shift the picture? What confirms the narrative? What invalida
 ## CONVICTION: [LOW/MEDIUM/HIGH]
 Explain. Reference whether source consensus score is present and sufficient.`;
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
     const d=await r.json();
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
     const tags=pri.map(d=>`<span style="background:rgba(240,160,48,.12);color:var(--amber);border:1px solid rgba(240,160,48,.35);padding:2px 8px;border-radius:4px;font-size:10px">${d.icon} ${d.name}</span>`).join(' ');
@@ -1142,7 +1142,7 @@ Binary risks. Position sizing guidance for today's gap risk level.
 How does the pre-trade patience principle apply specifically to today's setup? What triggers a high-quality entry?`;
 
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
     const d2=await r.json();
     const text=d2.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
     document.getElementById('brief-out-content').innerHTML=renderAnalysis(text);
@@ -1398,5 +1398,6 @@ function parseTasklet(){
 buildDriverCards();
 buildLib();
 </script>
+<button onclick="clearApiKey()" style="position:fixed;bottom:16px;right:16px;z-index:9999;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--dim);border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.08em" title="Reset Anthropic API key">⚙ API KEY</button>
 </body>
 </html>
