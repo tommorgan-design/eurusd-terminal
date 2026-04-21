@@ -225,6 +225,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
     <button class="nav-btn" onclick="go('session')">🎯 Session</button>
     <button class="nav-btn" onclick="go('intel')">🔍 Intel</button>
     <button class="nav-btn" onclick="go('drivers')">⚙️ Drivers</button>
+    <button class="nav-btn" onclick="go('settings')" id="settings-btn" style="margin-left:auto;opacity:0.6;font-size:11px">🔑 API Key</button>
     <button class="nav-btn" onclick="go('brief')">📋 Briefing</button>
     <button class="nav-btn" onclick="go('library')">📚 Library</button>
   </div>
@@ -670,9 +671,25 @@ DS.fed.w="background"; DS.ecb.w="background"; DS.petrodollar.w="background";
 function go(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  const map={home:0,session:1,intel:2,drivers:3,brief:4,library:5};
-  if(map[id]!=null)document.querySelectorAll('.nav-btn')[map[id]].classList.add('active');
+  // Handle settings panel (not a .panel class)
+  const sp = document.getElementById('p-settings');
+  if(sp) sp.style.display = (id==='settings') ? 'block' : 'none';
+  if(id !== 'settings') {
+    document.getElementById('panel-'+id).classList.add('active');
+    const map={home:0,session:1,intel:2,drivers:3,brief:4,library:5};
+    if(map[id]!=null)document.querySelectorAll('.nav-btn')[map[id]].classList.add('active');
+  } else {
+    // Highlight settings btn
+    document.getElementById('settings-btn').classList.add('active');
+    // Show current key status
+    const status = document.getElementById('settings-key-status');
+    const hasKey = !!localStorage.getItem('anthropic_api_key');
+    if(status) {
+      status.style.display = 'block';
+      status.style.color = hasKey ? 'var(--green)' : 'var(--amber)';
+      status.textContent = hasKey ? '✓ API key is saved and active' : '⚠ No API key saved — paste one above';
+    }
+  }
   window.scrollTo(0,0);
 }
 function resetPanel(k){
@@ -1406,5 +1423,20 @@ buildLib();
   <span style="color:#555;font-size:10px;white-space:nowrap">Stored in browser only — never sent to GitHub</span>
 </div>
 <button onclick="clearApiKey()" style="position:fixed;bottom:16px;right:16px;z-index:9999;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#555;border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.08em" title="Reset API key">⚙ reset key</button>
+
+  <!-- SETTINGS PANEL -->
+  <div id="p-settings" style="display:none;max-width:480px;margin:60px auto;padding:0 16px">
+    <div class="card">
+      <div class="card-title">🔑 Anthropic API Key</div>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:16px;line-height:1.6">Required for Intel, Session and Drivers tabs. Stored only in this browser — never shared anywhere.</p>
+      <div class="field">
+        <label>API Key</label>
+        <input id="settings-key-input" type="password" placeholder="sk-ant-api03-..." style="width:100%;box-sizing:border-box"/>
+      </div>
+      <div id="settings-key-status" style="font-size:11px;margin-bottom:12px;display:none"></div>
+      <button class="btn" onclick="saveKeyFromSettings()" style="width:100%">💾 Save API Key</button>
+      <button class="btn btn-ghost" onclick="clearKeyFromSettings()" style="width:100%;margin-top:8px">🗑 Clear Saved Key</button>
+    </div>
+  </div>
 </body>
 </html>
