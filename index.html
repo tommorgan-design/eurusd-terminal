@@ -692,6 +692,26 @@ function go(id){
   }
   window.scrollTo(0,0);
 }
+function saveKeyFromSettings() {
+  const input = document.getElementById('settings-key-input');
+  const status = document.getElementById('settings-key-status');
+  const key = input ? input.value.trim() : '';
+  if (key && key.length > 10) {
+    localStorage.setItem('anthropic_api_key', key);
+    input.value = '';
+    if (status) {
+      status.style.display = 'block';
+      status.style.color = 'var(--green)';
+      status.textContent = '✓ Key saved — Intel, Session and Drivers tabs are now active';
+    }
+  } else {
+    if (status) {
+      status.style.display = 'block';
+      status.style.color = 'var(--amber)';
+      status.textContent = '⚠ Please paste your API key above first';
+    }
+  }
+}
 function resetPanel(k){
   const out=document.getElementById(k+'-out');if(out)out.style.display='none';
   const form=document.getElementById(k+'-form');if(form)form.style.display='block';
