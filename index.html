@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>EUR/USD Intelligence Terminal v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050810;--surface:#090E1A;--panel:#0C1220;--panel2:#101828;
+  --border:#1A2438;--border2:#243048;
+  --text:#E2EAF8;--dim:#4A5E80;--dim2:#7A90B8;
+  --amber:#F0A030;--amber2:#FFB840;
+  --green:#00D47A;--red:#F03858;--blue:#3A8FFF;
+  --teal:#00C8B8;--purple:#8A68F8;--gold:#C8A020;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:15px;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.025) 2px,rgba(0,0,0,.025) 4px)}
+body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 100% 50% at 50% 0%,rgba(58,143,255,.05) 0%,transparent 60%)}
+#app{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 0 80px}
+
+/* HEADER */
+.hdr{background:rgba(5,8,16,.96);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;backdrop-filter:blur(20px);padding:0 16px}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:10px 0 0}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--amber),var(--gold));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:15px;color:#050810;box-shadow:0 0 24px rgba(240,160,48,.3);flex-shrink:0}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.08em}
+.logo-sub{font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(0,212,122,.12);border:1px solid rgba(0,212,122,.35);padding:4px 10px;border-radius:20px;font-size:10px;color:var(--green);letter-spacing:.18em;font-family:'IBM Plex Sans',sans-serif}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin-top:8px}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:9px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.nav-btn.active{color:var(--amber);border-bottom-color:var(--amber)}
+.nav-btn:hover:not(.active){color:var(--dim2)}
+
+/* PANELS */
+.panel{display:none;padding:16px;animation:fadeUp .2s ease}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* CARDS */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px}
+.card-title{font-size:10px;color:var(--amber);letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;font-family:'IBM Plex Sans',sans-serif}
+
+/* FORMS */
+.field{margin-bottom:10px}
+.field label{display:block;font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;font-family:'IBM Plex Sans',sans-serif}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:10px 12px;font-family:'IBM Plex Mono',monospace;font-size:14px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--amber)}
+textarea{resize:vertical;min-height:56px}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234A5E80' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:26px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 10px}
+
+/* BUTTONS */
+.btn{display:block;width:100%;padding:12px;background:var(--amber);color:#050810;border:none;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;margin-top:4px}
+.btn:hover:not(:disabled){background:var(--amber2);box-shadow:0 0 20px rgba(240,160,48,.3)}
+.btn:disabled{background:var(--border2);color:var(--dim);cursor:not-allowed}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn-ghost{background:transparent;color:var(--amber);border:1px solid rgba(240,160,48,.35)}
+.btn-ghost:hover:not(:disabled){background:rgba(240,160,48,.08);box-shadow:none}
+.btn-sm{padding:6px 14px;font-size:9px;display:inline-block;width:auto}
+
+/* SPINNER */
+.spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(5,8,16,.0);border-top-color:#050810;border-radius:50%;animation:rot .6s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes rot{to{transform:rotate(360deg)}}
+.err-box{background:rgba(240,56,88,.1);border:1px solid rgba(240,56,88,.35);border-radius:6px;padding:10px 12px;margin-bottom:10px;font-size:13px;color:var(--red)}
+
+/* ANALYSIS OUTPUT */
+.ao{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px}
+.ao .sec{font-size:10px;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border);font-family:'IBM Plex Sans',sans-serif}
+.ao .sec:first-child{margin-top:0}
+.ao p{font-size:13px;color:var(--dim2);line-height:1.85;margin-bottom:6px}
+.ao .hl{background:var(--panel2);border-left:3px solid var(--amber);border-radius:0 5px 5px 0;padding:8px 12px;margin:6px 0}
+.ao .hl-k{color:var(--amber);font-weight:600;font-size:11px}
+.ao .hl-v{color:var(--text);font-size:11px;display:block;margin-top:1px}
+.ao .li{display:flex;gap:8px;margin-bottom:5px}
+.ao .li-b{color:var(--amber);flex-shrink:0;font-size:10px;margin-top:3px}
+.ao .li-t{font-size:12px;color:var(--dim2);line-height:1.75}
+.ao .warn{background:rgba(240,56,88,.08);border:1px solid rgba(240,56,88,.25);border-radius:6px;padding:8px 12px;margin:6px 0;font-size:13px;color:var(--red)}
+.ao .good{background:rgba(0,212,122,.08);border:1px solid rgba(0,212,122,.25);border-radius:6px;padding:8px 12px;margin:6px 0;font-size:13px;color:var(--green)}
+
+/* CLASSIFICATION HERO */
+.cls-hero{background:var(--panel);border:2px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.cls-top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--border)}
+.cls-badge{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.06em;text-shadow:0 0 30px currentColor}
+.cls-metrics{display:grid;grid-template-columns:repeat(4,1fr);padding:14px 18px 10px;gap:8px}
+.cm{text-align:center}
+.cm-v{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.04em}
+.cm-l{font-size:11px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;font-family:'IBM Plex Sans',sans-serif}
+.cls-bar{height:4px;background:var(--border);margin:0 18px;border-radius:2px;overflow:hidden}
+.cls-bar-fill{height:100%;border-radius:2px;transition:width .8s ease}
+.cls-foot{display:flex;justify-content:space-between;padding:8px 18px 14px;font-size:10px}
+
+/* OIL REGIME */
+.oil-regime{border-radius:8px;padding:10px 14px;margin-bottom:10px;border:1px solid;display:flex;align-items:center;gap:10px}
+.oil-regime.hot{background:rgba(240,56,88,.08);border-color:rgba(240,56,88,.35);color:var(--red)}
+.oil-regime.trans{background:rgba(240,160,48,.08);border-color:rgba(240,160,48,.35);color:var(--amber)}
+.oil-regime.cool{background:rgba(58,143,255,.08);border-color:rgba(58,143,255,.35);color:var(--blue)}
+.oil-regime.norm{background:rgba(0,212,122,.08);border-color:rgba(0,212,122,.35);color:var(--green)}
+
+/* CONSENSUS */
+.cons-ring{width:60px;height:60px;border-radius:50%;border:3px solid currentColor;display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0}
+.cons-n{font-family:'Bebas Neue',sans-serif;font-size:20px;line-height:1}
+.cons-d{font-size:9px;opacity:.7}
+.cons-bars{display:flex;gap:2px;flex:1;align-items:center}
+.cons-seg{height:7px;border-radius:3px;flex:1;background:var(--border)}
+
+/* SNAP GRID */
+.snap{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+@media(min-width:460px){.snap{grid-template-columns:repeat(5,1fr)}}
+.si{background:var(--panel2);border:1px solid var(--border);border-radius:7px;padding:8px;text-align:center}
+.si-l{font-size:11px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif}
+.si-v{font-family:'Bebas Neue',sans-serif;font-size:16px;margin-top:3px}
+.si-c{font-size:10px;margin-top:1px}
+
+/* LEVEL MAP */
+.lm-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(26,36,56,.5);font-size:11px}
+.lm-item:last-child{border:none}
+.lm-price{font-family:'Bebas Neue',sans-serif;font-size:15px;width:75px;flex-shrink:0}
+.lm-label{flex:1;color:var(--dim2)}
+.lm-tag{font-size:8px;padding:2px 7px;border-radius:4px;border:1px solid;letter-spacing:.06em;flex-shrink:0;font-family:'IBM Plex Sans',sans-serif}
+.lm-cur{background:rgba(240,160,48,.12);border-left:3px solid var(--amber);padding-left:10px;border-radius:0 5px 5px 0;margin:3px 0}
+
+/* INTEL SEARCH */
+.i-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:12px}
+@media(min-width:500px){.i-opts{grid-template-columns:repeat(4,1fr)}}
+.i-opt{background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:9px;text-align:center;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.i-opt.sel{background:rgba(240,160,48,.12);border-color:rgba(240,160,48,.5);color:var(--amber)}
+.i-opt-ic{font-size:16px;margin-bottom:2px}
+.i-opt-l{font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif}
+.s-step{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px}
+.s-step:last-child{border:none}
+
+/* DRIVER CARDS */
+.drv-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;margin-bottom:7px;overflow:hidden;transition:border-color .2s,opacity .2s}
+.drv-card.inactive{opacity:.32}
+.drv-hdr{display:flex;align-items:center;gap:9px;padding:10px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.drv-icon{font-size:17px;flex-shrink:0}
+.drv-name{font-size:12px;font-weight:500;flex:1}
+.drv-body{display:none;padding:0 13px 13px;border-top:1px solid var(--border)}
+.drv-card.open .drv-body{display:block}
+.drv-chev{font-size:11px;color:var(--dim);transition:transform .2s}
+.drv-card.open .drv-chev{transform:rotate(180deg)}
+.why-box{background:var(--panel2);border-left:3px solid var(--amber);border-radius:0 5px 5px 0;padding:9px 12px;margin:10px 0;font-size:13px;color:var(--dim2);line-height:1.8}
+.why-lbl{font-size:11px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;font-family:'IBM Plex Sans',sans-serif}
+.pill{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;letter-spacing:.06em;border:1px solid;font-family:'IBM Plex Sans',sans-serif}
+
+/* HOME */
+.home-hero{background:linear-gradient(135deg,var(--panel) 0%,#080F20 100%);border:1px solid var(--border);border-radius:12px;padding:24px 20px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(240,160,48,.06),transparent)}
+.h-badge{display:inline-block;padding:3px 12px;border-radius:20px;background:rgba(240,160,48,.12);color:var(--amber);border:1px solid rgba(240,160,48,.35);font-size:8px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px;position:relative;font-family:'IBM Plex Sans',sans-serif}
+.h-title{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:.06em;line-height:1.1;margin-bottom:9px;position:relative}
+.h-title span{color:var(--amber)}
+.h-sub{font-size:13px;color:var(--dim2);max-width:380px;margin:0 auto;line-height:1.8;position:relative;font-family:'IBM Plex Sans',sans-serif}
+.tool-grid{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:500px){.tool-grid{grid-template-columns:1fr 1fr}}
+.tool-tile{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:16px;cursor:pointer;transition:all .2s;text-align:left;-webkit-tap-highlight-color:transparent}
+.tool-tile:hover{border-color:rgba(240,160,48,.4);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.tool-tile.feat{border-color:rgba(240,160,48,.25);background:linear-gradient(135deg,rgba(240,160,48,.05),transparent)}
+.t-icon{font-size:22px;margin-bottom:8px}
+.t-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;margin-bottom:4px}
+.t-desc{font-size:13px;color:var(--dim2);line-height:1.7;font-family:'IBM Plex Sans',sans-serif}
+.t-new{display:inline-block;background:rgba(0,212,122,.15);color:var(--green);border:1px solid rgba(0,212,122,.35);padding:2px 7px;border-radius:4px;font-size:8px;letter-spacing:.1em;margin-top:7px;font-family:'IBM Plex Sans',sans-serif}
+
+/* FIBO */
+.fib-l{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:11px}
+.fib-p{font-size:10px;color:var(--dim);width:42px;flex-shrink:0;font-family:'IBM Plex Sans',sans-serif}
+.fib-v{font-family:'Bebas Neue',sans-serif;font-size:14px;width:62px}
+.fib-bar{flex:1;height:2px;background:var(--border);border-radius:1px;overflow:hidden}
+.fib-fill{height:100%;border-radius:1px}
+
+/* CAT HEADER */
+.cat-hdr{font-size:10px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;padding:10px 0 5px;border-bottom:1px solid var(--border);margin-bottom:7px;font-family:'IBM Plex Sans',sans-serif}
+
+/* LAYOUT */
+.drv-layout{display:block}
+@media(min-width:720px){.drv-layout{display:grid;grid-template-columns:1fr 270px;gap:18px;align-items:start}}
+.drv-sticky{position:sticky;top:70px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(26,36,56,.5);font-size:11px}
+.sum-row:last-child{border:none}
+
+/* SPREAD DISPLAY */
+.spread-row{display:flex;justify-content:space-between;align-items:center;background:var(--panel2);border-radius:8px;padding:12px 14px;border:1px solid var(--border);margin-bottom:10px}
+.spread-val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em}
+
+/* PRINCIPLE */
+.principle{background:linear-gradient(135deg,rgba(240,160,48,.07),transparent);border:1px solid rgba(240,160,48,.2);border-radius:10px;padding:16px;text-align:center;margin-top:14px}
+.principle-q{font-size:14px;color:var(--amber);font-style:italic;line-height:1.8;margin-bottom:4px;font-family:'IBM Plex Sans',sans-serif}
+.principle-a{font-size:10px;color:var(--dim);letter-spacing:.1em;font-family:'IBM Plex Sans',sans-serif}
+
+/* LIB FILTER */
+.filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.fpill{padding:4px 11px;border-radius:20px;font-size:9px;font-family:'IBM Plex Mono',monospace;letter-spacing:.07em;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--dim);transition:all .15s;-webkit-tap-highlight-color:transparent}
+.fpill.active{background:var(--amber);color:#050810;border-color:var(--amber)}
+
+/* CUSTOM FORM */
+.cf-form{background:var(--panel);border:1px solid rgba(0,200,184,.35);border-radius:9px;padding:14px;margin-top:10px;display:none}
+
+/* BRIEF HEADER */
+.brief-hdr{background:var(--panel);border:1px solid rgba(240,160,48,.35);border-radius:10px;padding:14px;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo">
+      <div class="logo-mark">◈</div>
+      <div>
+        <div class="logo-text">EUR/USD Terminal <span style="color:var(--amber);font-size:13px">v3</span></div>
+        <div class="logo-sub">Pre-London Intelligence System</div>
+      </div>
+    </div>
+    <div class="live-pill"><div class="live-dot"></div>LIVE</div>
+  </div>
+  <div class="nav">
+    <button class="nav-btn active" onclick="go('home')">Home</button>
+    <button class="nav-btn" onclick="go('session')">🎯 Session</button>
+    <button class="nav-btn" onclick="go('intel')">🔍 Intel</button>
+    <button class="nav-btn" onclick="go('drivers')">⚙️ Drivers</button>
+    <button class="nav-btn" onclick="go('brief')">📋 Briefing</button>
+    <button class="nav-btn" onclick="go('library')">📚 Library</button>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══════════════════════════════════════════ -->
+<div class="panel active" id="panel-home">
+  <div class="home-hero">
+    <div class="h-badge">EUR/USD · Pre-London Intelligence · v3</div>
+    <div class="h-title">Know <span>Why</span><br>Before You Trade</div>
+    <div class="h-sub">Four weeks of live crisis market intelligence compressed into one institutional-grade pre-London framework. Built session by session. Battle-tested.</div>
+  </div>
+  <div class="tool-grid">
+    <div class="tool-tile feat" onclick="go('session')">
+      <div class="t-icon">🎯</div>
+      <div class="t-title">Session Classification</div>
+      <div class="t-desc">The primary output. Level 1, 2 or 3 with conviction bar. Oil regime monitor. Consensus score integration. Yield spread auto-calculated.</div>
+      <div class="t-new">CORE FRAMEWORK</div>
+    </div>
+    <div class="tool-tile feat" onclick="go('intel')">
+      <div class="t-icon">🔍</div>
+      <div class="t-title">Live Intelligence</div>
+      <div class="t-desc">Real-time web search across 10 geographically diverse sources. Consensus rating 1-10. Primary theme, dissent identification, EUR/USD implication.</div>
+      <div class="t-new">WEB SEARCH POWERED</div>
+    </div>
+    <div class="tool-tile" onclick="go('drivers')">
+      <div class="t-icon">⚙️</div>
+      <div class="t-title">Driver Framework</div>
+      <div class="t-desc">15 macro drivers including petrodollar, rebalancing and COT. Set importance and signal direction. Generate educational analysis.</div>
+    </div>
+    <div class="tool-tile" onclick="go('brief')">
+      <div class="t-icon">📋</div>
+      <div class="t-title">Pre-Session Briefing</div>
+      <div class="t-desc">Full Tasklet data input. Asian body and wick levels. Fibonacci map from 1.2079. Options, COT percentiles, yield spread.</div>
+    </div>
+    <div class="tool-tile" onclick="go('library')">
+      <div class="t-icon">📚</div>
+      <div class="t-title">Driver Library</div>
+      <div class="t-desc">Every macro driver explained from first principles. Why it moves EUR/USD. When it matters most. Your permanent knowledge base.</div>
+    </div>
+    <div class="tool-tile feat">
+      <div class="t-icon">🎓</div>
+      <div class="t-title">The Framework</div>
+      <div class="t-desc">Iran crisis. Strait of Hormuz. Petrodollar erosion. April 1 rebalancing. COT extremes. 200 EMA precision rejection. NFP doji. Four extraordinary weeks.</div>
+      <div class="t-new">BATTLE TESTED</div>
+    </div>
+  </div>
+  <div class="principle">
+    <div class="principle-q">"58% is better than 57%. One session at a time. One layer at a time. The process is the edge — not the outcome of any single trade."</div>
+    <div class="principle-a">Claude thinks · Tasklet delivers · Tom decides</div>
+  </div>
+</div>
+
+<!-- ═══ SESSION CLASSIFICATION ═══════════════════════════ -->
+<div class="panel" id="panel-session">
+  <div id="sess-form">
+    <div class="card">
+      <div class="card-title">📡 Intelligence Consensus (from Tasklet)</div>
+      <div class="g2">
+        <div class="field"><label>Consensus Score (1-10)</label><input id="s-cons" type="number" min="1" max="10" placeholder="9" inputmode="numeric"></div>
+        <div class="field"><label>Primary Theme</label><input id="s-theme" placeholder="Iran / Hormuz / Oil Supply Risk"></div>
+      </div>
+      <div class="field"><label>Dissenting Source (if any)</label><input id="s-dissent" placeholder="e.g. Tehran Times — ceasefire signals (state media, low weight)"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📌 Market Snapshot (from Tasklet)</div>
+      <div class="g2">
+        <div class="field"><label>EUR/USD Current</label><input id="s-eur" placeholder="1.1544" inputmode="decimal"></div>
+        <div class="field"><label>EUR/USD Prev Close</label><input id="s-eurp" placeholder="1.1591" inputmode="decimal"></div>
+        <div class="field"><label>DXY</label><input id="s-dxy" placeholder="100.03" inputmode="decimal"></div>
+        <div class="field"><label>Brent Crude ($)</label><input id="s-brent" placeholder="109.03" inputmode="decimal"></div>
+        <div class="field"><label>VIX</label><input id="s-vix" placeholder="23.87" inputmode="decimal"></div>
+        <div class="field"><label>VIX 20-Day Average</label><input id="s-vix20" placeholder="26.08" inputmode="decimal"></div>
+        <div class="field"><label>US 10Y Yield (%)</label><input id="s-us10" placeholder="4.313" inputmode="decimal"></div>
+        <div class="field"><label>German Bund 10Y (%)</label><input id="s-bund" placeholder="3.048" inputmode="decimal"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🏯 Asian Session — Body + Wick Levels</div>
+      <div class="g2">
+        <div class="field"><label>Body High</label><input id="s-bhi" placeholder="1.1601" inputmode="decimal"></div>
+        <div class="field"><label>Body Low</label><input id="s-blo" placeholder="1.1529" inputmode="decimal"></div>
+        <div class="field"><label>Wick High</label><input id="s-whi" placeholder="1.1606" inputmode="decimal"></div>
+        <div class="field"><label>Wick Low</label><input id="s-wlo" placeholder="1.1519" inputmode="decimal"></div>
+      </div>
+      <div class="field"><label>Session Character</label>
+        <select id="s-achar">
+          <option value="coiling">Coiling — tight range, energy building</option>
+          <option value="trending">Trending — directional bias established</option>
+          <option value="ranging">Ranging — oscillating, no conviction</option>
+          <option value="wide">Wide — volatile, large range</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📈 Technical Levels</div>
+      <div class="g2">
+        <div class="field"><label>Daily 200 EMA (your platform)</label><input id="s-ema" placeholder="1.1615" inputmode="decimal"></div>
+        <div class="field"><label>1H VWAP</label><input id="s-vwap" placeholder="1.1541" inputmode="decimal"></div>
+        <div class="field"><label>Weekly Pivot</label><input id="s-pivot" placeholder="1.1533" inputmode="decimal"></div>
+        <div class="field"><label>HTF Support</label><input id="s-rlow" placeholder="1.1400" inputmode="decimal"></div>
+        <div class="field"><label>HTF Resistance</label><input id="s-rhigh" placeholder="1.1700" inputmode="decimal"></div>
+        <div class="field"><label>10-Week High (Fibonacci anchor)</label><input id="s-wkhigh" placeholder="1.2079" inputmode="decimal"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">⚙️ COT Positioning (from Tasklet)</div>
+      <div class="g2">
+        <div class="field"><label>Asset Mgrs Net Position</label><input id="s-am" placeholder="+287940" inputmode="numeric"></div>
+        <div class="field"><label>Asset Mgrs 52wk Percentile</label><input id="s-amp" placeholder="6" inputmode="numeric"></div>
+        <div class="field"><label>Lev Money Net Position</label><input id="s-lm" placeholder="-13538" inputmode="numeric"></div>
+        <div class="field"><label>Lev Money 52wk Percentile</label><input id="s-lmp" placeholder="2" inputmode="numeric"></div>
+        <div class="field"><label>6E Open Interest</label><input id="s-oi" placeholder="775589" inputmode="numeric"></div>
+        <div class="field"><label>6E Volume vs MTD ADV (%)</label><input id="s-vol" placeholder="100" inputmode="numeric"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📋 Context & Regime</div>
+      <div class="field"><label>Market Regime</label>
+        <select id="s-regime">
+          <option value="crisis">🔴 Extended Crisis — active geopolitical binary risk</option>
+          <option value="transitional">🟡 Transitional — regime changing, reduced conviction</option>
+          <option value="normal">🟢 Normal — standard macro drivers</option>
+          <option value="rebalancing">🔵 Mechanical — rebalancing / quarter-end flow</option>
+        </select>
+      </div>
+      <div class="g2">
+        <div class="field"><label>Gap Risk</label>
+          <select id="s-gap">
+            <option value="extreme">🔴 EXTREME — binary event imminent</option>
+            <option value="elevated">🟡 ELEVATED — geopolitical premium present</option>
+            <option value="normal">🟢 NORMAL — standard risk</option>
+          </select>
+        </div>
+        <div class="field"><label>Monday Weekend Coil?</label>
+          <select id="s-coil">
+            <option value="na">Not Monday / N/A</option>
+            <option value="yes">Yes — gap from Friday close</option>
+            <option value="no">No — opened near Friday close</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Key News / Catalysts Today</label><textarea id="s-news" placeholder="Trump threatens Iran power plants, NFP 13:30, Powell speaks 15:30..."></textarea></div>
+    </div>
+    <div id="sess-err" class="err-box" style="display:none"></div>
+    <button class="btn" id="sess-btn" onclick="genSession()">🎯 Generate Session Classification</button>
+  </div>
+  <div id="sess-out" style="display:none">
+    <div id="sess-out-content"></div>
+    <button class="btn btn-ghost" style="margin-top:12px" onclick="resetPanel('sess')">← New Session</button>
+  </div>
+</div>
+
+<!-- ═══ LIVE INTELLIGENCE ═══════════════════════════════ -->
+<div class="panel" id="panel-intel">
+  <div id="intel-setup">
+    <div style="background:linear-gradient(135deg,var(--panel),#0A1428);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(58,143,255,.06),transparent);pointer-events:none"></div>
+      <div style="font-size:28px;margin-bottom:8px;position:relative">🔍</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.06em;position:relative">Live <span style="color:var(--amber)">World Intelligence</span></div>
+      <div style="font-size:11px;color:var(--dim2);max-width:380px;margin:7px auto 0;line-height:1.7;position:relative;font-family:'IBM Plex Sans',sans-serif">10 geographically diverse sources · Consensus rating 1-10 · Real-time web search</div>
+    </div>
+    <div class="card">
+      <div class="card-title">① Select Search Areas</div>
+      <div class="i-opts">
+        <div class="i-opt sel" id="iop-geo" onclick="togOpt('geo')"><div class="i-opt-ic">🌍</div><div class="i-opt-l">Geopolitical</div></div>
+        <div class="i-opt sel" id="iop-oil" onclick="togOpt('oil')"><div class="i-opt-ic">⛽</div><div class="i-opt-l">Oil/Energy</div></div>
+        <div class="i-opt sel" id="iop-cb" onclick="togOpt('cb')"><div class="i-opt-ic">🏦</div><div class="i-opt-l">Central Banks</div></div>
+        <div class="i-opt sel" id="iop-macro" onclick="togOpt('macro')"><div class="i-opt-ic">📊</div><div class="i-opt-l">Macro/Data</div></div>
+        <div class="i-opt sel" id="iop-asia" onclick="togOpt('asia')"><div class="i-opt-ic">🌏</div><div class="i-opt-l">Asian Session</div></div>
+        <div class="i-opt" id="iop-risk" onclick="togOpt('risk')"><div class="i-opt-ic">⚡</div><div class="i-opt-l">Risk/VIX</div></div>
+        <div class="i-opt" id="iop-dollar" onclick="togOpt('dollar')"><div class="i-opt-ic">💵</div><div class="i-opt-l">Dollar/DXY</div></div>
+        <div class="i-opt" id="iop-nat" onclick="togOpt('nat')"><div class="i-opt-ic">🌾</div><div class="i-opt-l">Commodities</div></div>
+      </div>
+      <div class="field"><label>② Current EUR/USD (for sanity check)</label><input id="intel-eur" placeholder="1.1544" inputmode="decimal" style="max-width:160px"></div>
+      <div class="field"><label>③ Specific Question or Context (include today's date + verified prices)</label><textarea id="intel-ctx" placeholder="Today is Sunday April 5 2026. EUR/USD 1.1544, DXY 99.97, Brent $109. Search the LAST 6 HOURS ONLY. What happened to the Strait of Hormuz situation overnight? Reject any article showing EUR/USD below 1.15 — that is stale data." style="min-height:90px"></textarea></div>
+    </div>
+    <div id="intel-err" class="err-box" style="display:none"></div>
+    <button class="btn" id="intel-btn" onclick="runIntel()">🔍 Search & Generate Intelligence Brief</button>
+    <div style="margin-top:8px;font-size:10px;color:var(--dim);text-align:center;line-height:1.6;font-family:'IBM Plex Sans',sans-serif">Searches real-time web across multiple sources · Sanity-checks against your prices · Takes 20-40 seconds</div>
+    <div style="background:rgba(240,160,48,.07);border:1px solid rgba(240,160,48,.2);border-radius:8px;padding:12px;margin-top:12px">
+      <div style="font-size:10px;color:var(--amber);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;font-family:'IBM Plex Sans',sans-serif">Sanity Check Protocol</div>
+      <div style="font-size:13px;color:var(--dim2);line-height:1.75;font-family:'IBM Plex Sans',sans-serif">If the brief shows EUR/USD levels inconsistent with your verified price — the articles are stale. Discard and rerun with explicit date and current prices in the context box above.</div>
+    </div>
+  </div>
+  <div id="intel-progress" style="display:none">
+    <div class="card" style="text-align:center;padding:22px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.08em;color:var(--amber);margin-bottom:6px">Searching The World</div>
+      <div style="font-size:11px;color:var(--dim2);margin-bottom:18px;font-family:'IBM Plex Sans',sans-serif">Gathering real-time intelligence across multiple sources...</div>
+      <div id="intel-steps"></div>
+    </div>
+  </div>
+  <div id="intel-out" style="display:none">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+        <div>
+          <div style="font-size:10px;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:3px;font-family:'IBM Plex Sans',sans-serif">Live Intelligence Brief · EUR/USD</div>
+          <div id="i-focus" style="font-size:14px;color:var(--text)"></div>
+        </div>
+        <div id="i-time" style="font-size:10px;color:var(--dim)"></div>
+      </div>
+      <div id="i-body" class="ao" style="border:none;padding:0"></div>
+    </div>
+    <button class="btn btn-ghost" style="margin-top:10px" onclick="resetPanel('intel')">← New Search</button>
+  </div>
+</div>
+
+<!-- ═══ DRIVER FRAMEWORK ═══════════════════════════════ -->
+<div class="panel" id="panel-drivers">
+  <div class="drv-layout">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px">
+        <div style="font-size:10px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif">Configure Active Drivers</div>
+        <div style="font-size:10px;color:var(--dim)"><span id="pc" style="color:var(--amber)">0</span> primary · <span id="ac" style="color:var(--blue)">0</span> active</div>
+      </div>
+      <div id="drv-container"></div>
+      <button class="btn btn-ghost btn-sm" style="border-style:dashed;color:var(--teal);border-color:rgba(0,200,184,.4);margin-top:6px;display:inline-block;width:auto" onclick="togCF()">+ Custom Driver</button>
+      <div class="cf-form" id="cf">
+        <div style="font-size:10px;color:var(--teal);letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;font-family:'IBM Plex Sans',sans-serif">New Custom Driver</div>
+        <div class="g2">
+          <div class="field"><label>Name</label><input id="cf-n" placeholder="e.g. Wheat Prices"></div>
+          <div class="field"><label>Icon</label><input id="cf-i" placeholder="🌾" maxlength="4"></div>
+          <div class="field"><label>Category</label><input id="cf-c" placeholder="Agriculture"></div>
+          <div class="field"><label>Unit</label><input id="cf-u" placeholder="¢/bu"></div>
+        </div>
+        <div class="field"><label>Why Does This Drive EUR/USD?</label><textarea id="cf-w" placeholder="Explain the relationship..."></textarea></div>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="btn btn-sm" style="background:var(--teal);color:#050810;width:auto" onclick="addCust()">Add</button>
+          <button class="btn btn-ghost btn-sm" onclick="togCF()">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="drv-sticky">
+        <div class="card">
+          <div class="card-title">Market Context</div>
+          <div class="field"><label>EUR/USD & Session Notes</label><textarea id="drv-ctx" placeholder="EUR/USD 1.1544, London open, Iran week 4, oil $109..." style="min-height:65px"></textarea></div>
+          <div style="background:rgba(0,200,184,.07);border:1px solid rgba(0,200,184,.3);border-radius:8px;padding:12px;margin-top:8px">
+            <div style="font-size:10px;color:var(--teal);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;font-family:'IBM Plex Sans',sans-serif">⚡ Load From Tasklet Brief</div>
+            <div style="font-size:11px;color:var(--dim2);margin-bottom:8px;font-family:'IBM Plex Sans',sans-serif">Paste your Tasklet brief below to auto-set driver values and context</div>
+            <textarea id="drv-paste" style="min-height:80px;font-size:11px;border-color:rgba(0,200,184,.35)" placeholder="Paste Tasklet brief here..."></textarea>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button class="btn btn-sm" style="background:var(--teal);color:#050810;width:auto" onclick="loadDriversFromTasklet()">⚡ Load Drivers</button>
+              <button class="btn btn-ghost btn-sm" onclick="document.getElementById('drv-paste').value=''">Clear</button>
+            </div>
+            <div id="drv-load-ok" style="display:none;margin-top:6px;font-size:11px;color:var(--green)">✓ Driver values loaded — review and adjust, then generate analysis</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Active Drivers</div>
+          <div id="drv-sum"><div style="font-size:11px;color:var(--dim);font-style:italic">No active drivers yet.</div></div>
+        </div>
+        <div id="drv-err" class="err-box" style="display:none"></div>
+        <button class="btn" id="drv-btn" onclick="genDrivers()">◈ Educational Analysis</button>
+      </div>
+    </div>
+  </div>
+  <div id="drv-out" style="display:none;margin-top:18px">
+    <div id="drv-out-content"></div>
+    <button class="btn btn-ghost" style="margin-top:10px" onclick="document.getElementById('drv-out').style.display='none'">← Adjust Drivers</button>
+  </div>
+</div>
+
+<!-- ═══ PRE-SESSION BRIEFING ═══════════════════════════ -->
+<div class="panel" id="panel-brief">
+  <div id="brief-form">
+    <div class="card" style="border-color:rgba(0,200,184,.35)">
+      <div class="card-title" style="color:var(--teal)">⚡ Paste Tasklet Brief — Auto-Fill All Fields</div>
+      <div class="field"><label>Paste complete Tasklet brief below</label><textarea id="brief-paste" style="min-height:120px;font-size:11px;border-color:rgba(0,200,184,.35)" placeholder="Paste the complete Tasklet briefing here and click Parse — all fields will be filled automatically..."></textarea></div>
+      <div id="parse-err" class="err-box" style="display:none"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-sm" style="background:var(--teal);color:#050810;width:auto" onclick="parseTasklet()">⚡ Parse Brief</button>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('brief-paste').value=''">Clear</button>
+      </div>
+      <div id="parse-ok" style="display:none;margin-top:8px;font-size:11px;color:var(--green)">✓ Brief parsed — fields populated below. Review and generate.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">① Market Snapshot</div>
+      <div class="g2">
+        <div class="field"><label>EUR/USD</label><input id="b-e" placeholder="1.1544" inputmode="decimal"></div>
+        <div class="field"><label>Prev Close</label><input id="b-ep" placeholder="1.1591" inputmode="decimal"></div>
+        <div class="field"><label>DXY</label><input id="b-d" placeholder="100.03" inputmode="decimal"></div>
+        <div class="field"><label>Brent ($)</label><input id="b-b" placeholder="109.03" inputmode="decimal"></div>
+        <div class="field"><label>Gold ($)</label><input id="b-g" placeholder="4651" inputmode="decimal"></div>
+        <div class="field"><label>VIX</label><input id="b-v" placeholder="23.87" inputmode="decimal"></div>
+        <div class="field"><label>VIX 20d Avg</label><input id="b-v20" placeholder="26.08" inputmode="decimal"></div>
+        <div class="field"><label>US 10Y (%)</label><input id="b-u" placeholder="4.313" inputmode="decimal"></div>
+        <div class="field"><label>German Bund (%)</label><input id="b-bu" placeholder="3.048" inputmode="decimal"></div>
+        <div class="field"><label>USD/CNY</label><input id="b-cny" placeholder="6.8803" inputmode="decimal"></div>
+        <div class="field"><label>EVZ Implied Vol (%)</label><input id="b-evz" placeholder="7.51" inputmode="decimal"></div>
+        <div class="field"><label>TTF Gas (€/MWh)</label><input id="b-ttf" placeholder="50.04" inputmode="decimal"></div>
+      </div>
+      <div class="field"><label>Session</label>
+        <select id="b-s"><option value="London Open">London Open</option><option value="Asian Session">Asian Session</option><option value="New York Open">New York Open</option><option value="London/NY Overlap">London/NY Overlap</option></select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">② Asian Session — Body + Wick</div>
+      <div class="g2">
+        <div class="field"><label>Body High</label><input id="b-bhi" placeholder="1.1601" inputmode="decimal"></div>
+        <div class="field"><label>Body Low</label><input id="b-blo" placeholder="1.1529" inputmode="decimal"></div>
+        <div class="field"><label>Wick High</label><input id="b-whi" placeholder="1.1606" inputmode="decimal"></div>
+        <div class="field"><label>Wick Low</label><input id="b-wlo" placeholder="1.1519" inputmode="decimal"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">③ Technical Levels</div>
+      <div class="g2">
+        <div class="field"><label>Daily 200 EMA</label><input id="b-ema" placeholder="1.1615" inputmode="decimal"></div>
+        <div class="field"><label>1H VWAP</label><input id="b-vwap" placeholder="1.1541" inputmode="decimal"></div>
+        <div class="field"><label>HTF Support</label><input id="b-sup" placeholder="1.1400" inputmode="decimal"></div>
+        <div class="field"><label>HTF Resistance</label><input id="b-res" placeholder="1.1700" inputmode="decimal"></div>
+        <div class="field"><label>Weekly Pivot</label><input id="b-piv" placeholder="1.1533" inputmode="decimal"></div>
+        <div class="field"><label>10-Week High</label><input id="b-wkh" placeholder="1.2079" inputmode="decimal"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">④ COT Positioning</div>
+      <div class="g2">
+        <div class="field"><label>Asset Mgrs Position</label>
+          <select id="b-cot">
+            <option value="6th percentile LONG — extreme">Extreme Long (6th percentile)</option>
+            <option value="NET LONG">Net Long — building</option>
+            <option value="NEUTRAL">Neutral</option>
+            <option value="NET SHORT">Net Short — building</option>
+            <option value="2nd percentile SHORT — extreme">Extreme Short (2nd percentile)</option>
+          </select>
+        </div>
+        <div class="field"><label>COT Trend</label>
+          <select id="b-cotc">
+            <option value="building conviction">Building conviction</option>
+            <option value="reducing exposure">Reducing exposure</option>
+            <option value="reversing">Reversing direction</option>
+            <option value="at extreme — coiled spring">At extreme — coiled spring</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">⑤ Intelligence & Context</div>
+      <div class="field"><label>Intelligence Consensus Score</label><input id="b-cons" placeholder="9/10 — Iran/Hormuz — STRONG" type="text"></div>
+      <div class="field"><label>Key News Catalysts</label><textarea id="b-news" placeholder="Trump threatens Iran power plants, NFP 13:30, Powell 15:30..."></textarea></div>
+      <div class="field"><label>Geopolitical Context</label><textarea id="b-geo" placeholder="Iran war week 4, Strait closed, ceasefire talks collapsed Thursday..."></textarea></div>
+      <div class="field"><label>Market Regime</label>
+        <select id="b-reg">
+          <option value="Extended Crisis">🔴 Extended Crisis — active binary risk</option>
+          <option value="Transitional">🟡 Transitional — regime changing</option>
+          <option value="Normal">🟢 Normal — standard drivers</option>
+          <option value="Mechanical Rebalancing">🔵 Mechanical — rebalancing flow</option>
+        </select>
+      </div>
+    </div>
+    <div id="brief-err" class="err-box" style="display:none"></div>
+    <button class="btn" id="brief-btn" onclick="genBrief()">◈ Generate Pre-Session Briefing</button>
+  </div>
+  <div id="brief-out" style="display:none">
+    <div class="brief-hdr">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+        <div>
+          <div style="font-size:10px;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:2px;font-family:'IBM Plex Sans',sans-serif">Pre-Session Intelligence Briefing</div>
+          <div id="b-sess-lbl" style="font-size:12px"></div>
+        </div>
+        <div style="text-align:right">
+          <div id="b-date" style="font-size:10px;color:var(--dim)"></div>
+          <div id="b-clock" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green);letter-spacing:.04em"></div>
+        </div>
+      </div>
+      <div id="b-snap" class="snap"></div>
+    </div>
+    <div id="brief-out-content" class="ao"></div>
+    <button class="btn btn-ghost" style="margin-top:10px" onclick="resetPanel('brief')">← New Briefing</button>
+  </div>
+</div>
+
+<!-- ═══ LIBRARY ═════════════════════════════════════════ -->
+<div class="panel" id="panel-library">
+  <div style="font-size:10px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;font-family:'IBM Plex Sans',sans-serif">Complete Macro Driver Library — Every Relationship Explained</div>
+  <div class="filter-bar" id="lib-filters"></div>
+  <div id="lib-cards"></div>
+</div>
+
+<div style="height:40px"></div>
+</div>
+<script>
+// ═══════════════════════════════════════════════
+// DATA — 15 DRIVERS
+// ═══════════════════════════════════════════════
+const DRIVERS=[
+  {id:"crude",cat:"Energy",name:"Crude Oil (Brent/WTI)",icon:"⛽",color:"#F0A030",unit:"$/bbl",ph:"109.03",
+   why:"Oil is priced in USD globally. Rising oil increases dollar demand from oil-importing nations — especially the eurozone, which is a net energy importer. The Iran crisis demonstrated this at scale: Brent reaching $119.50 (65% above pre-war), yet DXY only gained 2% — MUFG noted you'd expect 4-5% dollar strength on a 60-70% oil jump. The underperformance was the dollar safe haven being questioned. Key oil regime thresholds: above $110 = war premium dominant; $100-110 = transition zone; $90-100 = war premium eroding; below $90 = safe haven fully unwound and EUR/USD potentially above 1.18 immediately (Standard Chartered). The Strait of Hormuz disruption amplifies everything — 20% of global oil passes through it."},
+  {id:"natgas",cat:"Energy",name:"Natural Gas (TTF)",icon:"🔥",color:"#F97316",unit:"€/MWh",ph:"50.04",
+   why:"Europe is structurally far more exposed to natural gas price shocks than the US. Surging TTF gas prices devastate the eurozone trade balance, weaken manufacturing output and push the ECB into a stagflation trap. When European gas costs surge relative to US Henry Hub, the euro suffers disproportionately. TTF above €50/MWh in a crisis regime adds directly to European energy cost burden. The 2022 energy crisis drove EUR/USD to parity — demonstrating the power of this relationship in its most extreme form."},
+  {id:"gold",cat:"Metals",name:"Gold",icon:"🥇",color:"#FBBF24",unit:"$/oz",ph:"4651",
+   why:"Gold interpretation requires regime awareness. Gold falling while oil rises AND VIX rises = inflation fear regime, not safe haven regime. During the Iran crisis gold fell 10%+ from peaks as real rates rose on persistent inflation expectations — confirming 'inflation not safe haven' classification. Gold rising alongside dollar = systemic fear across all assets simultaneously (rare). Gold below recent highs while EUR/USD recovers = safe haven bid unwinding selectively. The gold signal is most powerful as a regime classifier, not a directional EUR/USD signal in isolation."},
+  {id:"dxy",cat:"Currencies",name:"US Dollar Index (DXY)",icon:"💵",color:"#3A8FFF",unit:"",ph:"100.03",
+   why:"DXY is EUR/USD's direct mirror — EUR is 57.6% of the DXY basket. The key professional insight: DXY DIVERGENCE from the expected narrative is the most powerful signal. When DXY falls despite dollar-bullish headlines — the safe haven bid is exhausting and institutional money is telling you what headlines aren't. DXY only gained 2% on a 65% oil surge — that underperformance was the signal the safe haven premium was already being questioned from tariff chaos and Fed independence concerns. Key levels: above 100 = elevated safe haven territory; below 99 = normalising; at 100 = psychological battleground. Rate of change more important than the absolute level."},
+  {id:"us10y",cat:"Rates",name:"US 10-Year Yield",icon:"📈",color:"#3A8FFF",unit:"%",ph:"4.313",
+   why:"Rising US yields attract global capital into dollar assets. The US-Germany yield spread (currently ~1.265%) is one of the most powerful structural EUR/USD drivers. Spread widening = EUR/USD lower; narrowing = EUR/USD recovery. With NFP 178K and ISM prices at 78.3, the Fed is locked higher for longer — keeping the spread wide and structurally weighing on EUR/USD. A spread move toward 1.5% would be a sustained bearish EUR signal. Watch CME FedWatch for real-time probability shifts — when cut probabilities shift, dollar moves accordingly."},
+  {id:"bund",cat:"Rates",name:"German Bund 10-Year",icon:"🇩🇪",color:"#8A68F8",unit:"%",ph:"3.048",
+   why:"The Bund is Europe's risk-free rate benchmark, sourced via ECB API (currently 3.048%). The US-Germany yield spread of 1.265% is structurally EUR negative. Bund yields falling faster than Treasuries signals European deflation risk and accelerating ECB cut expectations. German CPI came in at 0.2% versus 1.1% expected — a massive miss — confirming deflationary underlying pressure despite headline energy inflation. This spread is the fundamental divergence story: nine US data beats versus three European misses in one week. The spread is the scoreboard."},
+  {id:"fed",cat:"Policy",name:"Fed Rate Expectations",icon:"🏦",color:"#3A8FFF",unit:"cuts priced",ph:"0",
+   why:"The single most powerful medium-term dollar driver. With NFP 178K, JOLTS 7.24M, ISM prices 78.3 — the Fed is locked into higher for longer. Rate cuts in 2026 are effectively off the table with this data. Higher for longer keeps the yield spread wide and structurally supports DXY. Watch CME FedWatch for probability shifts at each FOMC meeting. When cut probabilities increase significantly — dollar weakens regardless of geopolitical noise. Powell speaking is always an elevated risk event — even slight dovish language can move EUR/USD 30-50 pips instantly."},
+  {id:"ecb",cat:"Policy",name:"ECB Rate Expectations",icon:"🇪🇺",color:"#8A68F8",unit:"%",ph:"2.50",
+   why:"ECB is trapped in the classic stagflation dilemma — the core structural EUR negative. Oil at $109 means inflation via energy imports: cannot cut. But European growth is weakening: needs to cut. German CPI at 0.2% versus 1.1% expected showed deflationary underlying pressure despite headline energy. Any Lagarde dovish signal accelerates EUR/USD downside. ECB meeting decisions and Lagarde press conferences carry similar weight to Fed events for EUR/USD direction. The ECB trap thesis remains intact until oil normalises below $90."},
+  {id:"vix",cat:"Sentiment",name:"VIX — Fear Index",icon:"⚡",color:"#EF4444",unit:"",ph:"23.87",
+   why:"VIX is the market's thermometer for fear. Critical professional insight: the RATE OF CHANGE and comparison to the 20-day average matters more than the absolute level. VIX falling below its 20-day average = safe haven dollar bid unwinding — this was the key regime transition signal during the Iran crisis. VIX fell from 31 to below 26 (its 20d average of 26.08) despite ongoing conflict — confirming safe haven exhaustion. The divergence of falling VIX against worsening headlines was the most important forward-looking signal of the week. Below 20 = risk appetite returning; 20-25 = cautious; 25-30 = fear active; above 30 = crisis mode."},
+  {id:"geo",cat:"Geopolitical",name:"Geopolitical Risk / Iran",icon:"🌍",color:"#EF4444",unit:"level 1-10",ph:"8",
+   why:"The Iran crisis demonstrated the limits of safe haven dollar buying — DXY only gained 2% on 65% oil surge. Binary risk is extreme: Trump's Reuters statement at 4:35am ('extremely hard over 2-3 weeks') reversed 106 pips in 24 hours. The source triangulation framework is essential: presidential statements (Tier 1) resolve all conflicts immediately. Consensus score above 7/10 needed to trade the geopolitical thesis with full conviction. Below 5/10 = too conflicted to trade. Standard Chartered: 'As soon as oil goes below $90, EUR/USD would be above 1.18 before you could snap your fingers.' The Strait of Hormuz closure timeline is the defining variable."},
+  {id:"china",cat:"Macro",name:"China / USD/CNY",icon:"🇨🇳",color:"#EF4444",unit:"USD/CNY",ph:"6.88",
+   why:"China is Europe's largest trading partner and the world's biggest commodity consumer. CNY stable or strengthening during dollar rallies signals China managing its currency deliberately — likely related to CNY oil payment arrangements with Iran (de-dollarisation in practice). A stable CNY prevents emergency Asian dollar buying from amplifying dollar strength. CNY weakening sharply would signal China stress and amplify EUR/USD downside via risk appetite channels. In the current Iran regime, CNY movements reflect whether China is participating in the petrodollar system or actively building an alternative."},
+  {id:"cot",cat:"Positioning",name:"COT Positioning / 6E Futures",icon:"📊",color:"#00C8B8",unit:"net contracts",ph:"287940",
+   why:"The most powerful positioning intelligence available. Critical framework: leveraged money at 2nd percentile short (more short than 98% of past year) PLUS asset managers at 6th percentile long (more long than 94% of past year) simultaneously = coiled spring. The NFP 178K doji confirmed the spring — the asset manager floor of 287,940 net long contracts absorbed every selling wave. 6E open interest of 775,589 building = new positions opening = conviction. The 52-week percentile is the key context. Rising OI + falling EUR/USD = new shorts entering (conviction). Falling OI + falling EUR/USD = longs exiting (exhaustion, less reliable)."},
+  {id:"petrodollar",cat:"Structural",name:"Petrodollar / De-dollarisation",icon:"🔗",color:"#8A68F8",unit:"",ph:"",
+   why:"Iran demanding CNY for oil payments is a direct attack on the petrodollar system — the 1974 arrangement where oil priced in USD creates permanent structural dollar demand. Every barrel sold in CNY reduces that demand permanently. US fiscal: $6T assets vs $47T liabilities + $88T unfunded obligations (Treasury, Sept 2025). The dollar's safe haven status was already under pressure from tariff chaos and Fed independence concerns before Iran. Reuters poll of 70 FX analysts: EUR/USD forecast $1.18 in 6 months, $1.20 in 12 months. This is the decade-long structural story playing out. Standard Chartered noted dollar buying 'not enthusiastic' — the structural erosion is visible in the price action."},
+  {id:"rebalancing",cat:"Structural",name:"Quarter-End Rebalancing",icon:"🗓️",color:"#00D47A",unit:"",ph:"",
+   why:"April 1 rebalancing produced a 144 pip EUR/USD recovery with NO news catalyst — the signature being the absence of explanation. Mechanical quarterly rebalancing: pension funds and sovereign wealth buying EUR to restore target weights after EUR/USD's 632 pip Q1 decline. The tell: no volume conviction, EVZ stable, cross-asset simultaneous movement (oil, DXY, equities all moving at once), exhausted by session end. After a large quarterly decline the rebalancing requirement scales proportionally. Next occurrences: July 1, October 1, January 1. Always check April 1, July 1 for unexplained cross-asset moves with no single news catalyst."},
+  {id:"rates_spread",cat:"Rates",name:"US-Germany Yield Spread",icon:"📐",color:"#A78BFA",unit:"%",ph:"1.265",
+   why:"The yield spread — currently 1.265% (US 10Y at 4.313% minus German Bund at 3.048%) — is one of the most powerful medium-term EUR/USD drivers and now auto-calculated in the terminal. This spread represents the fundamental capital flow driver: global investors earn 1.265% more per year holding US Treasuries versus German Bunds, creating structural demand for dollars. When spread widens toward 1.5%+ = structural EUR/USD headwind. When spread narrows toward 0.8%- = structural EUR/USD support. With NFP 178K and ISM prices 78.3, the spread is likely to widen further as Fed stays on hold and ECB faces pressure to cut. Watch for ECB dovish surprise as the primary spread-narrowing catalyst."},
+];
+
+const WEIGHTS=[{v:"primary",l:"PRIMARY",c:"#F0A030"},{v:"secondary",l:"SECONDARY",c:"#3A8FFF"},{v:"background",l:"BACKGROUND",c:"#4A5E80"},{v:"inactive",l:"INACTIVE",c:"#243048"}];
+const DIRS=[{v:"bullish_eur",l:"↑ EUR Bullish",c:"#00D47A"},{v:"bearish_eur",l:"↓ EUR Bearish",c:"#F03858"},{v:"neutral",l:"→ Neutral",c:"#4A5E80"},{v:"conflicted",l:"⚡ Mixed",c:"#F0A030"}];
+const SEARCH_AREAS={
+  geo:{label:"Geopolitical Developments",icon:"🌍",q:"major geopolitical events overnight Iran war Middle East affecting forex EUR USD"},
+  oil:{label:"Oil & Energy Markets",icon:"⛽",q:"crude oil Brent WTI natural gas prices overnight energy supply disruption"},
+  cb:{label:"Central Bank Intelligence",icon:"🏦",q:"Federal Reserve ECB central bank news speeches interest rates overnight"},
+  macro:{label:"Macro & Economic Data",icon:"📊",q:"US Europe economic data releases macro news overnight EUR USD forex"},
+  asia:{label:"Asian Session Overview",icon:"🌏",q:"Asian markets overnight JPY CNH AUD NZD forex moves Asia Pacific"},
+  risk:{label:"Risk Sentiment / VIX",icon:"⚡",q:"VIX risk sentiment equity markets safe haven flows fear overnight"},
+  dollar:{label:"Dollar / DXY Analysis",icon:"💵",q:"US dollar index DXY strength weakness safe haven petrodollar de-dollarisation"},
+  nat:{label:"Other Commodities",icon:"🌾",q:"gold silver copper agricultural commodity prices overnight markets"},
+};
+
+// ═══ STATE ═══
+let DS={},CS={},customs=[],libCat="All";
+let iOpts={geo:true,oil:true,cb:true,macro:true,asia:true,risk:false,dollar:false,nat:false};
+DRIVERS.forEach(d=>{DS[d.id]={w:"inactive",dir:"neutral",val:"",notes:""}});
+DS.crude.w="primary"; DS.dxy.w="primary"; DS.geo.w="primary";
+DS.us10y.w="secondary"; DS.vix.w="secondary"; DS.gold.w="secondary"; DS.cot.w="secondary";
+DS.fed.w="background"; DS.ecb.w="background"; DS.petrodollar.w="background";
+
+// ═══ NAV ═══
+function go(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  const map={home:0,session:1,intel:2,drivers:3,brief:4,library:5};
+  if(map[id]!=null)document.querySelectorAll('.nav-btn')[map[id]].classList.add('active');
+  window.scrollTo(0,0);
+}
+function resetPanel(k){
+  const out=document.getElementById(k+'-out');if(out)out.style.display='none';
+  const form=document.getElementById(k+'-form');if(form)form.style.display='block';
+  if(k==='intel'){document.getElementById('intel-progress').style.display='none';document.getElementById('intel-setup').style.display='block';}
+}
+
+// ═══ INTEL OPTIONS ═══
+function togOpt(k){iOpts[k]=!iOpts[k];document.getElementById('iop-'+k).classList.toggle('sel',iOpts[k]);}
+
+// ═══ RENDER ANALYSIS ═══
+function renderAnalysis(text){
+  let html=text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  html=html.replace(/^##\s+(.+)$/gm,'</p><div class="sec">$1</div><p>');
+  html=html.replace(/^###\s+(.+)$/gm,'</p><div class="sec" style="font-size:9px;color:var(--blue)">$1</div><p>');
+  html=html.replace(/\*\*([^*]+)\*\*/g,'<strong style="color:var(--amber)">$1</strong>');
+  html=html.replace(/\*([^*]+)\*/g,'<em style="color:var(--dim2)">$1</em>');
+  html=html.replace(/^[-•]\s+(.+)$/gm,'</p><div class="li"><span class="li-b">▸</span><span class="li-t">$1</span></div><p>');
+  html=html.replace(/^\d+\.\s+(.+)$/gm,'</p><div class="li"><span class="li-b">▸</span><span class="li-t">$1</span></div><p>');
+  html=html.replace(/^(BIAS:|CONVICTION:|LEVEL|SESSION:)\s*(.+)$/gm,(m,k,v)=>`</p><div class="hl"><span class="hl-k">${k}</span><span class="hl-v">${v}</span></div><p>`);
+  html=html.replace(/⚠️\s*(.+)/g,'</p><div class="warn">⚠️ $1</div><p>');
+  html=html.replace(/✅\s*(.+)/g,'</p><div class="good">✅ $1</div><p>');
+  html=html.replace(/\n{2,}/g,'</p><p>').replace(/\n/g,' ');
+  return '<p>'+html+'</p>';
+}
+
+// ═══ SESSION CLASSIFICATION ═══
+async function genSession(){
+  const eur=document.getElementById('s-eur').value.trim();
+  const brent=document.getElementById('s-brent').value.trim();
+  const errEl=document.getElementById('sess-err');
+  if(!eur||!brent){errEl.textContent="Please enter EUR/USD and Brent crude at minimum.";errEl.style.display='block';return;}
+  errEl.style.display='none';
+  const btn=document.getElementById('sess-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Classifying...';
+  const g=id=>document.getElementById(id).value.trim();
+  const eurF=parseFloat(eur)||0,brentF=parseFloat(brent)||0;
+  const dxyF=parseFloat(g('s-dxy'))||0;
+  const vixF=parseFloat(g('s-vix'))||0,vix20F=parseFloat(g('s-vix20'))||0;
+  const us10F=parseFloat(g('s-us10'))||0,bundF=parseFloat(g('s-bund'))||0;
+  const spread=(us10F-bundF).toFixed(3);
+  const emaF=parseFloat(g('s-ema'))||0;
+  const vwapF=parseFloat(g('s-vwap'))||0;
+  const cons=parseInt(g('s-cons'))||5;
+  const oilRegime=brentF>110?'🔴 ABOVE $110 — war premium dominant, dollar safe haven fully active':brentF>100?'🟡 $100-110 — transition zone, range trading likely':brentF>90?'🟢 $90-100 — war premium eroding, safe haven unwinding':'🔵 BELOW $90 — war premium gone, EUR/USD potentially above 1.18 immediately (Standard Chartered)';
+  const vixSignal=vixF>0&&vix20F>0?(vixF>vix20F?`ABOVE 20d average (${vix20F}) — fear BUILDING, safe haven bid active`:`BELOW 20d average (${vix20F}) — fear RECEDING, safe haven bid exhausting — KEY REGIME TRANSITION SIGNAL`):'';
+  const dxySignal=dxyF>100?'ABOVE 100 — elevated safe haven territory':dxyF>99?'approaching 100 — battleground':'BELOW 100 — safe haven normalising';
+
+  const prompt=`You are a senior EUR/USD analyst. Generate a complete pre-London session classification for a structure trader.
+
+DATA:
+EUR/USD: ${eur} | Prev Close: ${g('s-eurp')||'N/A'} | vs 200 EMA: ${emaF>0?(eurF>emaF?`ABOVE by ${((eurF-emaF)*10000).toFixed(0)} pips`:`BELOW by ${((emaF-eurF)*10000).toFixed(0)} pips`):'N/A'} | vs VWAP: ${vwapF>0?(eurF>vwapF?`ABOVE by ${((eurF-vwapF)*10000).toFixed(0)} pips`:`BELOW by ${((vwapF-eurF)*10000).toFixed(0)} pips`):'N/A'}
+DXY: ${g('s-dxy')||'N/A'} (${dxySignal})
+Oil Regime: ${oilRegime}
+VIX: ${g('s-vix')||'N/A'}${vixSignal?' — '+vixSignal:''}
+US-Germany Yield Spread: ${spread}% ${parseFloat(spread)>1.3?'(WIDE — structurally EUR negative)':parseFloat(spread)>0.9?'(moderate)':'(narrow — EUR supported)'}
+ASIAN SESSION: Body ${g('s-bhi')||'N/A'}/${g('s-blo')||'N/A'} | Wicks ${g('s-whi')||'N/A'}/${g('s-wlo')||'N/A'} | Character: ${g('s-achar')}
+HTF Range: ${g('s-rlow')||'N/A'} — ${g('s-rhigh')||'N/A'} | 10-Week High: ${g('s-wkhigh')||'N/A'}
+COT: Asset Mgrs ${g('s-am')||'N/A'} (${g('s-amp')||'N/A'}th pctile) | Lev Money ${g('s-lm')||'N/A'} (${g('s-lmp')||'N/A'}th pctile)
+6E OI: ${g('s-oi')||'N/A'} | Volume: ${g('s-vol')||'N/A'}% of MTD ADV
+INTELLIGENCE CONSENSUS: ${cons}/10 | Theme: ${g('s-theme')||'N/A'} | Dissent: ${g('s-dissent')||'None'}
+REGIME: ${g('s-regime')} | Gap Risk: ${g('s-gap')} | Coil: ${g('s-coil')}
+NEWS: ${g('s-news')||'N/A'}
+
+Generate these EXACT sections:
+
+## SESSION CLASSIFICATION
+State: LEVEL 1 — RANGE DAY, LEVEL 2 — DIRECTIONAL, or LEVEL 3 — MACRO DRIVEN.
+CONVICTION: HIGH/MEDIUM/LOW. One sentence explaining why.
+
+## OIL REGIME & KEY SIGNALS
+Assess the oil threshold and what it means. Note VIX vs 20d average signal. Note DXY position relative to 100. These three signals together define the regime character.
+
+## INTELLIGENCE CONSENSUS ASSESSMENT
+Is ${cons}/10 sufficient to trade the geopolitical thesis with conviction? Note any dissent. What confidence level does this represent?
+
+## ASIAN SESSION READING
+Read body vs wick structure. Note any liquidity grabs (wick extending beyond body = stop hunt). What character is the Asian session handing to London?
+
+## LEVEL MAP
+List 6-8 key levels above and below current price with brief context for each. Mark current price clearly. Include the oil regime thresholds ($90/$100/$110) as background references.
+
+## COT & POSITIONING INTELLIGENCE
+Interpret percentile readings. Crowded or room to build? Coiled spring assessment. What does OI direction suggest?
+
+## YIELD SPREAD & FUNDAMENTAL PICTURE
+Assess the ${spread}% spread. Widening or narrowing direction? What does this mean for medium-term EUR/USD?
+
+## BIAS & CONVICTION STATEMENT
+BIAS: [BULLISH EUR / BEARISH EUR / NEUTRAL — WAIT] with conviction level. Note if consensus score ${cons}/10 is high enough for Level 3 conviction.
+
+## RISK FACTORS & GAP RISK
+What invalidates this bias? Binary headline risk? Position sizing implications given gap risk level: ${g('s-gap')}.
+
+## TRADE SETUP CONTEXT (not signals — education only)
+What confirmation does a structure trader need before acting? How does the 45-minute rule apply? What is the retest methodology for today?`;
+
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+    const d=await r.json();
+    const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error generating classification.';
+    const lvl=text.includes('LEVEL 3')?3:text.includes('LEVEL 2')?2:1;
+    const lc=['','#3A8FFF','#F0A030','#F03858'][lvl];
+    const ll=['','LEVEL 1 — RANGE DAY','LEVEL 2 — DIRECTIONAL','LEVEL 3 — MACRO DRIVEN'][lvl];
+    const conv=text.toUpperCase().includes('CONVICTION: HIGH')||text.toUpperCase().includes('HIGH CONVICTION')?95:text.toUpperCase().includes('CONVICTION: MEDIUM')||text.toUpperCase().includes('MEDIUM CONVICTION')?60:30;
+    const oilColor=brentF>110?'var(--red)':brentF>100?'var(--amber)':brentF>90?'var(--blue)':'var(--green)';
+    const vixColor=vixF>vix20F&&vixF>0&&vix20F>0?'var(--red)':'var(--green)';
+    const dxyColor=dxyF>100?'var(--red)':'var(--green)';
+
+    document.getElementById('sess-out-content').innerHTML=`
+      <div class="cls-hero" style="border-color:${lc}55">
+        <div class="cls-top">
+          <div>
+            <div style="font-size:10px;color:var(--dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:3px;font-family:'IBM Plex Sans',sans-serif">${new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})}</div>
+            <div class="cls-badge" style="color:${lc}">${ll}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;color:var(--dim);font-family:'IBM Plex Sans',sans-serif">Consensus</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:${cons>=7?'var(--green)':cons>=5?'var(--amber)':'var(--red)'}">${cons}/10</div>
+          </div>
+        </div>
+        <div class="cls-metrics">
+          <div class="cm"><div class="cm-v" style="color:${dxyColor}">${dxyF||'—'}</div><div class="cm-l">DXY</div></div>
+          <div class="cm"><div class="cm-v" style="color:${oilColor}">$${brentF||'—'}</div><div class="cm-l">Brent</div></div>
+          <div class="cm"><div class="cm-v" style="color:${vixColor}">${vixF||'—'}</div><div class="cm-l">VIX</div></div>
+          <div class="cm"><div class="cm-v" style="color:var(--purple)">${spread}%</div><div class="cm-l">Spread</div></div>
+        </div>
+        ${brentF>0?`<div style="padding:0 18px 10px">
+          <div class="oil-regime ${brentF>110?'hot':brentF>100?'trans':brentF>90?'cool':'norm'}">
+            <span style="font-size:16px">${brentF>110?'🔴':brentF>100?'🟡':brentF>90?'🔵':'🟢'}</span>
+            <div>
+              <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif;font-weight:600">Oil Regime Monitor</div>
+              <div style="font-size:11px;margin-top:1px">${brentF>110?'War premium dominant — safe haven dollar fully active':brentF>100?'Transition zone — range trading likely':brentF>90?'War premium eroding — safe haven reducing':'Below $90 — EUR/USD potentially above 1.18 immediately'}</div>
+            </div>
+          </div>
+        </div>`:''}
+        ${vixF>0&&vix20F>0?`<div style="padding:0 18px 10px">
+          <div style="background:${vixF>vix20F?'rgba(240,56,88,.08)':'rgba(0,212,122,.08)'};border:1px solid ${vixF>vix20F?'rgba(240,56,88,.25)':'rgba(0,212,122,.25)'};border-radius:6px;padding:8px 12px;display:flex;align-items:center;gap:8px">
+            <span style="font-size:14px">${vixF>vix20F?'⚡':'✅'}</span>
+            <div style="font-size:11px;color:${vixF>vix20F?'var(--red)':'var(--green)'}">VIX ${vixF} ${vixF>vix20F?`ABOVE`:`BELOW`} 20d average (${vix20F}) — ${vixF>vix20F?'fear BUILDING, safe haven dollar bid active':'fear RECEDING, safe haven bid exhausting — KEY REGIME TRANSITION SIGNAL'}</div>
+          </div>
+        </div>`:''}
+        <div class="cls-bar"><div class="cls-bar-fill" style="width:${conv}%;background:${lc}"></div></div>
+        <div class="cls-foot"><span style="color:var(--dim2)">Conviction</span><span style="color:${lc};font-weight:600">${conv>=80?'HIGH':conv>=50?'MEDIUM':'LOW'}</span></div>
+      </div>
+      ${emaF>0?`<div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:12px">
+        <div style="font-size:10px;color:var(--amber);letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;font-family:'IBM Plex Sans',sans-serif">200 EMA Structure</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:${eurF>emaF?'var(--green)':'var(--red)'}">${eurF>emaF?'ABOVE':'BELOW'} 200 EMA</div>
+          <div style="font-size:12px;color:var(--dim2)">${Math.abs((eurF-emaF)*10000).toFixed(0)} pips ${eurF>emaF?'above':'below'} ${emaF}</div>
+          <div style="font-size:11px;color:${eurF>emaF?'var(--green)':'var(--red)'}">${eurF>emaF?'Regime shift if holds — institutional confirmation needed':'Bearish regime intact — ceiling confirmed'}</div>
+        </div>
+      </div>`:''}
+      <div class="ao">${renderAnalysis(text)}</div>`;
+    document.getElementById('sess-form').style.display='none';
+    document.getElementById('sess-out').style.display='block';
+    document.getElementById('sess-out').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){errEl.textContent="Connection error. Please try again.";errEl.style.display='block';}
+  btn.disabled=false;btn.innerHTML='🎯 Generate Session Classification';
+}
+
+// ═══ LIVE INTELLIGENCE ═══
+async function runIntel(){
+  const sel=Object.keys(iOpts).filter(k=>iOpts[k]);
+  const errEl=document.getElementById('intel-err');
+  if(!sel.length){errEl.textContent="Select at least one area.";errEl.style.display='block';return;}
+  errEl.style.display='none';
+  document.getElementById('intel-setup').style.display='none';
+  document.getElementById('intel-progress').style.display='block';
+  const stepsEl=document.getElementById('intel-steps');
+  stepsEl.innerHTML=sel.map(k=>`<div class="s-step"><span style="font-size:13px">${SEARCH_AREAS[k].icon}</span><span style="flex:1;color:var(--dim2);font-family:'IBM Plex Sans',sans-serif">${SEARCH_AREAS[k].label}</span><span id="ss-${k}" style="color:var(--dim)">○ Pending</span></div>`).join('');
+  sel.forEach((k,i)=>setTimeout(()=>{const e=document.getElementById('ss-'+k);if(e){e.style.color='var(--amber)';e.textContent='⟳ Searching...';setTimeout(()=>{if(e){e.style.color='var(--green)';e.textContent='✓ Done';}},2000+i*300);}},i*600));
+  const ctx=document.getElementById('intel-ctx').value.trim();
+  const eur=document.getElementById('intel-eur').value.trim();
+  const now=new Date();
+  const ds=now.toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const ts=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  const areas=sel.map(k=>`- ${SEARCH_AREAS[k].label}: search "${SEARCH_AREAS[k].q}"`).join('\n');
+
+  const prompt=`You are a senior FX analyst building a pre-London intelligence brief for an experienced EUR/USD structure trader who uses source triangulation.
+
+Today: ${ds}, ${ts}
+${eur?`Current EUR/USD: ${eur}`:''}
+${ctx?`Context: ${ctx}`:''}
+
+CRITICAL: Search for CURRENT information from the LAST 6-12 HOURS ONLY.
+SANITY CHECK: If articles show EUR/USD levels inconsistent with ${eur||'current market'} — those articles are STALE. Discard them. State clearly if you found stale vs current data.
+
+Search these areas:
+${areas}
+
+## OVERNIGHT SUMMARY
+What is the world telling EUR/USD this morning? Include a sanity check — does the narrative match current prices?
+
+## KEY INTELLIGENCE FINDINGS
+For each area searched: specific findings and EUR/USD implication. Flag if sources conflict.
+
+## SOURCE CONSENSUS ASSESSMENT
+Rate source agreement 1-10. What is the primary theme? Any significant dissenting source? Note geographic diversity of sources consulted. Can the geopolitical thesis be traded with conviction?
+
+## OIL REGIME ASSESSMENT
+Where does oil sit in the regime framework?
+- Above $110: war premium dominant, safe haven dollar fully active
+- $100-110: transition zone, range trading  
+- $90-100: war premium eroding, safe haven reducing
+- Below $90: safe haven fully unwound, EUR/USD potentially above 1.18 immediately (Standard Chartered)
+
+## DOLLAR SAFE HAVEN CHECK
+Is the dollar performing proportionally to the macro headlines? Any divergence (dollar underperforming despite bullish headlines) is a KEY signal. Reference MUFG: "You'd expect 4-5% dollar strength on 60-70% oil jump — we haven't had that."
+
+## THE MOST IMPORTANT INSIGHT
+The single most impactful piece of intelligence for EUR/USD today and why.
+
+## WATCH LIST FOR LONDON OPEN
+3-4 most important things to monitor. Include specific price levels where possible.
+
+## CONVICTION: [LOW/MEDIUM/HIGH]
+Explain the alignment or conflict between findings. Is the consensus score high enough to trade the primary theme?`;
+
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]})});
+    const d=await r.json();
+    const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'No analysis generated.';
+    setTimeout(()=>{
+      document.getElementById('intel-progress').style.display='none';
+      document.getElementById('i-focus').textContent=sel.map(k=>SEARCH_AREAS[k].icon+' '+SEARCH_AREAS[k].label).join(' · ');
+      document.getElementById('i-time').textContent=new Date().toLocaleString('en-GB');
+      document.getElementById('i-body').innerHTML=renderAnalysis(text);
+      document.getElementById('intel-out').style.display='block';
+      document.getElementById('intel-out').scrollIntoView({behavior:'smooth',block:'start'});
+    },400);
+  }catch(e){
+    document.getElementById('intel-progress').style.display='none';
+    document.getElementById('intel-setup').style.display='block';
+    document.getElementById('intel-err').textContent="Search failed. Check connection.";
+    document.getElementById('intel-err').style.display='block';
+  }
+}
+
+// ═══ DRIVER FRAMEWORK ═══
+function allD(){return[...DRIVERS,...customs]}
+function gS(id){return CS[id]||DS[id]||{w:"inactive",dir:"neutral",val:"",notes:""}}
+function sS(id,p){const isc=customs.some(d=>d.id===id);if(isc)CS[id]={...CS[id],...p};else DS[id]={...DS[id],...p};updCnt();updSum();}
+
+function updCnt(){
+  const a=allD();
+  document.getElementById('pc').textContent=a.filter(d=>gS(d.id).w==='primary').length;
+  document.getElementById('ac').textContent=a.filter(d=>gS(d.id).w!=='inactive').length;
+}
+function updSum(){
+  const a=allD();let h="";
+  ['primary','secondary','background'].forEach(w=>{
+    const dr=a.filter(d=>gS(d.id).w===w);
+    const wo=WEIGHTS.find(o=>o.v===w);
+    h+=`<div style="margin-bottom:9px"><div style="font-size:7px;color:${wo.c};letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px;font-family:'IBM Plex Sans',sans-serif">${w.toUpperCase()} (${dr.length})</div>`;
+    if(!dr.length)h+=`<div style="font-size:11px;color:var(--dim);font-style:italic">None</div>`;
+    else dr.forEach(d=>{const s=gS(d.id);const do_=DIRS.find(o=>o.v===s.dir);h+=`<div class="sum-row"><span>${d.icon} ${d.name.split(' ')[0]}</span><span style="color:${do_?.c||'var(--dim)'}">  ${do_?.l||'→'}</span></div>`;});
+    h+=`</div>`;
+  });
+  document.getElementById('drv-sum').innerHTML=h||`<div style="font-size:11px;color:var(--dim);font-style:italic">No active drivers yet.</div>`;
+}
+
+function buildDriverCards(){
+  const cont=document.getElementById('drv-container');if(!cont)return;
+  const cats=[...new Set(DRIVERS.map(d=>d.cat))];
+  let html="";
+  cats.forEach(cat=>{
+    html+=`<div class="cat-hdr">${cat}</div>`;
+    DRIVERS.filter(d=>d.cat===cat).forEach(d=>{html+=dCardHTML(d,false)});
+  });
+  if(customs.length){html+=`<div class="cat-hdr">Custom</div>`;customs.forEach(d=>{html+=dCardHTML(d,true)});}
+  cont.innerHTML=html;updCnt();updSum();
+}
+
+function dCardHTML(d,isc){
+  const s=gS(d.id);const wo=WEIGHTS.find(o=>o.v===s.w);const do_=DIRS.find(o=>o.v===s.dir);
+  return`<div class="drv-card${s.w==='inactive'?' inactive':''}" id="dc-${d.id}" style="border-color:${s.w==='inactive'?'var(--border)':wo.c+'55'}">
+  <div class="drv-hdr" onclick="togCard('${d.id}')">
+    <div class="drv-icon">${d.icon}</div>
+    <div class="drv-name">${d.name}${isc?' <span style="font-size:10px;color:var(--teal)">[custom]</span>':''}</div>
+    <div style="display:flex;align-items:center;gap:7px">
+      <span class="pill pw-${d.id}" style="color:${wo.c};background:${wo.c}18;border-color:${wo.c}44">${wo.l}</span>
+      <span style="font-size:10px;color:${do_?.c};font-weight:500">${do_?.l||'→'}</span>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:${d.color||'var(--amber)'}">${s.val||''}</span>
+      <span class="drv-chev">▼</span>
+    </div>
+  </div>
+  <div class="drv-body">
+    <div class="why-box" style="border-left-color:${d.color||'var(--amber)'}"><div class="why-lbl">Why This Drives EUR/USD</div>${d.why}</div>
+    <div class="g3">
+      <div class="field"><label>Importance</label><select onchange="sS('${d.id}',{w:this.value});rebuildCard('${d.id}')">${WEIGHTS.map(o=>`<option value="${o.v}"${s.w===o.v?' selected':''}>${o.l}</option>`).join('')}</select></div>
+      <div class="field"><label>Signal</label><select onchange="sS('${d.id}',{dir:this.value});rebuildCard('${d.id}')">${DIRS.map(o=>`<option value="${o.v}"${s.dir===o.v?' selected':''}>${o.l}</option>`).join('')}</select></div>
+      <div class="field"><label>Value${d.unit?' ('+d.unit+')':''}</label><input value="${s.val||''}" placeholder="${d.ph||''}" inputmode="decimal" onchange="sS('${d.id}',{val:this.value})"></div>
+    </div>
+    <div class="field"><label>Notes Today</label><textarea onchange="sS('${d.id}',{notes:this.value})">${s.notes||''}</textarea></div>
+    ${isc?`<button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(240,56,88,.35);margin-top:4px" onclick="remCust('${d.id}')">Remove</button>`:''}
+  </div>
+</div>`;
+}
+
+function rebuildCard(id){
+  const s=gS(id);const wo=WEIGHTS.find(o=>o.v===s.w);
+  const card=document.getElementById('dc-'+id);if(!card)return;
+  card.className='drv-card'+(s.w==='inactive'?' inactive':'')+( card.classList.contains('open')?' open':'');
+  card.style.borderColor=s.w==='inactive'?'var(--border)':wo.c+'55';
+  const pw=card.querySelector('.pw-'+id);if(pw){pw.textContent=wo.l;pw.style.color=wo.c;pw.style.background=wo.c+'18';pw.style.borderColor=wo.c+'44';}
+}
+function togCard(id){const c=document.getElementById('dc-'+id);if(c)c.classList.toggle('open');}
+function togCF(){const f=document.getElementById('cf');f.style.display=f.style.display==='none'?'block':'none';}
+function addCust(){
+  const name=document.getElementById('cf-n').value.trim();if(!name)return;
+  const id='cx_'+Date.now();
+  customs.push({id,name,cat:document.getElementById('cf-c').value.trim()||'Custom',icon:document.getElementById('cf-i').value.trim()||'📌',unit:document.getElementById('cf-u').value.trim()||'',why:document.getElementById('cf-w').value.trim()||'Custom driver added by user.',color:'#00C8B8',ph:''});
+  CS[id]={w:'primary',dir:'neutral',val:'',notes:''};
+  ['cf-n','cf-c','cf-i','cf-u','cf-w'].forEach(x=>document.getElementById(x).value='');
+  togCF();buildDriverCards();
+}
+function remCust(id){customs=customs.filter(d=>d.id!==id);delete CS[id];buildDriverCards();}
+
+async function genDrivers(){
+  const a=allD();const pri=a.filter(d=>gS(d.id).w==='primary');
+  const errEl=document.getElementById('drv-err');
+  if(!pri.length){errEl.textContent="Set at least one driver to PRIMARY.";errEl.style.display='block';return;}
+  errEl.style.display='none';
+  const btn=document.getElementById('drv-btn');btn.disabled=true;btn.innerHTML='<span class="spin"></span>Generating...';
+  const secs=['primary','secondary','background'].map(w=>{
+    const dr=a.filter(d=>gS(d.id).w===w);if(!dr.length)return'';
+    return`${w.toUpperCase()}:\n`+dr.map(d=>{const s=gS(d.id);return`- ${d.name}: ${s.val?`${s.val} ${d.unit||''}`:'no value'} | Signal: ${s.dir}${s.notes?' | Notes: '+s.notes:''}`}).join('\n');
+  }).filter(Boolean).join('\n\n');
+  const ctx=document.getElementById('drv-ctx').value.trim();
+  const prompt=`You are a trading educator. TEACH not signal — no buy/sell recommendations. Help the trader understand what this driver configuration means for EUR/USD.
+
+CONTEXT: ${ctx||'No additional context provided.'}
+
+ACTIVE DRIVERS:
+${secs}
+
+## THE CURRENT NARRATIVE
+What story are these drivers collectively telling today?
+
+## PRIMARY DRIVER ANALYSIS
+For each primary driver: current reading, direction pushing EUR/USD and WHY.
+
+## DRIVER ALIGNMENT & CONFLICTS
+Where are drivers agreeing? Where conflicting? What does alignment or conflict mean for conviction level?
+
+## THE REGIME LESSON TODAY
+What principle about markets can be learned from today's specific configuration?
+
+## OIL & VIX REGIME CHECK
+If crude oil data present: which regime threshold does it sit in? If VIX present: is it above or below its 20d average? These two signals together define the safe haven character of the session.
+
+## WHAT TO WATCH
+What changes would shift the picture? What confirms the narrative? What invalidates it?
+
+## CONVICTION: [LOW/MEDIUM/HIGH]
+Explain. Reference whether source consensus score is present and sufficient.`;
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+    const d=await r.json();
+    const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
+    const tags=pri.map(d=>`<span style="background:rgba(240,160,48,.12);color:var(--amber);border:1px solid rgba(240,160,48,.35);padding:2px 8px;border-radius:4px;font-size:10px">${d.icon} ${d.name}</span>`).join(' ');
+    document.getElementById('drv-out-content').innerHTML=`<div style="background:var(--panel);border:1px solid rgba(240,160,48,.35);border-radius:9px;padding:14px;margin-bottom:12px"><div style="font-size:10px;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;font-family:'IBM Plex Sans',sans-serif">Educational Analysis · EUR/USD</div><div style="display:flex;flex-wrap:wrap;gap:5px">${tags}</div></div><div class="ao">${renderAnalysis(text)}</div>`;
+    document.getElementById('drv-out').style.display='block';
+    document.getElementById('drv-out').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(e){errEl.textContent="Connection error. Please try again.";errEl.style.display='block';}
+  btn.disabled=false;btn.innerHTML='◈ Educational Analysis';
+}
+
+// ═══ PRE-SESSION BRIEFING ═══
+async function genBrief(){
+  const e=document.getElementById('b-e').value.trim();const d=document.getElementById('b-d').value.trim();const b=document.getElementById('b-b').value.trim();
+  const errEl=document.getElementById('brief-err');
+  if(!e||!d||!b){errEl.textContent="Please fill in EUR/USD, DXY and Brent at minimum.";errEl.style.display='block';return;}
+  errEl.style.display='none';
+  const btn=document.getElementById('brief-btn');btn.disabled=true;btn.innerHTML='<span class="spin"></span>Generating...';
+  const g=id=>document.getElementById(id).value.trim();
+  const eF=parseFloat(e)||0,bF=parseFloat(b)||0,dF=parseFloat(d)||0;
+  const us10=parseFloat(g('b-u'))||0,bund=parseFloat(g('b-bu'))||0;
+  const spread=(us10-bund).toFixed(3);
+  const vix=parseFloat(g('b-v'))||0,v20=parseFloat(g('b-v20'))||0;
+  const ema=parseFloat(g('b-ema'))||0;
+  const vwap=parseFloat(g('b-vwap'))||0;
+  const wkh=parseFloat(g('b-wkh'))||0;
+  const htfLo=parseFloat(g('b-sup'))||0,htfHi=parseFloat(g('b-res'))||0;
+
+  // Fibonacci from weekly high
+  let fib="";
+  if(wkh>0&&htfLo>0){
+    const rng=wkh-htfLo;
+    const levels=[{p:"23.6%",v:htfLo+rng*.236},{p:"38.2%",v:htfLo+rng*.382},{p:"50.0%",v:htfLo+rng*.500},{p:"61.8%",v:htfLo+rng*.618},{p:"78.6%",v:htfLo+rng*.786}];
+    fib="FIBONACCI ("+htfLo+" low → "+wkh+" 10-week high):\n"+levels.map(l=>`${l.p}: ${l.v.toFixed(4)}`).join(' | ');
+  }
+
+  const now=new Date();
+  document.getElementById('b-sess-lbl').textContent=g('b-s')+' · EUR/USD';
+  document.getElementById('b-date').textContent=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('b-clock').textContent=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+
+  // Snap grid
+  const snap=[
+    {l:'EUR/USD',v:e,c:eF>(parseFloat(g('b-ep'))||eF)?'var(--green)':'var(--red)'},
+    {l:'DXY',v:d,c:dF>100?'var(--red)':'var(--green)'},
+    {l:'Brent',v:'$'+b,c:bF>110?'var(--red)':bF>100?'var(--amber)':'var(--green)'},
+    {l:'VIX',v:g('b-v')||'—',c:vix>0&&v20>0?(vix>v20?'var(--red)':'var(--green)'):'var(--dim2)'},
+    {l:'Spread',v:spread+'%',c:parseFloat(spread)>1.3?'var(--red)':parseFloat(spread)>0.9?'var(--amber)':'var(--green)'},
+  ];
+  document.getElementById('b-snap').innerHTML=snap.map(s=>`<div class="si"><div class="si-l">${s.l}</div><div class="si-v" style="color:${s.c}">${s.v}</div></div>`).join('');
+
+  const oilR=bF>110?'ABOVE $110 — war premium dominant':bF>100?'$100-110 — transition zone':bF>90?'$90-100 — war premium eroding':'BELOW $90 — safe haven fully unwound';
+
+  const prompt=`You are a senior FX analyst. Generate a complete pre-session intelligence briefing for an experienced EUR/USD structure trader.
+
+TASKLET SNAPSHOT:
+EUR/USD: ${e} | Prev Close: ${g('b-ep')||'N/A'} | Change: ${eF&&parseFloat(g('b-ep'))?(((eF-parseFloat(g('b-ep')))*10000).toFixed(0)+' pips'):'N/A'}
+DXY: ${d} (${dF>100?'ABOVE 100 — elevated':'BELOW 100 — normalising'})
+Brent: $${b} | Oil Regime: ${oilR}
+Gold: $${g('b-g')||'N/A'} | VIX: ${g('b-v')||'N/A'}${vix>0&&v20>0?' — '+(vix>v20?'ABOVE':'BELOW')+' 20d avg ('+v20+')'+'  → '+(vix>v20?'fear BUILDING':'fear RECEDING — REGIME TRANSITION SIGNAL'):''}
+US 10Y: ${g('b-u')||'N/A'}% | German Bund: ${g('b-bu')||'N/A'}% | Yield Spread: ${spread}%
+USD/CNY: ${g('b-cny')||'N/A'} | EVZ IV: ${g('b-evz')||'N/A'}% | TTF Gas: €${g('b-ttf')||'N/A'}/MWh
+
+ASIAN SESSION:
+Body: ${g('b-bhi')||'N/A'} / ${g('b-blo')||'N/A'} | Wicks: ${g('b-whi')||'N/A'} / ${g('b-wlo')||'N/A'}
+200 EMA: ${g('b-ema')||'N/A'}${ema>0?' — price '+(eF>ema?'ABOVE by '+((eF-ema)*10000).toFixed(0)+' pips':'BELOW by '+((ema-eF)*10000).toFixed(0)+' pips'):''}
+VWAP: ${g('b-vwap')||'N/A'}${vwap>0?' — price '+(eF>vwap?'ABOVE by '+((eF-vwap)*10000).toFixed(0)+' pips':'BELOW by '+((vwap-eF)*10000).toFixed(0)+' pips'):''}
+HTF Support: ${g('b-sup')||'N/A'} | HTF Resistance: ${g('b-res')||'N/A'} | Pivot: ${g('b-piv')||'N/A'}
+${fib}
+COT: ${g('b-cot')||'N/A'} | Trend: ${g('b-cotc')||'N/A'}
+Intelligence Consensus: ${g('b-cons')||'N/A'}
+Regime: ${g('b-reg')||'N/A'}
+Catalysts: ${g('b-news')||'N/A'}
+Geopolitical: ${g('b-geo')||'N/A'}
+
+Generate these sections:
+
+## OPENING PICTURE
+One paragraph synthesis of the complete overnight picture. Include oil regime assessment and VIX signal.
+
+## OIL REGIME & DOLLAR SAFE HAVEN
+Assess oil regime threshold. Is the dollar performing proportionally to the oil move? Reference the key threshold: below $90 = EUR/USD potentially above 1.18 immediately.
+
+## ASIAN SESSION INTELLIGENCE
+Body vs wick structure. Any liquidity grabs? What character is Asia handing to London? Where is price relative to VWAP and 200 EMA?
+
+## STRUCTURAL LEVELS & FIBONACCI
+Map the key levels. Include Fibonacci retracement targets if 10-week high data present. Mark which levels have confluence with options/COT.
+
+## COT & POSITIONING INTELLIGENCE
+Interpret positioning. Coiled spring assessment. Percentile extremes and implications.
+
+## YIELD SPREAD ANALYSIS
+US-Germany spread at ${spread}%. Direction. EUR/USD implication. What would change this?
+
+## SESSION BIAS
+BIAS: [BULLISH EUR / BEARISH EUR / NEUTRAL — WAIT]
+CONVICTION: [LOW/MEDIUM/HIGH]
+One sentence rationale incorporating consensus score.
+
+## KEY LEVELS TO WATCH (top 5)
+Specific levels with context. Include oil regime thresholds as background references.
+
+## RISK & GAP ASSESSMENT
+Binary risks. Position sizing guidance for today's gap risk level.
+
+## THE 45-MINUTE RULE TODAY
+How does the pre-trade patience principle apply specifically to today's setup? What triggers a high-quality entry?`;
+
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
+    const d2=await r.json();
+    const text=d2.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
+    document.getElementById('brief-out-content').innerHTML=renderAnalysis(text);
+    document.getElementById('brief-form').style.display='none';
+    document.getElementById('brief-out').style.display='block';
+    document.getElementById('brief-out').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(ex){errEl.textContent="Connection error. Please try again.";errEl.style.display='block';}
+  btn.disabled=false;btn.innerHTML='◈ Generate Pre-Session Briefing';
+}
+
+// ═══ LIBRARY ═══
+function buildLib(){
+  const cats=["All",...new Set(DRIVERS.map(d=>d.cat))];
+  document.getElementById('lib-filters').innerHTML=cats.map(c=>`<button class="fpill${c===libCat?' active':''}" onclick="setLibCat('${c}')">${c}</button>`).join('');
+  const filt=libCat==='All'?DRIVERS:DRIVERS.filter(d=>d.cat===libCat);
+  document.getElementById('lib-cards').innerHTML=filt.map(d=>`
+    <div class="card" style="border-left:3px solid ${d.color||'var(--amber)'}">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div style="font-size:22px">${d.icon}</div>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.04em">${d.name}</div>
+          <div style="font-size:10px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif">${d.cat}${d.unit?' · '+d.unit:''}</div>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--dim2);line-height:1.85;font-family:'IBM Plex Sans',sans-serif">${d.why}</div>
+    </div>`).join('');
+}
+function setLibCat(c){libCat=c;buildLib();}
+
+// ═══ LOAD DRIVERS FROM TASKLET ═══
+function loadDriversFromTasklet(){
+  const raw=document.getElementById('drv-paste').value;
+  if(!raw.trim()){return;}
+
+  function ex(patterns,text){
+    for(const p of patterns){const m=text.match(p);if(m&&m[1]!==undefined)return m[1].trim();}
+    return '';
+  }
+
+  // Extract values
+  const eur=ex([/EUR\/USD:\s*([\d.]+)/],raw);
+  const brent=ex([/Brent Crude:\s*\$([\d.]+)/],raw);
+  const wti=ex([/WTI Crude:\s*\$([\d.]+)/],raw);
+  const dxy=ex([/DXY:\s*([\d.]+)/],raw);
+  const vix=ex([/VIX:\s*([\d.]+)/],raw);
+  const vix20=ex([/20d Avg:\s*([\d.]+)/],raw);
+  const us10=ex([/US 10Y Yield:\s*([\d.]+)/],raw);
+  const bund=ex([/German Bund 10Y:\s*([\d.]+)/],raw);
+  const gold=ex([/Gold Spot:\s*\$([\d,]+)/],raw).replace(',','');
+  const ttf=ex([/TTF Nat Gas:\s*€([\d.]+)/],raw);
+  const cny=ex([/USD\/CNY:\s*([\d.]+)/],raw);
+  const cons=ex([/Confidence:\s*(\d+)\/10/],raw);
+  const theme=ex([/Primary Theme:\s*(.+)/],raw);
+  const am=ex([/Asset Managers:\s*([\+\-]?[\d,]+)\s*\(NET/],raw).replace(',','');
+  const lm=ex([/Leveraged Money:\s*([\+\-]?[\d,]+)\s*\(NET/],raw).replace(',','');
+  const oi=ex([/Open Interest:\s*([\d,]+)/],raw).replace(',','');
+  const comp=ex([/COMPRESSION RATIO:\s*([\d.]+)%/],raw);
+  const spread=us10&&bund?(parseFloat(us10)-parseFloat(bund)).toFixed(3):'';
+
+  // Determine driver signals from data
+  const brentF=parseFloat(brent)||0;
+  const dxyF=parseFloat(dxy)||0;
+  const vixF=parseFloat(vix)||0;
+  const vix20F=parseFloat(vix20)||0;
+  const consI=parseInt(cons)||0;
+
+  const oilDir=brentF>110?'bearish_eur':brentF>100?'neutral':brentF>90?'neutral':'bullish_eur';
+  const dxyDir=dxyF>100?'bearish_eur':dxyF>99?'neutral':'bullish_eur';
+  const vixDir=vixF>0&&vix20F>0?(vixF>vix20F?'bearish_eur':'bullish_eur'):'neutral';
+  const geoDir=consI>=8?'bearish_eur':consI>=5?'neutral':'bullish_eur';
+  const spreadF=parseFloat(spread)||0;
+  const spreadDir=spreadF>1.3?'bearish_eur':spreadF>0.9?'neutral':'bullish_eur';
+
+  // Set driver states
+  function setDrv(id,w,dir,val,notes){
+    const s=DS[id]||{};
+    DS[id]={w:w,dir:dir,val:val||s.val||'',notes:notes||s.notes||''};
+  }
+
+  // Oil
+  const oilVal=brent?(brent+(wti?` (WTI ${wti})`:'')):'';
+  const oilNotes=brentF>110?'War premium dominant — above $110 crisis zone':brentF>100?'Transition zone — $100-110 range trading':brentF>90?'War premium eroding — approaching key $90 threshold':'Below $90 — Standard Chartered trigger for EUR/USD above 1.18';
+  setDrv('crude','primary',oilDir,oilVal,oilNotes);
+
+  // DXY
+  const dxyNotes=dxyF>100?'Above 100 — safe haven elevated':dxyF>99?'Battleground around 100':'Below 100 — safe haven normalising, dollar failure pattern';
+  setDrv('dxy','primary',dxyDir,dxy,dxyNotes);
+
+  // Geopolitical
+  const geoVal=cons?`${cons}/10`:'';;
+  const geoNotes=theme?`Theme: ${theme}. ${consI>=8?'High conviction — trade thesis with full sizing':consI>=5?'Medium conviction — reduced sizing':'Low conviction — do not trade geopolitical thesis'}`:'';;
+  setDrv('geo','primary',geoDir,geoVal,geoNotes);
+
+  // VIX
+  const vixNotes=vixF>0&&vix20F>0?(vixF>vix20F?`ABOVE 20d avg (${vix20F}) — fear building, safe haven active`:`BELOW 20d avg (${vix20F}) — KEY REGIME TRANSITION SIGNAL, safe haven exhausting`):'';
+  setDrv('vix','secondary',vixDir,vix,vixNotes);
+
+  // Gold
+  setDrv('gold','secondary','neutral',gold,gold?`Gold at $${gold} — monitor vs oil direction for regime classification`:'');
+
+  // US 10Y
+  setDrv('us10y','secondary',spreadDir,us10,spread?`Yield spread ${spread}% — ${parseFloat(spread)>1.3?'wide, structurally EUR negative':parseFloat(spread)>0.9?'moderate':'narrowing, EUR supportive'}`:'');
+
+  // Bund
+  setDrv('bund','secondary',spreadDir,bund,bund?`German Bund at ${bund}% — spread vs US ${spread||'N/A'}%`:'');
+
+  // Yield spread
+  setDrv('rates_spread','secondary',spreadDir,spread?`${spread}%`:'',spread?`Spread ${spread}% — ${parseFloat(spread)>1.3?'WIDE — structural EUR headwind':parseFloat(spread)>0.9?'moderate':'NARROWING — EUR supported'}`:'');
+
+  // COT
+  const cotNotes=am?`Asset Managers ${am} net long | Leveraged Money ${lm} net | OI ${oi}`:'';
+  setDrv('cot','secondary','neutral',am||'',cotNotes);
+
+  // TTF
+  setDrv('natgas','background','neutral',ttf?`€${ttf}/MWh`:'',ttf?`TTF at €${ttf} — European energy cost driver`:'');
+
+  // CNY
+  setDrv('china','background','neutral',cny,cny?`USD/CNY ${cny} — China currency stability signal`:'');
+
+  // Fed/ECB background
+  setDrv('fed','background','neutral','','Higher for longer — PPI miss removes some hike justification but FOMC minutes showed growing hike bias');
+  setDrv('ecb','background','neutral','','Lagarde dovish — economy between baseline and adverse, cautioning against hike bets');
+  setDrv('petrodollar','background','neutral','','Iran CNY oil payments — de-dollarisation in practice, structural long-term EUR positive');
+
+  // Set active weights
+  DS.crude.w='primary'; DS.dxy.w='primary'; DS.geo.w='primary';
+  DS.vix.w='secondary'; DS.gold.w='secondary'; DS.cot.w='secondary';
+  DS.us10y.w='secondary';
+  DS.bund.w='background'; DS.rates_spread.w='background';
+  DS.fed.w='background'; DS.ecb.w='background'; DS.petrodollar.w='background';
+  DS.natgas.w='background'; DS.china.w='background';
+
+  // Build context note
+  const compF=parseFloat(comp)||0;
+  const compNote=comp?`Compression ratio: ${comp}% — ${compF<15?'EXTREME compression, high continuation energy':compF<25?'Normal compression':compF<40?'Moderate — Asia doing directional work':'EXTENDED — reassess breakout thesis'}. `:'';
+  const ctxNote=`EUR/USD ${eur||'N/A'} | Brent $${brent||'N/A'} | DXY ${dxy||'N/A'} | VIX ${vix||'N/A'} vs 20d avg ${vix20||'N/A'} | Spread ${spread||'N/A'}% | Consensus ${cons||'N/A'}/10 ${theme?'— '+theme:''}. ${compNote}`;
+  document.getElementById('drv-ctx').value=ctxNote;
+
+  // Rebuild cards and summary
+  buildDriverCards();
+  document.getElementById('drv-load-ok').style.display='block';
+  document.getElementById('drv-paste').value='';
+}
+
+// ═══ TASKLET BRIEF PARSER ═══
+function parseTasklet(){
+  const raw=document.getElementById('brief-paste').value;
+  const errEl=document.getElementById('parse-err');
+  const okEl=document.getElementById('parse-ok');
+  if(!raw.trim()){errEl.textContent="Please paste a Tasklet brief first.";errEl.style.display='block';return;}
+  errEl.style.display='none';okEl.style.display='none';
+
+  function ex(patterns,text){
+    for(const p of patterns){
+      const m=text.match(p);
+      if(m&&m[1]!==undefined)return m[1].trim();
+    }
+    return '';
+  }
+
+  // EUR/USD
+  const eur=ex([/EUR\/USD:\s*([\d.]+)/,/EUR\/USD\s+([\d.]+)/],raw);
+  const eurp=ex([/Prev Close:\s*([\d.]+)/],raw);
+  // DXY
+  const dxy=ex([/DXY:\s*([\d.]+)/],raw);
+  // Brent
+  const brent=ex([/Brent Crude:\s*\$([\d.]+)/,/Brent:\s*\$([\d.]+)/],raw);
+  // WTI
+  const wti=ex([/WTI Crude:\s*\$([\d.]+)/],raw);
+  // Gold
+  const gold=ex([/Gold Spot:\s*\$([\d,]+)/,/Gold:\s*\$([\d,]+)/],raw).replace(',','');
+  // VIX
+  const vix=ex([/VIX:\s*([\d.]+)/],raw);
+  const vix20=ex([/20d Avg:\s*([\d.]+)/,/20-day Avg:\s*([\d.]+)/],raw);
+  // Yields
+  const us10=ex([/US 10Y Yield:\s*([\d.]+)/,/US 10Y:\s*([\d.]+)/],raw);
+  const bund=ex([/German Bund 10Y:\s*([\d.]+)/,/Bund 10Y:\s*([\d.]+)/],raw);
+  // TTF
+  const ttf=ex([/TTF Nat Gas:\s*€([\d.]+)/,/TTF Natural Gas:\s*€([\d.]+)/],raw);
+  // EVZ
+  const evz=ex([/1M Implied Volatility \(EVZ\):\s*([\d.]+)/,/EVZ.*?:\s*([\d.]+)%/],raw);
+  // CNY
+  const cny=ex([/USD\/CNY:\s*([\d.]+)/],raw);
+  // Asian body
+  const bhi=ex([/Body High:\s*([\d.]+)/],raw);
+  const blo=ex([/Body Low:\s*([\d.]+)/],raw);
+  const whi=ex([/Wick High:\s*([\d.]+)/],raw);
+  const wlo=ex([/Wick Low:\s*([\d.]+)/],raw);
+  // EMA
+  const ema=ex([/200 EMA.*?:\s*([\d.]+)/,/Daily 200 EMA:\s*([\d.]+)/],raw);
+  const vwap=ex([/1H VWAP:\s*([\d.]+)/,/VWAP:\s*([\d.]+)/],raw);
+  // Session
+  const sess=raw.includes('London Open')?'London Open':raw.includes('Asian')?'Asian Session':raw.includes('New York')?'New York Open':'London Open';
+  // Consensus
+  const cons=ex([/Confidence:\s*(\d+)\/10/,/Consensus:.*?(\d+)\/10/],raw);
+  // Theme
+  const theme=ex([/Primary Theme:\s*(.+)/],raw);
+  // Headlines
+  const hlMatch=raw.match(/Supporting Headlines:([\s\S]*?)Sources/);
+  const headlines=hlMatch?hlMatch[1].replace(/•/g,'').trim().split('\n').map(h=>h.trim()).filter(Boolean).join(', '):'';
+  // News composite
+  const news=headlines||theme;
+  // COT
+  const am=ex([/Asset Managers:\s*([\+\-]?[\d,]+)\s*\(NET/],raw).replace(',','');
+  const amp=ex([/Asset Managers:.*?52-wk Pctile:\s*(\d+)/],raw);
+  const lm=ex([/Leveraged Money:\s*([\+\-]?[\d,]+)\s*\(NET/],raw).replace(',','');
+  const lmp=ex([/Leveraged Money:.*?52-wk Pctile:\s*(\d+)/],raw);
+  const oi=ex([/Open Interest:\s*([\d,]+)/],raw).replace(',','');
+  const vol=ex([/(\d+)%\s*of MTD/],raw);
+  // Compression ratio
+  const comp=ex([/COMPRESSION RATIO:\s*([\d.]+)%/],raw);
+  // Weekly high for Fibonacci
+  const wkh=ex([/Weekly.*?H\s*([\d.]+)/,/10-week high.*?:\s*([\d.]+)/i],raw);
+
+  // Set fields
+  const sf=(id,val)=>{const el=document.getElementById(id);if(el&&val)el.value=val;};
+  sf('b-e',eur); sf('b-ep',eurp); sf('b-d',dxy); sf('b-b',brent);
+  sf('b-g',gold); sf('b-v',vix); sf('b-v20',vix20); sf('b-u',us10);
+  sf('b-bu',bund); sf('b-ttf',ttf); sf('b-evz',evz); sf('b-cny',cny);
+  sf('b-bhi',bhi); sf('b-blo',blo); sf('b-whi',whi); sf('b-wlo',wlo);
+  sf('b-ema',ema); sf('b-vwap',vwap); sf('b-wkh',wkh||'1.2079');
+  sf('b-sup','1.1400'); sf('b-res','1.1700');
+  if(sess){const se=document.getElementById('b-s');if(se)se.value=sess;}
+  // Consensus field
+  const consField=document.getElementById('b-cons');
+  if(consField){
+    let consStr=cons?`${cons}/10`:'';
+    if(theme)consStr+=` — ${theme}`;
+    if(cons&&parseInt(cons)>=8)consStr+=' — STRONG';
+    else if(cons&&parseInt(cons)>=6)consStr+=' — MODERATE';
+    if(consStr)consField.value=consStr;
+  }
+  // News
+  sf('b-news',news);
+  // Geo context from compression
+  if(comp){
+    const geoEl=document.getElementById('b-geo');
+    if(geoEl){
+      const cr=parseFloat(comp);
+      const crLabel=cr<15?'EXTREME COMPRESSION — high continuation energy':cr<25?'NORMAL COMPRESSION — standard consolidation':cr<40?'MODERATE — Asia doing some directional work':'EXTENDED — Asia released significant energy, reassess breakout thesis';
+      geoEl.value=`Compression ratio: ${comp}% — ${crLabel}${raw.includes('Iran')||raw.includes('Hormuz')?'\nGeopolitical context: Iran/Hormuz situation ongoing — check latest news for ceasefire/deal developments.':''}`;
+    }
+  }
+  // Check what was found
+  const found=[eur,brent,vix,bhi].filter(Boolean).length;
+  if(found<2){errEl.textContent="Could not parse enough data. Check the brief format and try again.";errEl.style.display='block';return;}
+  okEl.style.display='block';
+  // Scroll to first field
+  document.getElementById('b-e').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+// ═══ INIT ═══
+buildDriverCards();
+buildLib();
+</script>
+</body>
+</html>
