@@ -205,7 +205,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
 .brief-hdr{background:var(--panel);border:1px solid rgba(240,160,48,.35);border-radius:10px;padding:14px;margin-bottom:14px}
 </style>
 </head>
-<body>
+<body onload="checkApiKey()">
 <div id="app">
 
 <!-- HEADER -->
@@ -1398,6 +1398,13 @@ function parseTasklet(){
 buildDriverCards();
 buildLib();
 </script>
-<button onclick="clearApiKey()" style="position:fixed;bottom:16px;right:16px;z-index:9999;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--dim);border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.08em" title="Reset Anthropic API key">⚙ API KEY</button>
+
+<div id="api-key-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:10000;background:#1a1a2e;border-bottom:2px solid #3A8FFF;padding:12px 20px;align-items:center;gap:12px;font-family:'IBM Plex Sans',sans-serif">
+  <span style="color:#aaa;font-size:12px;white-space:nowrap">⚙ Anthropic API Key required:</span>
+  <input id="api-key-input" type="password" placeholder="sk-ant-api03-..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(58,143,255,0.4);border-radius:6px;padding:6px 12px;color:#fff;font-size:12px;font-family:'IBM Plex Sans',sans-serif;outline:none" onkeydown="if(event.key==='Enter')saveApiKey()"/>
+  <button onclick="saveApiKey()" style="background:#3A8FFF;border:none;color:#fff;border-radius:6px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap">Save Key</button>
+  <span style="color:#555;font-size:10px;white-space:nowrap">Stored in browser only — never sent to GitHub</span>
+</div>
+<button onclick="clearApiKey()" style="position:fixed;bottom:16px;right:16px;z-index:9999;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#555;border-radius:6px;padding:4px 10px;font-size:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.08em" title="Reset API key">⚙ reset key</button>
 </body>
 </html>
