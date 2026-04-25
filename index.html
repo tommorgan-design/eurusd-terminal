@@ -743,7 +743,7 @@ async function testProxy(){
     const proxy=getProxyUrl();const key=getApiKey();
     if(!proxy){res.style.color='var(--red)';res.textContent='Save a proxy URL first';return;}
     if(!key){res.style.color='var(--red)';res.textContent='Save an API key first';return;}
-    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:20,messages:[{role:"user",content:"Reply with exactly: CONNECTED"}]});
+    const d=await callAnthropic({model:"claude-sonnet-4-20250514",max_tokens:20,messages:[{role:"user",content:"Reply with exactly: CONNECTED"}]});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';
     if(text.includes('CONNECTED')){res.style.color='var(--green)';res.textContent='Connection successful — terminal is fully operational!';}
     else{res.style.color='var(--green)';res.textContent='Got response from API — connection working';}
@@ -900,7 +900,7 @@ What invalidates this bias? Binary headline risk? Position sizing implications g
 What confirmation does a structure trader need before acting? How does the 45-minute rule apply? What is the retest methodology for today?`;
 
   try{
-    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]});
+    const d=await callAnthropic({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error generating classification.';
     const lvl=text.includes('LEVEL 3')?3:text.includes('LEVEL 2')?2:1;
     const lc=['','#3A8FFF','#F0A030','#F03858'][lvl];
@@ -1021,7 +1021,7 @@ The single most impactful piece of intelligence for EUR/USD today and why.
 Explain the alignment or conflict between findings. Is the consensus score high enough to trade the primary theme?`;
 
   try{
-    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]},{"anthropic-beta":"web-search-2025-03-05"});
+    const d=await callAnthropic({model:"claude-sonnet-4-20250514",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]},{"anthropic-beta":"web-search-2025-03-05"});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'No analysis generated.';
     setTimeout(()=>{
       document.getElementById('intel-progress').style.display='none';
@@ -1158,7 +1158,7 @@ What changes would shift the picture? What confirms the narrative? What invalida
 ## CONVICTION: [LOW/MEDIUM/HIGH]
 Explain. Reference whether source consensus score is present and sufficient.`;
   try{
-    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]});
+    const d=await callAnthropic({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
     const tags=pri.map(d=>`<span style="background:rgba(240,160,48,.12);color:var(--amber);border:1px solid rgba(240,160,48,.35);padding:2px 8px;border-radius:4px;font-size:10px">${d.icon} ${d.name}</span>`).join(' ');
     document.getElementById('drv-out-content').innerHTML=`<div style="background:var(--panel);border:1px solid rgba(240,160,48,.35);border-radius:9px;padding:14px;margin-bottom:12px"><div style="font-size:10px;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;font-family:'IBM Plex Sans',sans-serif">Educational Analysis · EUR/USD</div><div style="display:flex;flex-wrap:wrap;gap:5px">${tags}</div></div><div class="ao">${renderAnalysis(text)}</div>`;
@@ -1267,7 +1267,7 @@ Binary risks. Position sizing guidance for today's gap risk level.
 How does the pre-trade patience principle apply specifically to today's setup? What triggers a high-quality entry?`;
 
   try{
-    const d2=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]});
+    const d2=await callAnthropic({model:"claude-sonnet-4-20250514",max_tokens:3000,messages:[{role:"user",content:prompt}]});
     const text=d2.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
     document.getElementById('brief-out-content').innerHTML=renderAnalysis(text);
     document.getElementById('brief-form').style.display='none';
