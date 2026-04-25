@@ -275,7 +275,7 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   </div>
   <div class="principle">
     <div class="principle-q">"58% is better than 57%. One session at a time. One layer at a time. The process is the edge — not the outcome of any single trade."</div>
-    <div class="principle-a">Claude thinks · Tasklet delivers · Tom decides</div>
+    <div class="principle-a">Chief collects · Claude analyses · Tom decides</div>
   </div>
 </div>
 
@@ -668,6 +668,88 @@ DS.us10y.w="secondary"; DS.vix.w="secondary"; DS.gold.w="secondary"; DS.cot.w="s
 DS.fed.w="background"; DS.ecb.w="background"; DS.petrodollar.w="background";
 
 // ═══ NAV ═══
+
+// ═══ API KEY & PROXY MANAGEMENT ═══
+function getApiKey(){return localStorage.getItem('anthropic_api_key')||'';}
+function getProxyUrl(){return localStorage.getItem('eurusd_proxy_url')||'';}
+
+function checkApiKey(){
+  const key=localStorage.getItem('anthropic_api_key');
+  const proxy=localStorage.getItem('eurusd_proxy_url');
+  const banner=document.getElementById('api-key-banner');
+  if(!key||!proxy){
+    if(banner)banner.style.display='flex';
+  } else {
+    if(banner)banner.style.display='none';
+  }
+}
+
+function saveApiKey(){
+  const input=document.getElementById('api-key-input');
+  const key=input?input.value.trim():'';
+  if(key&&key.length>10){
+    localStorage.setItem('anthropic_api_key',key);
+    input.value='';
+    checkApiKey();
+  }
+}
+
+function clearApiKey(){
+  localStorage.removeItem('anthropic_api_key');
+  localStorage.removeItem('eurusd_proxy_url');
+  checkApiKey();
+}
+
+function clearKeyFromSettings(){
+  localStorage.removeItem('anthropic_api_key');
+  localStorage.removeItem('eurusd_proxy_url');
+  const status=document.getElementById('settings-key-status');
+  if(status){status.style.display='block';status.style.color='var(--amber)';status.textContent='API key and proxy URL cleared';}
+}
+
+function saveProxyFromSettings(){
+  const input=document.getElementById('settings-proxy-input');
+  const status=document.getElementById('settings-proxy-status');
+  let url=input?input.value.trim():'';
+  if(url&&url.length>5){
+    url=url.replace(/\/+$/,'');
+    localStorage.setItem('eurusd_proxy_url',url);
+    input.value='';
+    if(status){status.style.display='block';status.style.color='var(--green)';status.textContent='Proxy URL saved — terminal is now fully operational';}
+    checkApiKey();
+  } else {
+    if(status){status.style.display='block';status.style.color='var(--amber)';status.textContent='Please paste your Cloudflare Worker URL above';}
+  }
+}
+
+async function callAnthropic(body, extraHeaders={}){
+  const proxy=getProxyUrl();
+  const key=getApiKey();
+  if(!proxy){throw new Error('No proxy URL configured. Go to Settings and paste your Cloudflare Worker URL.');}
+  if(!key){throw new Error('No API key configured. Go to Settings and paste your Anthropic key.');}
+  const headers={'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01',...extraHeaders};
+  const r=await fetch(proxy,{method:'POST',headers,body:JSON.stringify(body)});
+  if(!r.ok){
+    const errText=await r.text().catch(()=>'Unknown error');
+    throw new Error('API error ('+r.status+'): '+errText);
+  }
+  return r.json();
+}
+
+async function testProxy(){
+  const res=document.getElementById('proxy-test-result');
+  res.style.display='block';res.style.color='var(--amber)';res.textContent='Testing connection...';
+  try{
+    const proxy=getProxyUrl();const key=getApiKey();
+    if(!proxy){res.style.color='var(--red)';res.textContent='Save a proxy URL first';return;}
+    if(!key){res.style.color='var(--red)';res.textContent='Save an API key first';return;}
+    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:20,messages:[{role:"user",content:"Reply with exactly: CONNECTED"}]});
+    const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';
+    if(text.includes('CONNECTED')){res.style.color='var(--green)';res.textContent='Connection successful — terminal is fully operational!';}
+    else{res.style.color='var(--green)';res.textContent='Got response from API — connection working';}
+  }catch(e){res.style.color='var(--red)';res.textContent=e.message;}
+}
+
 function go(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -683,11 +765,18 @@ function go(id){
     document.getElementById('settings-btn').classList.add('active');
     // Show current key status
     const status = document.getElementById('settings-key-status');
+    const proxyStatus = document.getElementById('settings-proxy-status');
     const hasKey = !!localStorage.getItem('anthropic_api_key');
+    const hasProxy = !!localStorage.getItem('eurusd_proxy_url');
     if(status) {
       status.style.display = 'block';
       status.style.color = hasKey ? 'var(--green)' : 'var(--amber)';
-      status.textContent = hasKey ? '✓ API key is saved and active' : '⚠ No API key saved — paste one above';
+      status.textContent = hasKey ? '✓ API key is saved' : '⚠ No API key saved — paste one above';
+    }
+    if(proxyStatus) {
+      proxyStatus.style.display = 'block';
+      proxyStatus.style.color = hasProxy ? 'var(--green)' : 'var(--amber)';
+      proxyStatus.textContent = hasProxy ? '✓ Proxy URL is saved — terminal operational' : '⚠ No proxy URL — required for terminal to work';
     }
   }
   window.scrollTo(0,0);
@@ -702,8 +791,10 @@ function saveKeyFromSettings() {
     if (status) {
       status.style.display = 'block';
       status.style.color = 'var(--green)';
-      status.textContent = '✓ Key saved — Intel, Session and Drivers tabs are now active';
+      const hasProxy = !!localStorage.getItem('eurusd_proxy_url');
+      status.textContent = hasProxy ? '✓ Key saved — terminal is fully operational' : '✓ Key saved — now set your Proxy URL below';
     }
+    checkApiKey();
   } else {
     if (status) {
       status.style.display = 'block';
@@ -809,8 +900,7 @@ What invalidates this bias? Binary headline risk? Position sizing implications g
 What confirmation does a structure trader need before acting? How does the 45-minute rule apply? What is the retest methodology for today?`;
 
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
-    const d=await r.json();
+    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error generating classification.';
     const lvl=text.includes('LEVEL 3')?3:text.includes('LEVEL 2')?2:1;
     const lc=['','#3A8FFF','#F0A030','#F03858'][lvl];
@@ -868,7 +958,7 @@ What confirmation does a structure trader need before acting? How does the 45-mi
     document.getElementById('sess-form').style.display='none';
     document.getElementById('sess-out').style.display='block';
     document.getElementById('sess-out').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){errEl.textContent="Connection error. Please try again.";errEl.style.display='block';}
+  }catch(e){errEl.textContent=e.message||"Connection error. Check Settings.";errEl.style.display='block';}
   btn.disabled=false;btn.innerHTML='🎯 Generate Session Classification';
 }
 
@@ -931,8 +1021,7 @@ The single most impactful piece of intelligence for EUR/USD today and why.
 Explain the alignment or conflict between findings. Is the consensus score high enough to trade the primary theme?`;
 
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01","anthropic-beta":"web-search-2025-03-05"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]})});
-    const d=await r.json();
+    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,tools:[{type:"web_search_20250305",name:"web_search"}],messages:[{role:"user",content:prompt}]},{"anthropic-beta":"web-search-2025-03-05"});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'No analysis generated.';
     setTimeout(()=>{
       document.getElementById('intel-progress').style.display='none';
@@ -1069,14 +1158,13 @@ What changes would shift the picture? What confirms the narrative? What invalida
 ## CONVICTION: [LOW/MEDIUM/HIGH]
 Explain. Reference whether source consensus score is present and sufficient.`;
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
-    const d=await r.json();
+    const d=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]});
     const text=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
     const tags=pri.map(d=>`<span style="background:rgba(240,160,48,.12);color:var(--amber);border:1px solid rgba(240,160,48,.35);padding:2px 8px;border-radius:4px;font-size:10px">${d.icon} ${d.name}</span>`).join(' ');
     document.getElementById('drv-out-content').innerHTML=`<div style="background:var(--panel);border:1px solid rgba(240,160,48,.35);border-radius:9px;padding:14px;margin-bottom:12px"><div style="font-size:10px;color:var(--amber);letter-spacing:.2em;text-transform:uppercase;margin-bottom:7px;font-family:'IBM Plex Sans',sans-serif">Educational Analysis · EUR/USD</div><div style="display:flex;flex-wrap:wrap;gap:5px">${tags}</div></div><div class="ao">${renderAnalysis(text)}</div>`;
     document.getElementById('drv-out').style.display='block';
     document.getElementById('drv-out').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(e){errEl.textContent="Connection error. Please try again.";errEl.style.display='block';}
+  }catch(e){errEl.textContent=e.message||"Connection error. Check Settings.";errEl.style.display='block';}
   btn.disabled=false;btn.innerHTML='◈ Educational Analysis';
 }
 
@@ -1179,14 +1267,13 @@ Binary risks. Position sizing guidance for today's gap risk level.
 How does the pre-trade patience principle apply specifically to today's setup? What triggers a high-quality entry?`;
 
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":getApiKey(),"anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]})});
-    const d2=await r.json();
+    const d2=await callAnthropic({model:"claude-3-5-sonnet-20241022",max_tokens:3000,messages:[{role:"user",content:prompt}]});
     const text=d2.content?.filter(b=>b.type==='text').map(b=>b.text).join('\n')||'Error.';
     document.getElementById('brief-out-content').innerHTML=renderAnalysis(text);
     document.getElementById('brief-form').style.display='none';
     document.getElementById('brief-out').style.display='block';
     document.getElementById('brief-out').scrollIntoView({behavior:'smooth',block:'start'});
-  }catch(ex){errEl.textContent="Connection error. Please try again.";errEl.style.display='block';}
+  }catch(ex){errEl.textContent=e.message||"Connection error. Check Settings.";errEl.style.display='block';}
   btn.disabled=false;btn.innerHTML='◈ Generate Pre-Session Briefing';
 }
 
@@ -1437,7 +1524,7 @@ buildLib();
 </script>
 
 <div id="api-key-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:10000;background:#1a1a2e;border-bottom:2px solid #3A8FFF;padding:12px 20px;align-items:center;gap:12px;font-family:'IBM Plex Sans',sans-serif">
-  <span style="color:#aaa;font-size:12px;white-space:nowrap">⚙ Anthropic API Key required:</span>
+  <span style="color:#aaa;font-size:12px;white-space:nowrap">⚙ Setup required — go to 🔑 Settings tab:</span>
   <input id="api-key-input" type="password" placeholder="sk-ant-api03-..." style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(58,143,255,0.4);border-radius:6px;padding:6px 12px;color:#fff;font-size:12px;font-family:'IBM Plex Sans',sans-serif;outline:none" onkeydown="if(event.key==='Enter')saveApiKey()"/>
   <button onclick="saveApiKey()" style="background:#3A8FFF;border:none;color:#fff;border-radius:6px;padding:6px 16px;font-size:12px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;white-space:nowrap">Save Key</button>
   <span style="color:#555;font-size:10px;white-space:nowrap">Stored in browser only — never sent to GitHub</span>
@@ -1455,7 +1542,22 @@ buildLib();
       </div>
       <div id="settings-key-status" style="font-size:11px;margin-bottom:12px;display:none"></div>
       <button class="btn" onclick="saveKeyFromSettings()" style="width:100%">💾 Save API Key</button>
-      <button class="btn btn-ghost" onclick="clearKeyFromSettings()" style="width:100%;margin-top:8px">🗑 Clear Saved Key</button>
+    </div>
+    <div class="card">
+      <div class="card-title">🌐 Proxy URL (Cloudflare Worker)</div>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:16px;line-height:1.6">Your Cloudflare Worker URL that proxies requests to Anthropic. Required because GitHub Pages cannot call the API directly (browser security).</p>
+      <div class="field">
+        <label>Worker URL</label>
+        <input id="settings-proxy-input" type="text" placeholder="https://eurusd-proxy.your-account.workers.dev" style="width:100%;box-sizing:border-box"/>
+      </div>
+      <div id="settings-proxy-status" style="font-size:11px;margin-bottom:12px;display:none"></div>
+      <button class="btn" onclick="saveProxyFromSettings()" style="width:100%">💾 Save Proxy URL</button>
+      <button class="btn btn-ghost" onclick="testProxy()" style="width:100%;margin-top:8px">🧪 Test Connection</button>
+      <div id="proxy-test-result" style="font-size:11px;margin-top:8px;display:none"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🗑 Reset</div>
+      <button class="btn btn-ghost" onclick="clearKeyFromSettings()" style="width:100%">Clear All Saved Settings</button>
     </div>
   </div>
 </body>
