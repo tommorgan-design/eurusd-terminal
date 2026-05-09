@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bracket Trading Cheat Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0e17;
+    color: #e2e8f0;
+    padding: 24px;
+    min-height: 100vh;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #1e293b;
+  }
+  
+  .header h1 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .header .subtitle {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  
+  .header .dataset {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .pair-card {
+    background: #111827;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #1e293b;
+  }
+  
+  .pair-card.eur { border-top: 3px solid #3b82f6; }
+  .pair-card.gbp { border-top: 3px solid #8b5cf6; }
+  
+  .pair-name {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+  
+  .pair-card.eur .pair-name { color: #60a5fa; }
+  .pair-card.gbp .pair-name { color: #a78bfa; }
+  
+  .param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .param {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 12px;
+  }
+  
+  .param-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    margin-bottom: 4px;
+  }
+  
+  .param-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+  
+  .param-value .unit {
+    font-size: 12px;
+    font-weight: 400;
+    color: #94a3b8;
+  }
+  
+  .param-full {
+    grid-column: 1 / -1;
+  }
+  
+  .days-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  
+  .day {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  
+  .day.active { background: #22c55e; color: #052e16; }
+  .day.caution { background: #f59e0b; color: #451a03; }
+  .day.inactive { background: #1e293b; color: #475569; }
+  
+  .qualify-section {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+  }
+  
+  .qualify-section .param-label { margin-bottom: 8px; }
+  
+  .qualify-bar {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    background: #1e293b;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  
+  .qualify-zone {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  
+  .zone-no { background: #7f1d1d; color: #fca5a5; }
+  .zone-yes { background: #14532d; color: #86efac; }
+  .zone-hot { background: #065f46; color: #6ee7b7; }
+  
+  .quick-ref {
+    background: #111827;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #1e293b;
+    border-top: 3px solid #f59e0b;
+  }
+  
+  .quick-ref h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fbbf24;
+    margin-bottom: 12px;
+  }
+  
+  .rule-list {
+    list-style: none;
+  }
+  
+  .rule-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #1e293b;
+    font-size: 13px;
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .rule-list li:last-child { border-bottom: none; }
+  
+  .rule-icon {
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  
+  .stat {
+    text-align: center;
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .stat-val {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  
+  .stat-val.green { color: #4ade80; }
+  .stat-val.blue { color: #60a5fa; }
+  .stat-val.purple { color: #a78bfa; }
+  
+  .stat-label {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 2px;
+  }
+  
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #1e293b;
+    font-size: 11px;
+    color: #475569;
+  }
+  
+  .footer .tagline {
+    color: #64748b;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  
+  .entry-example {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #94a3b8;
+  }
+  
+  .entry-example code {
+    background: #1e293b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', monospace;
+    font-size: 12px;
+    color: #e2e8f0;
+  }
+
+  .entry-example .highlight-buy {
+    color: #4ade80;
+    font-weight: 700;
+  }
+
+  .entry-example .highlight-sell {
+    color: #f87171;
+    font-weight: 700;
+  }
+  
+  @media print {
+    body { background: white; color: #1e293b; padding: 12px; }
+    .pair-card, .quick-ref { border-color: #d1d5db; background: #f8fafc; }
+    .param { background: #f1f5f9; }
+    .qualify-bar { border: 1px solid #d1d5db; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>BRACKET TRADING CHEAT SHEET</h1>
+  <div class="subtitle">Wednesday / Thursday — Two-Pair Protocol</div>
+  <div class="dataset">723 sessions · 2.8 years · Universal Bracket Engine v1.0 · May 2026</div>
+</div>
+
+<div class="grid">
+  
+  <!-- EUR/USD Card -->
+  <div class="pair-card eur">
+    <div class="pair-name">EUR/USD</div>
+    
+    <div class="param-grid">
+      <div class="param">
+        <div class="param-label">Entry Offset</div>
+        <div class="param-value">+5 / -5 <span class="unit">pips</span></div>
+      </div>
+      <div class="param">
+        <div class="param-label">Take Profit</div>
+        <div class="param-value">35 <span class="unit">pips</span></div>
+      </div>
+      <div class="param">
+        <div class="param-label">Range Filter</div>
+        <div class="param-value">25 – 40 <span class="unit">pips</span></div>
+      </div>
+      <div class="param">
+        <div class="param-label">Median Range</div>
+        <div class="param-value">23.8 <span class="unit">pips</span></div>
+      </div>
+    </div>
+    
+    <div class="param param-full">
+      <div class="param-label">Trading Days</div>
+      <div class="days-row">
+        <div class="day inactive">Mon</div>
+        <div class="day inactive">Tue</div>
+        <div class="day active">Wed</div>
+        <div class="day active">Thu</div>
+        <div class="day inactive">Fri</div>
+      </div>
+    </div>
+    
+    <div class="qualify-section">
+      <div class="param-label">Range Qualification</div>
+      <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-bottom: 2px;">
+        <span>0</span><span>15</span><span>25</span><span>40</span><span>60+</span>
+      </div>
+      <div class="qualify-bar">
+        <div class="qualify-zone zone-no" style="width: 25%;">TOO NARROW</div>
+        <div class="qualify-zone zone-yes" style="width: 15%; background: #854d0e; color: #fde68a;">MARGINAL</div>
+        <div class="qualify-zone zone-hot" style="width: 25%;">SWEET SPOT ✓</div>
+        <div class="qualify-zone zone-no" style="width: 35%;">TOO WIDE</div>
+      </div>
+    </div>
+    
+    <div class="entry-example">
+      <strong style="color: #60a5fa;">Example:</strong> Asian range = 1.1720 – 1.1750 (30 pips ✓)<br>
+      <span class="highlight-buy">BUY</span> entry: 1.1750 + 5 = <code>1.1755</code> → TP <code>1.1790</code><br>
+      <span class="highlight-sell">SELL</span> entry: 1.1720 - 5 = <code>1.1715</code> → TP <code>1.1680</code><br>
+      Stop: opposite entry level · Risk: ~40 pips
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-val green">60%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val blue">~825</div>
+        <div class="stat-label">Est. 2yr Pips</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val purple">~2 hrs</div>
+        <div class="stat-label">Avg Trigger</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- GBP/USD Card -->
+  <div class="pair-card gbp">
+    <div class="pair-name">GBP/USD</div>
+    
+    <div class="param-grid">
+      <div class="param">
+        <div class="param-label">Entry Offset</div>
+        <div class="param-value">+7 / -7 <span class="unit">pips</span></div>
+      </div>
+      <div class="param">
+        <div class="param-label">Take Profit</div>
+        <div class="param-value">35 <span class="unit">pips</span></div>
+      </div>
+      <div class="param">
+        <div class="param-label">Range Filter</div>
+        <div class="param-value">20 – 25 <span class="unit">pips</span></div>
+      </div>
+      <div class="param">
+        <div class="param-label">Median Range</div>
+        <div class="param-value">30.5 <span class="unit">pips</span></div>
+      </div>
+    </div>
+    
+    <div class="param param-full">
+      <div class="param-label">Trading Days</div>
+      <div class="days-row">
+        <div class="day inactive">Mon</div>
+        <div class="day inactive">Tue</div>
+        <div class="day active">Wed</div>
+        <div class="day active">Thu</div>
+        <div class="day inactive">Fri</div>
+      </div>
+    </div>
+    
+    <div class="qualify-section">
+      <div class="param-label">Range Qualification</div>
+      <div style="display: flex; justify-content: space-between; font-size: 10px; color: #64748b; margin-bottom: 2px;">
+        <span>0</span><span>10</span><span>20</span><span>25</span><span>60+</span>
+      </div>
+      <div class="qualify-bar">
+        <div class="qualify-zone zone-no" style="width: 17%;">TOO NARROW</div>
+        <div class="qualify-zone zone-yes" style="width: 16%; background: #854d0e; color: #fde68a;">MARGINAL</div>
+        <div class="qualify-zone zone-hot" style="width: 9%;">SWEET ✓</div>
+        <div class="qualify-zone zone-no" style="width: 58%;">TOO WIDE</div>
+      </div>
+    </div>
+    
+    <div class="entry-example">
+      <strong style="color: #a78bfa;">Example:</strong> Asian range = 1.3380 – 1.3402 (22 pips ✓)<br>
+      <span class="highlight-buy">BUY</span> entry: 1.3402 + 7 = <code>1.3409</code> → TP <code>1.3444</code><br>
+      <span class="highlight-sell">SELL</span> entry: 1.3380 - 7 = <code>1.3373</code> → TP <code>1.3338</code><br>
+      Stop: opposite entry level · Risk: ~36 pips
+    </div>
+    
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-val green">59%</div>
+        <div class="stat-label">Win Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val blue">~655</div>
+        <div class="stat-label">Est. 2yr Pips</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val purple">~3 hrs</div>
+        <div class="stat-label">Avg Trigger</div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-- Quick Reference Rules -->
+<div class="quick-ref">
+  <h3>⚡ QUICK RULES</h3>
+  <ul class="rule-list">
+    <li><span class="rule-icon">📏</span>Measure Asian range at London open (8-hour lookback). Range must fall within pair's filter band to qualify.</li>
+    <li><span class="rule-icon">📅</span><strong>Wednesday and Thursday only.</strong> Both pairs share mid-week directional uncertainty — that's the bracket edge.</li>
+    <li><span class="rule-icon">🎯</span>Place BOTH orders (buy above + sell below) with entry offset. When one triggers, the other is your stop.</li>
+    <li><span class="rule-icon">❌</span>If neither qualifies — no trade. The filter IS the edge. Forcing a bracket outside the sweet spot = negative expectancy.</li>
+    <li><span class="rule-icon">🔄</span>Cancel opposite order manually when one side fires (no OCO on IG). IB: use native OCO.</li>
+    <li><span class="rule-icon">📊</span>Both pairs can fire on the same day if both qualify. Different range profiles = genuine diversification.</li>
+    <li><span class="rule-icon">⏱️</span>GBP triggers ~1 hour later than EUR. Monitor accordingly.</li>
+    <li><span class="rule-icon">🔁</span><strong>Monthly retest:</strong> Re-run engine first Sunday of each month. Parameters are hypotheses, not laws.</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Universal Bracket Engine v1.0 · 723 sessions · 2.8 years · Built May 2026<br>
+  <div class="tagline">Chief collects · Claude analyses · Tom decides</div>
+</div>
+
+</body>
+</html>
