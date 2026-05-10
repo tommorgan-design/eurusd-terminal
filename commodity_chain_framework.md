@@ -1,18 +1,19 @@
 # Commodity Supply Chain Intelligence Framework
 ## EUR/USD Trading System — Hormuz Crisis Transmission Chains
 
-**Version:** 1.0 — May 9, 2026
-**Source:** Chief analysis + Claude pressure test (May 9, 2026)
+**Version:** 1.1 — May 11, 2026
+**Source:** Chief analysis + Claude pressure test (May 9, 2026) + Chain 12 added May 11, 2026
 **Principle:** Second-order intelligence upgrades regime classification and modifies target conviction. It never overrides a gate signal.
 
 ---
 
 ## Chain Rankings (Probability × Magnitude for EUR/USD)
 
-| Tier | Chain | Magnitude | EUR Impact | Timeline | Status |
+| Tier | Chain | Magnitude | EUR/USD Impact | Timeline | Status |
 |---|---|---|---|---|---|
-| **TIER 1** | Fertiliser / Food CPI | 30-50 pips | EUR negative | Q3/Q4 2026 CPI | VERIFIED — mainstream |
+| **TIER 1** | Fertiliser / Food CPI | 30-50 pips | EUR negative (ECB trapped) | Q3/Q4 2026 CPI | VERIFIED — mainstream |
 | **TIER 1** | Naphtha / Plastics | 20-35 pips | EUR negative | 8-12 weeks | UNDERAPPRECIATED — in PPI now |
+| **TIER 1** | **Water / Irrigation / US Food Production** | **20-35 pips** | **USD positive (Fed trapped)** | **Q3/Q4 2026 + structural** | **NEW — ACTIVE. Decisions locked in NOW** |
 | **TIER 1** | Cape Rerouting / Container Rates | 20-30 pips | EUR negative | 3-4 months | ACTIVE — 25-35% of 2021 peak |
 | **TIER 2** | Pharmaceutical API | 15-25 pips | EUR negative | 6-12 weeks | HIGHEST REMAINING EDGE |
 | **TIER 2** | Jet Fuel / Aviation | 15-20 pips | EUR negative | 4-8 weeks CPI | ALREADY IN DATA |
@@ -41,7 +42,9 @@
 - Container rate normalisation: 2-4 weeks
 
 ### What DOES NOT UNWIND — LOCKED IN
-**2026 spring planting shortfall.** Crops are in the ground. Harvest volumes for Q3/Q4 are determined by what was planted. Even if fertiliser becomes freely available tomorrow — you cannot replant a missed spring season.
+**1. 2026 spring planting shortfall (Chain 1).** Crops are in the ground. Harvest volumes for Q3/Q4 are determined by what was planted. Even if fertiliser becomes freely available tomorrow — you cannot replant a missed spring season.
+
+**2. Lake Mead water crisis (Chain 12).** The drought does not care about the Islamabad talks. Hoover Dam turbine capacity offline until 2028-2031 (upgrade timeline). California permanent crop damage (almonds, pistachios, citrus) requires 5-7 years of recovery even after water returns. Southwest acreage decisions being made RIGHT NOW in May — once the planting window closes, Q3/Q4 harvest is locked in. This chain persists on a completely independent timeline from geopolitical resolution.
 
 **The Queensland sugar lesson applied:** The damage is done. The market hasn't priced the magnitude.
 
@@ -49,8 +52,9 @@
 **On a peace deal announcement:**
 - Market prices FULL resolution → EUR bid across the board
 - **Correct analysis:** PARTIAL resolution — energy reverses, food does NOT
-- **The trade:** Fade the initial full-EUR-bid reaction. Food CPI persistence keeps ECB trapped even after oil collapses
-- **Timeline:** Initial EUR bid fades within 1-2 weeks as food CPI data continues deteriorating
+- **Two independent reasons food CPI persists:** Chain 1 (European supply) + Chain 12 (US domestic production) — different geographies, same Q3/Q4 harvest window
+- **The trade:** Fade the initial full-EUR-bid reaction. Food CPI persistence keeps ECB trapped (Chain 1) AND Fed trapped (Chain 12) even after oil collapses
+- **Timeline:** Initial EUR bid fades within 1-2 weeks as food CPI data continues deteriorating from both sides
 
 ---
 
@@ -75,7 +79,7 @@
 
 ### Daily (in briefing)
 | Indicator | Source | Chain | What to Watch |
-|---|---|---|---|
+|---|---|---|---|-|
 | Brent futures (BZ=F) | yfinance | Energy baseline | Direction + level |
 | Heating oil (HO=F) | yfinance | Jet fuel proxy | Premium vs historical |
 | TTF Natural Gas (TTF=F) | yfinance | Fertiliser proxy | Sustained elevation = chain active |
@@ -84,10 +88,12 @@
 ### Weekly (Sunday review)
 | Indicator | Source | Chain | What to Watch |
 |---|---|---|---|
-| USDA Crop Progress | USDA.gov | Food CPI | Planting pace vs 5-year avg |
-| Urea spot price | Market sources | Fertiliser | WoW change, sustained elevation |
-| Freightos Baltic Index | freightos.com | Container rates | Asia-Europe premium |
-| IATA Jet Fuel Monitor | iata.org | Aviation CPI | Premium vs pre-crisis |
+| USDA Crop Progress | USDA.gov | Food CPI / Chain 1 | Planting pace vs 5-year avg |
+| Urea spot price | Market sources | Fertiliser / Chain 1 | WoW change, sustained elevation |
+| Freightos Baltic Index | freightos.com | Container rates / Chain 8 | Asia-Europe premium |
+| IATA Jet Fuel Monitor | iata.org | Aviation CPI / Chain 9 | Premium vs pre-crisis |
+| **Bureau of Reclamation levels** | **usbr.gov** | **Water / Chain 12** | **Lake Mead + Powell ft elevation. Below 1,035ft = 12 turbines offline** |
+| **Southwest power prices** | **CAISO / WECC** | **Water / Chain 12** | **Irrigation pumping cost proxy. Rising = acreage reduction accelerating** |
 
 ### Monthly (when available)
 | Indicator | Source | Chain | What to Watch |
@@ -115,6 +121,42 @@ Gulf naphtha = 35-40% of global ethylene → EU crackers paying premium → EU c
 - BASF, INEOS, LyondellBasell earnings calls = confirmation signal
 - Most underappreciated chain currently
 
+**Chain 12 (NEW): Water / Irrigation / US Domestic Food Production**
+
+*Mechanism — Two steps, both active:*
+
+**Step 1 — Power:** Lake Mead falling → Hoover Dam turbines offline (5 offline now, 12 offline if below 1,035ft) → Southwest power generation -40-75% → Power prices surge 8x worst case → Irrigation pumping costs unaffordable.
+
+**Step 2 — Acreage:** Farmers facing impossible pumping economics → Planted acreage reduced → Q3/Q4 Southwest food production falls → US domestic food CPI spike.
+
+*Why this is TIER 1:*
+- **Independent of Iran resolution.** The drought does not care about diplomacy. Timeline is 2028-2031 for turbine upgrades — a different order of structural permanence from all other chains.
+- **Permanent crop damage.** California produces 90%+ of US almonds, pistachios, artichokes, broccoli. These are permanent crops (trees, vines) — not annual plantings. Drought stress kills them. Recovery requires 5-7 years even after water returns. You cannot replant a 20-year almond grove next season.
+- **Planting window is open NOW.** May 2026. Farmers making acreage decisions in real time. Once the window closes — Q3/Q4 harvest is locked in. This is the Queensland moment.
+- **Colorado River system at 36% capacity.** Structural deficit. Not a single bad year.
+
+*The critical analytical distinction vs all other chains:*
+Every other chain in this framework works through: **European import costs rise → ECB trapped → EUR negative.**
+Chain 12 works through: **US domestic food production falls → US food CPI → Fed cannot cut aggressively → USD structural floor.**
+
+This is not the same engine. Chain 12 is **USD positive** regardless of what happens in Europe. It supports the dollar on a completely independent mechanism and timeline.
+
+*The multiplicative effect with Chain 1:*
+Chain 1 reduces yield **per acre** (less fertiliser applied = lower output per unit of land).
+Chain 12 reduces **total acres planted** (irrigation economics collapse = less land farmed).
+These multiply, not add. Fewer total acres × lower yield per acre = compounding US food shortfall.
+Claude treated these as two separate Jenga blocks. They are the same block falling twice.
+
+*EUR/USD implication:*
+On a peace deal: energy reverses (24hrs), European food inflation fades slowly (months), but US domestic food inflation continues independently for **years**. The Fed's ability to cut is structurally constrained from a domestic source that no diplomatic outcome resolves. EUR/USD recovery is capped further and longer than the market prices.
+
+*Key data points:*
+- 40 million people in US Southwest depend on Colorado River water
+- Southwest produces ~15% of US food supply
+- Lake Mead at 36% capacity — structural deficit not cycle
+- Hoover Dam full capacity offline timeline: 2028-2031
+- California permanent crop recovery timeline: 5-7 years post-water-restoration
+
 **Chain 8: Cape Rerouting**
 +10-14 days transit → +20-25% fuel cost/voyage → container rates +40-60% → goods inflation re-accelerates.
 - Currently 25-35% of 2021-22 peak — significant but not crisis-level
@@ -129,7 +171,7 @@ Gulf naphtha disruption → Indian chemical feedstock costs rise → API product
 - This is the next fertiliser story — we are early
 - Watch: Teva, Viatris, Sun Pharma earnings calls
 
-**Chain 9 (NEW): Jet Fuel / Aviation**
+**Chain 9: Jet Fuel / Aviation**
 Gulf jet fuel disrupted → 60-80% premium → airline fuel 25-30% of costs → European airfare CPI → SERVICES inflation (stickier than goods).
 - Ryanair, EasyJet, Lufthansa all affected
 - Services inflation is what ECB watches most closely
@@ -143,9 +185,9 @@ Less Gulf crude refined → less sulfur byproduct → phosphate production hit �
 
 ### TIER 3 — Background / Structural
 
-**Chain 10 (NEW): Insurance Cascade** — Lloyd's war risk +800-1200%. Invisible inflation tax on all Gulf-transiting cargo. Diffuse but real.
+**Chain 10: Insurance Cascade** — Lloyd's war risk +800-1200%. Invisible inflation tax on all Gulf-transiting cargo. Diffuse but real.
 
-**Chain 11 (NEW): VLCC Tanker Feedback** — $450K/day rates → $3-4/bbl transport premium → dollar-denominated → structural USD demand. Partially offsets safe haven unwind.
+**Chain 11: VLCC Tanker Feedback** — $450K/day rates → $3-4/bbl transport premium → dollar-denominated → structural USD demand. Partially offsets safe haven unwind.
 
 **Chain 5: Copper Smelting** — Weaker than assumed. Most smelters self-sufficient in sulfuric acid. AUD story more than EUR story.
 
@@ -159,11 +201,11 @@ Less Gulf crude refined → less sulfur byproduct → phosphate production hit �
 
 ## Integration with Gate Framework
 
-**Gate 1 (Conviction):** Commodity chain status feeds into bull/bear lean as second-order intelligence. Multiple chains active and worsening = reinforces bear EUR lean. Peace signals (spread narrowing, oil dropping) = lean adjustment but NOT full reversal (food CPI persistence).
+**Gate 1 (Conviction):** Commodity chain status feeds into bull/bear lean as second-order intelligence. Multiple chains active and worsening = reinforces bear EUR lean. Peace signals (spread narrowing, oil dropping) = lean adjustment but NOT full reversal (food CPI persistence — Chain 1 AND Chain 12 both locked in independently).
 
-**Gate 3 (Clearance):** Major commodity events (USDA crop reports, OPEC meetings, Hormuz developments) treated as calendar events in clearance window.
+**Gate 3 (Clearance):** Major commodity events (USDA crop reports, Bureau of Reclamation water level updates, OPEC meetings, Hormuz developments) treated as calendar events in clearance window.
 
-**MAVERICK Lean:** Commodity chain context included in lean reasoning. Peace deal asymmetry explicitly noted when relevant.
+**MAVERICK Lean:** Commodity chain context included in lean reasoning. Peace deal asymmetry explicitly noted when relevant. Chain 12 note: *"Lake Mead structural floor on USD — independent of any diplomatic outcome."*
 
 ---
 
