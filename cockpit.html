@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>CHIEF — Stoplight Terminal</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   ROOT VARIABLES
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --bg: #0a0e17;
+  --card: #111827;
+  --card-border: #1e293b;
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --green: #22c55e;
+  --green-glow: rgba(34,197,94,0.25);
+  --green-bg: rgba(34,197,94,0.08);
+  --amber: #f59e0b;
+  --amber-glow: rgba(245,158,11,0.25);
+  --amber-bg: rgba(245,158,11,0.08);
+  --red: #ef4444;
+  --red-glow: rgba(239,68,68,0.25);
+  --red-bg: rgba(239,68,68,0.08);
+  --grey: #475569;
+  --grey-glow: rgba(71,85,105,0.15);
+  --blue: #3b82f6;
+  --purple: #a78bfa;
+  --orange: #f97316;
+  --gold: #fbbf24;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 12px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px 16px;
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-brand h1 {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.status-badge.live { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+.status-badge.demo { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+.status-badge.live .status-dot { background: var(--green); }
+.status-badge.demo .status-dot { background: var(--amber); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.header-meta {
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.header-pair {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.header-price {
+  font-size: 26px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+.header-change { font-size: 12px; font-weight: 600; }
+.header-change.up { color: var(--green); }
+.header-change.down { color: var(--red); }
+.header-change.flat { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════════════
+   CLUSTER LIGHTS ROW
+   ═══════════════════════════════════════════════════════════ */
+.cluster-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.cluster-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.cluster-card:hover { transform: translateY(-2px); }
+.cluster-card.active { border-color: rgba(255,255,255,0.15); }
+.cluster-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+  transition: background 0.3s;
+}
+.cluster-card.green::before { background: var(--green); }
+.cluster-card.amber::before { background: var(--amber); }
+.cluster-card.red::before { background: var(--red); }
+.cluster-card.grey::before { background: var(--grey); }
+
+.cluster-light {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  transition: all 0.4s ease;
+}
+.cluster-card.green .cluster-light { background: var(--green); box-shadow: 0 0 16px var(--green-glow), 0 0 32px var(--green-glow); }
+.cluster-card.amber .cluster-light { background: var(--amber); box-shadow: 0 0 16px var(--amber-glow), 0 0 32px var(--amber-glow); }
+.cluster-card.red .cluster-light { background: var(--red); box-shadow: 0 0 16px var(--red-glow), 0 0 32px var(--red-glow); }
+.cluster-card.grey .cluster-light { background: var(--grey); box-shadow: 0 0 8px var(--grey-glow); }
+
+.cluster-name {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.cluster-metric {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CLUSTER EXPANSION PANEL
+   ═══════════════════════════════════════════════════════════ */
+.cluster-detail {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
+}
+.cluster-detail.open {
+  max-height: 600px;
+  opacity: 1;
+  margin-bottom: 16px;
+}
+.cluster-detail-inner { padding: 16px; }
+.cluster-detail-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.component-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.component-row:last-child { border-bottom: none; }
+.component-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.component-value {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.signal-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.signal-dot.green { background: var(--green); }
+.signal-dot.amber { background: var(--amber); }
+.signal-dot.red { background: var(--red); }
+.signal-dot.grey { background: var(--grey); }
+
+/* ═══════════════════════════════════════════════════════════
+   THE LEAN
+   ═══════════════════════════════════════════════════════════ */
+.lean-section {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px 16px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.lean-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.lean-direction {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+.lean-direction.bullish { color: var(--green); }
+.lean-direction.bearish { color: var(--red); }
+.lean-direction.neutral { color: var(--amber); }
+.lean-conviction {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.lean-score {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 12px;
+}
+.lean-reasoning {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GATE STATUS BAR
+   ═══════════════════════════════════════════════════════════ */
+.gate-bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  margin-bottom: 16px;
+}
+.gate-segment {
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+.gate-segment.clear { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+.gate-segment.pending { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+.gate-segment.blocked { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+.gate-segment.waiting { background: rgba(71,85,105,0.1); color: var(--grey); border: 1px solid rgba(71,85,105,0.2); }
+
+/* ═══════════════════════════════════════════════════════════
+   PRICE LADDER
+   ═══════════════════════════════════════════════════════════ */
+.levels-section {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.levels-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.price-ladder {
+  position: relative;
+  min-height: 280px;
+  margin: 0 60px 0 100px;
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+.ladder-level {
+  position: absolute;
+  left: -100px;
+  right: -60px;
+  display: flex;
+  align-items: center;
+  height: 0;
+}
+.ladder-label {
+  width: 90px;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.ladder-line {
+  flex: 1;
+  height: 1px;
+  position: relative;
+}
+.ladder-price {
+  width: 60px;
+  text-align: left;
+  padding-left: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ladder-level.ema .ladder-line { border-top: 2px dashed var(--blue); }
+.ladder-level.ema .ladder-price { color: var(--blue); }
+.ladder-level.ema .ladder-label { color: var(--blue); }
+.ladder-level.asian .ladder-line { border-top: 2px solid var(--orange); }
+.ladder-level.asian .ladder-price { color: var(--orange); }
+.ladder-level.asian .ladder-label { color: var(--orange); }
+.ladder-level.pivot .ladder-line { border-top: 1px dashed var(--text-muted); }
+.ladder-level.pivot .ladder-price { color: var(--text-secondary); }
+.ladder-level.fib .ladder-line { border-top: 1px dotted var(--purple); }
+.ladder-level.fib .ladder-price { color: var(--purple); }
+.ladder-level.fib .ladder-label { color: var(--purple); }
+.ladder-level.round .ladder-line { border-top: 1px solid var(--gold); }
+.ladder-level.round .ladder-price { color: var(--gold); }
+.ladder-level.round .ladder-label { color: var(--gold); }
+.ladder-level.current {
+  z-index: 10;
+}
+.ladder-level.current .ladder-line {
+  border-top: 2px solid var(--text);
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), transparent);
+  height: 20px;
+  margin-top: -10px;
+}
+.ladder-level.current .ladder-price {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+.ladder-level.current .ladder-label {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DANGER ZONES
+   ═══════════════════════════════════════════════════════════ */
+.danger-section {
+  margin-bottom: 16px;
+}
+.danger-card {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.danger-card.active { border: 1px solid rgba(239,68,68,0.3); background: var(--red-bg); }
+.danger-card.nearby { border: 1px solid rgba(245,158,11,0.3); background: var(--amber-bg); }
+.danger-card.info { border: 1px solid var(--card-border); }
+.danger-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.danger-content { flex: 1; }
+.danger-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.danger-detail { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+
+/* ═══════════════════════════════════════════════════════════
+   BRACKET STATUS
+   ═══════════════════════════════════════════════════════════ */
+.bracket-section {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.bracket-section.active-bracket {
+  border-color: rgba(59,130,246,0.3);
+  background: rgba(59,130,246,0.05);
+}
+.bracket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.bracket-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+}
+.bracket-status {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.bracket-status.active { background: var(--blue); color: #fff; }
+.bracket-status.inactive { background: rgba(71,85,105,0.2); color: var(--grey); }
+.bracket-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.bracket-params {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 10px;
+}
+.bracket-param {
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+}
+.bracket-param-label { color: var(--text-muted); }
+.bracket-param-value { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ═══════════════════════════════════════════════════════════
+   MARKET TICKER BAR
+   ═══════════════════════════════════════════════════════════ */
+.ticker-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.ticker-item {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+}
+.ticker-name { color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px; }
+.ticker-price { color: var(--text); font-weight: 600; font-size: 12px; }
+.ticker-change { font-weight: 600; font-size: 10px; }
+.ticker-change.up { color: var(--green); }
+.ticker-change.down { color: var(--red); }
+.ticker-change.flat { color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.footer {
+  text-align: center;
+  padding: 16px 0 8px;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+.footer-model {
+  font-style: italic;
+  margin-bottom: 4px;
+}
+.footer-update {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  body { padding: 8px; }
+  .cluster-row { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .cluster-card { padding: 10px 4px; }
+  .cluster-light { width: 22px; height: 22px; margin-bottom: 6px; }
+  .cluster-name { font-size: 7px; letter-spacing: 1px; }
+  .cluster-metric { font-size: 9px; }
+  .lean-direction { font-size: 26px; }
+  .price-ladder { margin: 0 40px 0 80px; }
+  .ladder-label { width: 70px; font-size: 9px; }
+  .ladder-price { width: 45px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HTML STRUCTURE
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">
+    <h1>CHIEF</h1>
+    <span class="status-badge demo" id="statusBadge">
+      <span class="status-dot"></span>
+      <span id="statusText">DEMO</span>
+    </span>
+  </div>
+  <div class="header-meta">
+    <div class="header-pair" id="pairLabel">EUR/USD</div>
+    <div class="header-price" id="currentPrice">—</div>
+    <div class="header-change flat" id="priceChange">—</div>
+  </div>
+</div>
+
+<!-- FIVE CLUSTER LIGHTS -->
+<div class="cluster-row" id="clusterRow">
+  <div class="cluster-card grey" data-cluster="session" onclick="toggleCluster('session')">
+    <div class="cluster-light"></div>
+    <div class="cluster-name">Session</div>
+    <div class="cluster-metric" id="metric-session">—</div>
+  </div>
+  <div class="cluster-card grey" data-cluster="flow" onclick="toggleCluster('flow')">
+    <div class="cluster-light"></div>
+    <div class="cluster-name">Flow</div>
+    <div class="cluster-metric" id="metric-flow">—</div>
+  </div>
+  <div class="cluster-card grey" data-cluster="positioning" onclick="toggleCluster('positioning')">
+    <div class="cluster-light"></div>
+    <div class="cluster-name">Position</div>
+    <div class="cluster-metric" id="metric-positioning">—</div>
+  </div>
+  <div class="cluster-card grey" data-cluster="terrain" onclick="toggleCluster('terrain')">
+    <div class="cluster-light"></div>
+    <div class="cluster-name">Terrain</div>
+    <div class="cluster-metric" id="metric-terrain">—</div>
+  </div>
+  <div class="cluster-card grey" data-cluster="regime" onclick="toggleCluster('regime')">
+    <div class="cluster-light"></div>
+    <div class="cluster-name">Regime</div>
+    <div class="cluster-metric" id="metric-regime">—</div>
+  </div>
+</div>
+
+<!-- CLUSTER DETAIL PANELS -->
+<div class="cluster-detail" id="detail-session">
+  <div class="cluster-detail-inner" id="detail-session-inner"></div>
+</div>
+<div class="cluster-detail" id="detail-flow">
+  <div class="cluster-detail-inner" id="detail-flow-inner"></div>
+</div>
+<div class="cluster-detail" id="detail-positioning">
+  <div class="cluster-detail-inner" id="detail-positioning-inner"></div>
+</div>
+<div class="cluster-detail" id="detail-terrain">
+  <div class="cluster-detail-inner" id="detail-terrain-inner"></div>
+</div>
+<div class="cluster-detail" id="detail-regime">
+  <div class="cluster-detail-inner" id="detail-regime-inner"></div>
+</div>
+
+<!-- THE LEAN -->
+<div class="lean-section" id="leanSection">
+  <div class="lean-label">THE LEAN</div>
+  <div class="lean-direction neutral" id="leanDirection">AWAITING</div>
+  <div class="lean-conviction" id="leanConviction">—</div>
+  <div class="lean-score" id="leanScore"></div>
+  <div class="lean-reasoning" id="leanReasoning">Lean is generated by the briefing engine. Data shown below is live market state.</div>
+</div>
+
+<!-- GATE STATUS BAR -->
+<div class="gate-bar" id="gateBar">
+  <div class="gate-segment waiting" id="gate0"><span>G0 Session</span></div>
+  <div class="gate-segment waiting" id="gate1"><span>G1 Convict</span></div>
+  <div class="gate-segment waiting" id="gate2"><span>G2 Terrain</span></div>
+  <div class="gate-segment waiting" id="gate3"><span>G3 Clear</span></div>
+  <div class="gate-segment waiting" id="gate4"><span>G4 Confirm</span></div>
+</div>
+
+<!-- MARKET TICKER BAR -->
+<div class="ticker-bar" id="tickerBar"></div>
+
+<!-- KEY LEVELS / PRICE LADDER -->
+<div class="levels-section">
+  <div class="levels-title">KEY LEVELS</div>
+  <div class="price-ladder" id="priceLadder"></div>
+</div>
+
+<!-- DANGER ZONES -->
+<div class="danger-section" id="dangerZones"></div>
+
+<!-- BRACKET STATUS -->
+<div class="bracket-section" id="bracketSection">
+  <div class="bracket-header">
+    <span class="bracket-label">BRACKET MODE</span>
+    <span class="bracket-status inactive" id="bracketStatus">INACTIVE</span>
+  </div>
+  <div class="bracket-detail" id="bracketDetail">—</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-model">Chief collects · Claude analyses · Tom decides</div>
+  <div class="footer-update" id="footerUpdate">—</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT ENGINE
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+// ═══════════════════════════════════════════════════════════
+// CONFIGURATION
+// ═══════════════════════════════════════════════════════════
+
+const CONFIG = {
+  workerUrl: 'https://purple-wildflower-43e1.tommorgan.workers.dev',
+  snapshotUrl: 'https://tommorgan-design.github.io/eurusd-terminal/snapshot.json',
+  refreshMs: 60000,
+  timezone: 'Pacific/Auckland',
+
+  thresholds: {
+    session: {
+      asianRange: { green: 25, amber: 20 },
+      compression: { expanded: 1.0, compressed: 0.5 },
+      bodyCoherence: { clean: 0.6, mixed: 0.3 },
+    },
+    flow: { significant: 0.05 },
+    regime: {
+      vix: { low: 16, high: 20 },
+      oilSharp: 2.0,
+    },
+    terrain: {
+      eventClear: 4,
+      pinActive: 30, pinNearby: 50, pinDistant: 100,
+      cleanAir: { clear: 40, tight: 20 },
+    },
+  },
+};
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+
+let STATE = {
+  mode: 'demo',
+  market: null,
+  snapshot: null,
+  scores: {},
+  openCluster: null,
+  lastUpdate: null,
+};
+
+// ═══════════════════════════════════════════════════════════
+// MOCK DATA (realistic Week 8 values)
+// ═══════════════════════════════════════════════════════════
+
+const MOCK_MARKET = {
+  EURUSD:  { price: 1.1358, prevClose: 1.1372, change: -0.0014, changePct: -0.12 },
+  GBPUSD:  { price: 1.3520, prevClose: 1.3545, change: -0.0025, changePct: -0.18 },
+  DXY:     { price: 99.82, prevClose: 99.51, change: 0.31, changePct: 0.31 },
+  VIX:     { price: 22.40, prevClose: 21.90, change: 0.50, changePct: 2.28, avg20d: 19.80, aboveAvg: true },
+  US10Y:   { price: 4.52, prevClose: 4.55, change: -0.03, changePct: -0.66 },
+  BRENT:   { price: 61.20, prevClose: 62.80, change: -1.60, changePct: -2.55 },
+  WTI:     { price: 57.80, prevClose: 59.50, change: -1.70, changePct: -2.86 },
+  GOLD:    { price: 3340.50, prevClose: 3328.00, change: 12.50, changePct: 0.38 },
+  USDJPY:  { price: 142.35, prevClose: 142.80, change: -0.45, changePct: -0.32 },
+  COPPER:  { price: 4.65, prevClose: 4.72, change: -0.07, changePct: -1.48 },
+  SP500:   { price: 5820, prevClose: 5802, change: 18, changePct: 0.31 },
+  EVZ:     { price: 9.85, prevClose: 9.70, change: 0.15, changePct: 1.55 },
+};
+
+const MOCK_SNAPSHOT = {
+  generatedAt: '2026-05-25T18:30:00+12:00',
+  sessionLabel: 'PRE-LONDON OPEN',
+  pair: 'EUR/USD',
+  lean: {
+    direction: 'BEARISH',
+    conviction: 'MODERATE',
+    bull: 4, bear: 7,
+    reasoning: 'COT 34th %ile AM, VIX above 20d avg, DXY uptrend. Warsh hawkish regime + stagflation backdrop. Oil collapse offers marginal EUR relief but refining asymmetry limits pass-through.',
+    catalyst: 'Tuesday open — first real session post-Memorial Day.'
+  },
+  session: {
+    asianRange: 24.2,
+    asianHigh: 1.1380,
+    asianLow: 1.1356,
+    compression: 0.78,
+    bodyCoherence: 0.58,
+    dayOfWeek: 'Monday',
+    dayRule: 'MEMORIAL DAY — US CLOSED',
+    dayRuleStatus: 'AVOID'
+  },
+  positioning: {
+    cotPercentile: 34,
+    cotDirection: 'bearish',
+    riskReversal: -0.40,
+    rrPrev: -0.61,
+    rrTrend: 'improving',
+    oiChange: 2.3,
+    divergence: false
+  },
+  terrain: {
+    nextEvent: null,
+    nextEventName: 'None',
+    hoursToEvent: null,
+    pinRisk: null,
+    pinDistance: null,
+    pinStatus: 'NONE',
+    cleanAir: 45,
+    levelClusters: 0,
+    eventProtocol: null,
+  },
+  regime: {
+    chainActive: 4,
+    chainTotal: 13,
+    chainStatus: 'ELEVATED'
+  },
+  gates: [
+    { name: 'Session',  status: 'blocked', detail: 'Memorial Day — US markets closed' },
+    { name: 'Convict',  status: 'clear',   detail: 'Bear 7 vs Bull 4' },
+    { name: 'Terrain',  status: 'clear',   detail: 'No structural obstruction' },
+    { name: 'Clear',    status: 'clear',   detail: 'No Tier 1 events within 4h' },
+    { name: 'Confirm',  status: 'waiting', detail: 'Awaiting London open' }
+  ],
+  levels: [
+    { price: 1.1643, label: '200 EMA', type: 'ema', note: "Tom's platform (May 24)" },
+    { price: 1.1400, label: 'Round / R2', type: 'round' },
+    { price: 1.1380, label: 'Asian High', type: 'asian' },
+    { price: 1.1370, label: 'R1', type: 'pivot' },
+    { price: 1.1358, label: '◆ PRICE', type: 'current' },
+    { price: 1.1356, label: 'Asian Low', type: 'asian' },
+    { price: 1.1345, label: 'Pivot', type: 'pivot' },
+    { price: 1.1320, label: 'S1', type: 'pivot' },
+    { price: 1.1300, label: 'Round', type: 'round' },
+  ],
+  dangerZones: [
+    { type: 'active', icon: '⚠️', title: 'MEMORIAL DAY', detail: 'US markets closed. Thin liquidity. Gates should filter.' },
+    { type: 'info', icon: 'ℹ️', title: 'Core PCE Friday 12:30am NZT', detail: 'PCE is historically non-event (46.5 pip avg, below clean day). 4+ hours from Thursday entry.' },
+    { type: 'nearby', icon: '⚡', title: '1.1400 — Round Number', detail: 'Weekly resistance. 42 pips above. Watch for rejection on any approach.' },
+  ],
+  bracket: {
+    active: false,
+    day: 'Monday',
+    reason: 'Not Wed/Thu — directional system',
+    eur: { range: '25-40', offset: '+5/-5', tp: 35 },
+    gbp: { range: '20-25', offset: '+7/-7', tp: 35 },
+  }
+};
+
+// ═══════════════════════════════════════════════════════════
+// DATA LAYER
+// ═══════════════════════════════════════════════════════════
+
+async function fetchMarketData() {
+  try {
+    const resp = await fetch(CONFIG.workerUrl + '/market', { signal: AbortSignal.timeout(8000) });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.market) {
+      STATE.market = data.market;
+      STATE.mode = data.status === 'live' ? 'live' : 'partial';
+      return true;
+    }
+  } catch (e) {
+    console.log('Market fetch failed, using mock:', e.message);
+  }
+  STATE.market = MOCK_MARKET;
+  STATE.mode = 'demo';
+  return false;
+}
+
+async function fetchSnapshot() {
+  try {
+    const resp = await fetch(CONFIG.snapshotUrl + '?t=' + Date.now(), { signal: AbortSignal.timeout(5000) });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    if (data.lean) {
+      STATE.snapshot = data;
+      return true;
+    }
+  } catch (e) {
+    console.log('Snapshot fetch failed, using mock:', e.message);
+  }
+  STATE.snapshot = MOCK_SNAPSHOT;
+  return false;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCORING ENGINE
+// ═══════════════════════════════════════════════════════════
+
+function scoreAll() {
+  const m = STATE.market;
+  const s = STATE.snapshot;
+  const lean = s.lean ? s.lean.direction : 'NEUTRAL';
+  const leanBull = lean === 'BULLISH';
+
+  STATE.scores = {
+    session: scoreSession(s),
+    flow: scoreFlow(m, lean),
+    positioning: scorePositioning(s, lean),
+    terrain: scoreTerrain(s),
+    regime: scoreRegime(m, s),
+  };
+}
+
+function scoreSession(s) {
+  if (!s.session) return { grade: 'grey', total: 0, components: [] };
+  const sess = s.session;
+  const t = CONFIG.thresholds.session;
+  const comps = [];
+  let total = 0;
+
+  // Asian range
+  let rangeScore = sess.asianRange >= t.asianRange.green ? 2 :
+                   sess.asianRange >= t.asianRange.amber ? 1 : -1;
+  comps.push({ label: 'Asian Range', value: sess.asianRange.toFixed(1) + ' pips', signal: rangeScore > 0 ? 'green' : rangeScore === 0 ? 'amber' : 'red',
+    detail: rangeScore >= 2 ? 'QUALIFIED' : rangeScore >= 1 ? 'MARGINAL' : 'NARROW' });
+  total += rangeScore;
+
+  // Compression
+  let compScore = sess.compression > t.compression.expanded ? 2 :
+                  sess.compression >= t.compression.compressed ? 1 : -1;
+  comps.push({ label: 'Compression', value: (sess.compression * 100).toFixed(0) + '%', signal: compScore >= 2 ? 'green' : compScore >= 1 ? 'amber' : 'red',
+    detail: compScore >= 2 ? 'EXPANDED' : compScore >= 1 ? 'MODERATE' : 'COMPRESSED' });
+  total += compScore;
+
+  // Body coherence
+  let bodyScore = sess.bodyCoherence >= t.bodyCoherence.clean ? 1 :
+                  sess.bodyCoherence >= t.bodyCoherence.mixed ? 0 : -1;
+  comps.push({ label: 'Body Coherence', value: (sess.bodyCoherence * 100).toFixed(0) + '%', signal: bodyScore > 0 ? 'green' : bodyScore === 0 ? 'amber' : 'red',
+    detail: bodyScore > 0 ? 'CLEAN' : bodyScore === 0 ? 'MIXED' : 'CHOPPY' });
+  total += bodyScore;
+
+  // Day rule
+  let dayScore = sess.dayRuleStatus === 'CLEAR' ? 1 :
+                 sess.dayRuleStatus === 'CONDITIONAL' ? 0 : -2;
+  comps.push({ label: 'Day Rule', value: sess.dayOfWeek, signal: dayScore > 0 ? 'green' : dayScore === 0 ? 'amber' : 'red',
+    detail: sess.dayRule || sess.dayRuleStatus });
+  total += dayScore;
+
+  const grade = total >= 3 ? 'green' : total >= 1 ? 'amber' : 'red';
+  return { grade, total, components: comps, metric: 'Asian: ' + sess.asianRange.toFixed(0) + 'p' };
+}
+
+function scoreFlow(m, lean) {
+  if (!m) return { grade: 'grey', total: 0, components: [] };
+  const sig = CONFIG.thresholds.flow.significant;
+  const leanBull = lean === 'BULLISH';
+  const comps = [];
+  let total = 0;
+
+  // DXY: falling = EUR bullish, rising = EUR bearish
+  const dxy = m.DXY || {};
+  let dxyDir = 'flat';
+  let dxyScore = 0;
+  if (dxy.changePct != null && Math.abs(dxy.changePct) > sig) {
+    const dxyFalling = dxy.changePct < 0;
+    dxyDir = dxyFalling ? '↓' + Math.abs(dxy.changePct).toFixed(2) + '%' : '↑' + dxy.changePct.toFixed(2) + '%';
+    if (lean === 'NEUTRAL') {
+      dxyScore = 0;
+    } else {
+      dxyScore = (dxyFalling === leanBull) ? 1 : -1;
+    }
+  } else {
+    dxyDir = '→ flat';
+  }
+  comps.push({ label: 'DXY', value: (dxy.price||0).toFixed(2) + ' ' + dxyDir, signal: dxyScore > 0 ? 'green' : dxyScore < 0 ? 'red' : 'amber',
+    detail: dxyScore > 0 ? 'Supports lean' : dxyScore < 0 ? 'Contradicts lean' : 'Flat' });
+  total += dxyScore;
+
+  // US 10Y: falling yields = less USD support = EUR bullish
+  const y10 = m.US10Y || {};
+  let yDir = 'flat';
+  let yScore = 0;
+  if (y10.change != null && Math.abs(y10.change) > 0.01) {
+    const yFalling = y10.change < 0;
+    yDir = yFalling ? '↓' + Math.abs(y10.change).toFixed(2) : '↑' + y10.change.toFixed(2);
+    if (lean !== 'NEUTRAL') {
+      yScore = (yFalling === leanBull) ? 1 : -1;
+    }
+  } else { yDir = '→ flat'; }
+  comps.push({ label: 'US 10Y Yield', value: (y10.price||0).toFixed(2) + '% ' + yDir, signal: yScore > 0 ? 'green' : yScore < 0 ? 'red' : 'amber',
+    detail: yScore > 0 ? 'Supports lean' : yScore < 0 ? 'Contradicts lean' : 'Flat' });
+  total += yScore;
+
+  // USD/JPY: falling = USD weakness = EUR bullish
+  const jpy = m.USDJPY || {};
+  let jpyDir = 'flat';
+  let jpyScore = 0;
+  if (jpy.changePct != null && Math.abs(jpy.changePct) > sig) {
+    const jpyFalling = jpy.changePct < 0;
+    jpyDir = jpyFalling ? '↓' + Math.abs(jpy.changePct).toFixed(2) + '%' : '↑' + jpy.changePct.toFixed(2) + '%';
+    if (lean !== 'NEUTRAL') {
+      jpyScore = (jpyFalling === leanBull) ? 1 : -1;
+    }
+  } else { jpyDir = '→ flat'; }
+  comps.push({ label: 'USD/JPY', value: (jpy.price||0).toFixed(2) + ' ' + jpyDir, signal: jpyScore > 0 ? 'green' : jpyScore < 0 ? 'red' : 'amber',
+    detail: jpyScore > 0 ? 'Supports lean' : jpyScore < 0 ? 'Contradicts lean' : 'Flat' });
+  total += jpyScore;
+
+  // Alignment bonus
+  const allSame = [dxyScore, yScore, jpyScore].every(s => s > 0);
+  if (allSame) { total += 1; }
+  comps.push({ label: 'Alignment', value: allSame ? '3/3 aligned' : 'Mixed', signal: allSame ? 'green' : 'amber',
+    detail: allSame ? 'All flow signals agree' : 'Signals diverge' });
+
+  const grade = lean === 'NEUTRAL' ? 'grey' : total >= 3 ? 'green' : total >= 1 ? 'amber' : 'red';
+  const netDir = total > 0 ? 'Supporting' : total < 0 ? 'Opposing' : 'Neutral';
+  return { grade, total, components: comps, metric: 'DXY ' + dxyDir.substring(0,6) };
+}
+
+function scorePositioning(s, lean) {
+  if (!s.positioning) return { grade: 'grey', total: 0, components: [] };
+  const pos = s.positioning;
+  const leanBull = lean === 'BULLISH';
+  const comps = [];
+  let total = 0;
+
+  // COT: Low percentile = bearish positioning. Supports bear lean.
+  let cotScore = 0;
+  if (lean !== 'NEUTRAL') {
+    if (leanBull) {
+      cotScore = pos.cotPercentile > 60 ? 1 : pos.cotPercentile > 40 ? 0 : -1;
+    } else {
+      cotScore = pos.cotPercentile < 40 ? 1 : pos.cotPercentile < 60 ? 0 : -1;
+    }
+  }
+  comps.push({ label: 'COT AM %ile', value: pos.cotPercentile + 'th', signal: cotScore > 0 ? 'green' : cotScore < 0 ? 'red' : 'amber',
+    detail: cotScore > 0 ? 'Supports lean' : cotScore < 0 ? 'Contradicts lean' : 'Neutral zone' });
+  total += cotScore;
+
+  // Risk reversal: improving = less bearish sentiment
+  let rrScore = 0;
+  if (lean !== 'NEUTRAL') {
+    const improving = pos.rrTrend === 'improving';
+    if (leanBull) {
+      rrScore = improving ? 1 : -1;
+    } else {
+      rrScore = improving ? -1 : 1;
+    }
+  }
+  const rrChange = pos.rrPrev != null ? (pos.riskReversal - pos.rrPrev).toFixed(2) : '';
+  comps.push({ label: 'Risk Reversal', value: pos.riskReversal.toFixed(2) + (rrChange ? ' (' + (rrChange > 0 ? '+' : '') + rrChange + ')' : ''), signal: rrScore > 0 ? 'green' : rrScore < 0 ? 'red' : 'amber',
+    detail: pos.rrTrend.charAt(0).toUpperCase() + pos.rrTrend.slice(1) + (rrScore > 0 ? ' — supports lean' : rrScore < 0 ? ' — contradicts lean' : '') });
+  total += rrScore;
+
+  // OI change
+  let oiScore = Math.abs(pos.oiChange) > 1.5 ? 1 : 0;
+  comps.push({ label: 'Open Interest', value: (pos.oiChange > 0 ? '+' : '') + pos.oiChange.toFixed(1) + '%', signal: oiScore > 0 ? 'green' : 'amber',
+    detail: oiScore > 0 ? 'Rising — conviction building' : 'Flat — no strong signal' });
+  total += oiScore;
+
+  // Divergence
+  let divScore = pos.divergence ? -1 : 1;
+  comps.push({ label: 'Spot-Options', value: pos.divergence ? 'DIVERGED' : 'CONVERGED', signal: pos.divergence ? 'red' : 'green',
+    detail: pos.divergence ? '⚠ Spot and options disagree' : 'Spot and options aligned' });
+  total += divScore;
+
+  const grade = lean === 'NEUTRAL' ? 'grey' : total >= 3 ? 'green' : total >= 1 ? 'amber' : 'red';
+  return { grade, total, components: comps, metric: 'COT ' + pos.cotPercentile + 'th' };
+}
+
+function scoreTerrain(s) {
+  if (!s.terrain) return { grade: 'grey', total: 0, components: [] };
+  const ter = s.terrain;
+  const t = CONFIG.thresholds.terrain;
+  const comps = [];
+  let total = 0;
+
+  // Event window
+  let evScore = 0;
+  if (ter.hoursToEvent == null || ter.hoursToEvent > t.eventClear) {
+    evScore = 2;
+  } else if (ter.hoursToEvent > 1) {
+    evScore = 0;
+  } else {
+    evScore = -2;
+  }
+  const evLabel = ter.nextEventName === 'None' ? 'Clear — no events' :
+    ter.nextEventName + ' in ' + (ter.hoursToEvent||0).toFixed(1) + 'h';
+  comps.push({ label: 'Event Window', value: evLabel, signal: evScore >= 2 ? 'green' : evScore >= 0 ? 'amber' : 'red',
+    detail: evScore >= 2 ? 'CLEAR' : evScore >= 0 ? 'NEARBY — monitor' : 'IMMINENT — caution' });
+  total += evScore;
+
+  // Pin risk
+  let pinScore = 0;
+  if (ter.pinStatus === 'NONE' || ter.pinDistance == null) {
+    pinScore = 1;
+  } else if (ter.pinDistance > t.pinDistant) {
+    pinScore = 1;
+  } else if (ter.pinDistance > t.pinNearby) {
+    pinScore = 0;
+  } else if (ter.pinDistance > t.pinActive) {
+    pinScore = -1;
+  } else {
+    pinScore = -2;
+  }
+  const pinLabel = ter.pinStatus === 'NONE' ? 'No pin risk' :
+    ter.pinRisk.toFixed(4) + ' @ ' + ter.pinDistance + 'p';
+  comps.push({ label: 'Pin Risk', value: pinLabel, signal: pinScore > 0 ? 'green' : pinScore === 0 ? 'amber' : 'red',
+    detail: ter.pinStatus || 'CLEAR' });
+  total += pinScore;
+
+  // Clean air
+  let airScore = ter.cleanAir >= t.cleanAir.clear ? 1 :
+                 ter.cleanAir >= t.cleanAir.tight ? 0 : -1;
+  comps.push({ label: 'Clean Air to Target', value: ter.cleanAir + ' pips', signal: airScore > 0 ? 'green' : airScore === 0 ? 'amber' : 'red',
+    detail: airScore > 0 ? 'Clear path' : airScore === 0 ? 'Moderate — levels between' : 'Congested' });
+  total += airScore;
+
+  // Level clusters
+  let clusterScore = ter.levelClusters === 0 ? 1 : -1;
+  comps.push({ label: 'Level Clusters', value: ter.levelClusters === 0 ? 'None nearby' : ter.levelClusters + ' cluster(s)', signal: clusterScore > 0 ? 'green' : 'red',
+    detail: clusterScore > 0 ? 'No confluence zones blocking' : 'Structural friction ahead' });
+  total += clusterScore;
+
+  const grade = total >= 3 ? 'green' : total >= 1 ? 'amber' : 'red';
+  return { grade, total, components: comps, metric: evLabel.substring(0, 16) };
+}
+
+function scoreRegime(m, s) {
+  if (!m) return { grade: 'grey', total: 0, components: [] };
+  const comps = [];
+  let total = 0;
+
+  // VIX level
+  const vix = m.VIX || {};
+  let vixScore = (vix.price||0) < CONFIG.thresholds.regime.vix.low ? 2 :
+                 (vix.price||0) < CONFIG.thresholds.regime.vix.high ? 0 : -1;
+  comps.push({ label: 'VIX', value: (vix.price||0).toFixed(2), signal: vixScore >= 2 ? 'green' : vixScore >= 0 ? 'amber' : 'red',
+    detail: vixScore >= 2 ? 'LOW — calm' : vixScore >= 0 ? 'MODERATE' : 'ELEVATED — risk-off' });
+  total += vixScore;
+
+  // VIX vs 20d avg
+  let vixAvgScore = 0;
+  if (vix.avg20d) {
+    vixAvgScore = vix.aboveAvg ? -1 : 1;
+    comps.push({ label: 'VIX vs 20d Avg', value: (vix.price||0).toFixed(1) + ' vs ' + vix.avg20d.toFixed(1), signal: vixAvgScore > 0 ? 'green' : 'red',
+      detail: vix.aboveAvg ? 'Above average — safe haven bid' : 'Below average — risk appetite' });
+  } else {
+    comps.push({ label: 'VIX vs 20d Avg', value: '—', signal: 'grey', detail: 'Calculating...' });
+  }
+  total += vixAvgScore;
+
+  // Oil volatility (Brent)
+  const brent = m.BRENT || {};
+  let oilScore = Math.abs(brent.changePct||0) > CONFIG.thresholds.regime.oilSharp ? -1 : 1;
+  const oilDir = (brent.changePct||0) < 0 ? '↓' : (brent.changePct||0) > 0 ? '↑' : '→';
+  comps.push({ label: 'Brent Crude', value: '$' + (brent.price||0).toFixed(2) + ' ' + oilDir + Math.abs(brent.changePct||0).toFixed(1) + '%', signal: oilScore > 0 ? 'green' : 'amber',
+    detail: oilScore > 0 ? 'Stable — no shock' : 'Sharp move — regime disruption' });
+  total += oilScore;
+
+  // Chain stress
+  const chains = s && s.regime ? s.regime : { chainActive: 4, chainTotal: 13 };
+  let chainScore = chains.chainActive <= 2 ? 1 : chains.chainActive <= 4 ? 0 : -1;
+  comps.push({ label: 'Chain Stress', value: chains.chainActive + '/' + chains.chainTotal + ' active', signal: chainScore > 0 ? 'green' : chainScore === 0 ? 'amber' : 'red',
+    detail: chains.chainStatus || (chainScore > 0 ? 'LOW' : chainScore === 0 ? 'ELEVATED' : 'HIGH') });
+  total += chainScore;
+
+  const grade = total >= 2 ? 'green' : total >= 0 ? 'amber' : 'red';
+  return { grade, total, components: comps, metric: 'VIX ' + (vix.price||0).toFixed(1) };
+}
+
+// ═══════════════════════════════════════════════════════════
+// UI RENDERING
+// ═══════════════════════════════════════════════════════════
+
+function renderAll() {
+  renderHeader();
+  renderClusters();
+  renderLean();
+  renderGates();
+  renderTickers();
+  renderLevels();
+  renderDangerZones();
+  renderBracket();
+  renderFooter();
+}
+
+function renderHeader() {
+  const m = STATE.market;
+  const s = STATE.snapshot;
+
+  // Status badge
+  const badge = document.getElementById('statusBadge');
+  const statusText = document.getElementById('statusText');
+  badge.className = 'status-badge ' + STATE.mode;
+  statusText.textContent = STATE.mode.toUpperCase();
+
+  // Price
+  const eur = m.EURUSD || {};
+  document.getElementById('pairLabel').textContent = (s && s.pair) || 'EUR/USD';
+  document.getElementById('currentPrice').textContent = eur.price ? eur.price.toFixed(5) : '—';
+
+  const changeEl = document.getElementById('priceChange');
+  if (eur.changePct != null) {
+    const dir = eur.changePct > 0 ? 'up' : eur.changePct < 0 ? 'down' : 'flat';
+    changeEl.className = 'header-change ' + dir;
+    changeEl.textContent = (eur.changePct > 0 ? '+' : '') + eur.changePct.toFixed(2) + '% (' +
+      (eur.change > 0 ? '+' : '') + (eur.change * 10000).toFixed(1) + ' pips)';
+  }
+}
+
+function renderClusters() {
+  const clusters = ['session', 'flow', 'positioning', 'terrain', 'regime'];
+  clusters.forEach(name => {
+    const score = STATE.scores[name] || { grade: 'grey' };
+    const card = document.querySelector(`.cluster-card[data-cluster="${name}"]`);
+    card.className = 'cluster-card ' + score.grade + (STATE.openCluster === name ? ' active' : '');
+    document.getElementById('metric-' + name).textContent = score.metric || '—';
+
+    // Render detail panel
+    renderClusterDetail(name, score);
+  });
+}
+
+function renderClusterDetail(name, score) {
+  const inner = document.getElementById('detail-' + name + '-inner');
+  if (!score.components || score.components.length === 0) {
+    inner.innerHTML = '<div style="color:var(--text-muted);font-size:12px;">No data available</div>';
+    return;
+  }
+
+  const titleMap = { session: 'SESSION CHARACTER', flow: 'REAL-TIME FLOW', positioning: 'INSTITUTIONAL POSITIONING', terrain: 'PATH ASSESSMENT', regime: 'MACRO REGIME' };
+  let html = '<div class="cluster-detail-title"><span>' + titleMap[name] + '</span><span style="font-size:11px;">' +
+    (score.grade === 'green' ? '✅' : score.grade === 'amber' ? '⚡' : score.grade === 'red' ? '🔴' : '⚪') +
+    ' Score: ' + score.total + '</span></div>';
+
+  score.components.forEach(comp => {
+    html += '<div class="component-row">' +
+      '<div class="component-label">' + comp.label + '</div>' +
+      '<div class="component-value">' +
+      '<span class="signal-dot ' + comp.signal + '"></span>' +
+      '<span>' + comp.value + '</span>' +
+      '</div></div>';
+  });
+
+  inner.innerHTML = html;
+}
+
+function renderLean() {
+  const s = STATE.snapshot;
+  if (!s || !s.lean) return;
+  const lean = s.lean;
+
+  const dirEl = document.getElementById('leanDirection');
+  const arrow = lean.direction === 'BULLISH' ? '▲ ' : lean.direction === 'BEARISH' ? '▼ ' : '◆ ';
+  dirEl.textContent = arrow + lean.direction;
+  dirEl.className = 'lean-direction ' + lean.direction.toLowerCase();
+
+  document.getElementById('leanConviction').textContent = lean.conviction;
+  document.getElementById('leanScore').textContent = 'Bull ' + lean.bull + ' | Bear ' + lean.bear;
+  document.getElementById('leanReasoning').innerHTML = lean.reasoning +
+    (lean.catalyst ? '<br><br><strong style="color:var(--text);">Catalyst:</strong> ' + lean.catalyst : '');
+}
+
+function renderGates() {
+  const s = STATE.snapshot;
+  if (!s || !s.gates) return;
+
+  s.gates.forEach((gate, i) => {
+    const el = document.getElementById('gate' + i);
+    el.className = 'gate-segment ' + gate.status;
+    el.title = gate.detail;
+    el.innerHTML = '<span>G' + i + ' ' + gate.name + '</span>';
+  });
+}
+
+function renderTickers() {
+  const m = STATE.market;
+  if (!m) return;
+
+  const tickers = [
+    { key: 'DXY', label: 'DXY', dp: 2 },
+    { key: 'VIX', label: 'VIX', dp: 2 },
+    { key: 'US10Y', label: '10Y', dp: 2, suffix: '%' },
+    { key: 'BRENT', label: 'Brent', dp: 2, prefix: '$' },
+    { key: 'GOLD', label: 'Gold', dp: 0, prefix: '$' },
+    { key: 'USDJPY', label: 'JPY', dp: 2 },
+    { key: 'COPPER', label: 'Copper', dp: 2, prefix: '$' },
+    { key: 'GBPUSD', label: 'GBP', dp: 4 },
+  ];
+
+  let html = '';
+  tickers.forEach(t => {
+    const d = m[t.key] || {};
+    const chgClass = (d.changePct||0) > 0 ? 'up' : (d.changePct||0) < 0 ? 'down' : 'flat';
+    const chgStr = d.changePct != null ? ((d.changePct > 0 ? '+' : '') + d.changePct.toFixed(2) + '%') : '—';
+    const priceStr = d.price != null ? ((t.prefix||'') + d.price.toFixed(t.dp) + (t.suffix||'')) : '—';
+    html += '<div class="ticker-item"><div class="ticker-name">' + t.label + '</div>' +
+      '<div class="ticker-price">' + priceStr + '</div>' +
+      '<div class="ticker-change ' + chgClass + '">' + chgStr + '</div></div>';
+  });
+  document.getElementById('tickerBar').innerHTML = html;
+}
+
+function renderLevels() {
+  const s = STATE.snapshot;
+  const m = STATE.market;
+  if (!s || !s.levels || s.levels.length === 0) return;
+
+  const levels = [...s.levels];
+  const currentPrice = m && m.EURUSD ? m.EURUSD.price : null;
+
+  // Update current price level if we have live data
+  if (currentPrice) {
+    const currentIdx = levels.findIndex(l => l.type === 'current');
+    if (currentIdx >= 0) {
+      levels[currentIdx].price = currentPrice;
+    }
+  }
+
+  // Filter to relevant range (within ±80 pips of current price or show all nearby)
+  const refPrice = currentPrice || levels.find(l => l.type === 'current')?.price || levels[0].price;
+  const nearLevels = levels.filter(l => Math.abs(l.price - refPrice) < 0.0120); // ~120 pips
+
+  if (nearLevels.length === 0) {
+    document.getElementById('priceLadder').innerHTML = '<div style="color:var(--text-muted);text-align:center;padding:40px;">No levels in range</div>';
+    return;
+  }
+
+  // Sort by price descending (top = highest)
+  nearLevels.sort((a, b) => b.price - a.price);
+
+  const highest = nearLevels[0].price;
+  const lowest = nearLevels[nearLevels.length - 1].price;
+  const range = highest - lowest || 0.0001;
+  const height = 280;
+
+  let html = '';
+  nearLevels.forEach(level => {
+    const pct = ((highest - level.price) / range) * 100;
+    const top = Math.max(5, Math.min(95, pct)) / 100 * height;
+    const typeClass = level.type || 'pivot';
+
+    html += '<div class="ladder-level ' + typeClass + '" style="top:' + top.toFixed(0) + 'px">' +
+      '<div class="ladder-label">' + level.label + '</div>' +
+      '<div class="ladder-line"></div>' +
+      '<div class="ladder-price">' + level.price.toFixed(4) + '</div>' +
+      '</div>';
+  });
+
+  document.getElementById('priceLadder').innerHTML = html;
+}
+
+function renderDangerZones() {
+  const s = STATE.snapshot;
+  if (!s || !s.dangerZones || s.dangerZones.length === 0) {
+    document.getElementById('dangerZones').innerHTML = '';
+    return;
+  }
+
+  let html = '';
+  s.dangerZones.forEach(dz => {
+    html += '<div class="danger-card ' + dz.type + '">' +
+      '<div class="danger-icon">' + dz.icon + '</div>' +
+      '<div class="danger-content">' +
+      '<div class="danger-title">' + dz.title + '</div>' +
+      '<div class="danger-detail">' + dz.detail + '</div>' +
+      '</div></div>';
+  });
+  document.getElementById('dangerZones').innerHTML = html;
+}
+
+function renderBracket() {
+  const s = STATE.snapshot;
+  if (!s || !s.bracket) return;
+  const b = s.bracket;
+
+  const section = document.getElementById('bracketSection');
+  const status = document.getElementById('bracketStatus');
+  const detail = document.getElementById('bracketDetail');
+
+  if (b.active) {
+    section.className = 'bracket-section active-bracket';
+    status.className = 'bracket-status active';
+    status.textContent = 'ACTIVE';
+    detail.innerHTML = b.reason + (b.eur ?
+      '<div class="bracket-params">' +
+      '<div class="bracket-param"><span class="bracket-param-label">EUR Range</span><span class="bracket-param-value">' + b.eur.range + 'p</span></div>' +
+      '<div class="bracket-param"><span class="bracket-param-label">EUR Offset</span><span class="bracket-param-value">' + b.eur.offset + '</span></div>' +
+      '<div class="bracket-param"><span class="bracket-param-label">GBP Range</span><span class="bracket-param-value">' + b.gbp.range + 'p</span></div>' +
+      '<div class="bracket-param"><span class="bracket-param-label">GBP Offset</span><span class="bracket-param-value">' + b.gbp.offset + '</span></div>' +
+      '<div class="bracket-param"><span class="bracket-param-label">TP (base)</span><span class="bracket-param-value">' + b.eur.tp + 'p</span></div>' +
+      '<div class="bracket-param"><span class="bracket-param-label">VIX 16+ TP</span><span class="bracket-param-value">40p</span></div>' +
+      '</div>' : '');
+  } else {
+    section.className = 'bracket-section';
+    status.className = 'bracket-status inactive';
+    status.textContent = 'INACTIVE';
+    detail.textContent = b.day + ' — ' + b.reason;
+  }
+}
+
+function renderFooter() {
+  const now = new Date();
+  const nzt = now.toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const snapshotAge = STATE.snapshot && STATE.snapshot.generatedAt ?
+    formatAge(new Date(STATE.snapshot.generatedAt)) : 'mock data';
+  document.getElementById('footerUpdate').textContent = 'NZT ' + nzt + ' · Snapshot: ' + snapshotAge + ' · Market: ' + STATE.mode;
+}
+
+function formatAge(date) {
+  const mins = Math.round((Date.now() - date.getTime()) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return Math.round(hrs / 24) + 'd ago';
+}
+
+// ═══════════════════════════════════════════════════════════
+// CLUSTER EXPANSION
+// ═══════════════════════════════════════════════════════════
+
+function toggleCluster(name) {
+  const allPanels = document.querySelectorAll('.cluster-detail');
+  const panel = document.getElementById('detail-' + name);
+  const allCards = document.querySelectorAll('.cluster-card');
+
+  if (STATE.openCluster === name) {
+    panel.classList.remove('open');
+    STATE.openCluster = null;
+    allCards.forEach(c => c.classList.remove('active'));
+  } else {
+    allPanels.forEach(p => p.classList.remove('open'));
+    allCards.forEach(c => c.classList.remove('active'));
+    panel.classList.add('open');
+    document.querySelector(`.cluster-card[data-cluster="${name}"]`).classList.add('active');
+    STATE.openCluster = name;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// INITIALIZATION & REFRESH
+// ═══════════════════════════════════════════════════════════
+
+async function init() {
+  // Try live data first, fall back to mock
+  await Promise.all([fetchMarketData(), fetchSnapshot()]);
+  scoreAll();
+  renderAll();
+  STATE.lastUpdate = Date.now();
+
+  // Auto-refresh market data
+  setInterval(async () => {
+    await fetchMarketData();
+    scoreAll();
+    renderAll();
+    STATE.lastUpdate = Date.now();
+  }, CONFIG.refreshMs);
+
+  // Refresh snapshot less frequently (5 min)
+  setInterval(async () => {
+    await fetchSnapshot();
+    scoreAll();
+    renderAll();
+  }, 300000);
+
+  // Update footer clock every second
+  setInterval(() => renderFooter(), 1000);
+}
+
+// Start
+init();
+</script>
+</body>
+</html>
