@@ -520,6 +520,34 @@ body {
 .footer-update {
   font-variant-numeric: tabular-nums;
 }
+.footer-update.stale-amber {
+  color: var(--amber);
+}
+.footer-update.stale-red {
+  color: var(--red);
+  font-weight: 600;
+}
+.staleness-banner {
+  display: none;
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  border-radius: 6px;
+  margin: 0 auto 12px auto;
+  max-width: 600px;
+}
+.staleness-banner.stale-amber {
+  background: var(--amber-bg);
+  color: var(--amber);
+  border: 1px solid rgba(245,158,11,0.3);
+}
+.staleness-banner.stale-red {
+  background: var(--red-bg);
+  color: var(--red);
+  border: 1px solid rgba(239,68,68,0.3);
+  font-weight: 600;
+}
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
@@ -559,6 +587,9 @@ body {
     <div class="header-change flat" id="priceChange">—</div>
   </div>
 </div>
+
+<!-- STALENESS BANNER (hidden by default — shown when data is stale) -->
+<div id="stalenessBanner" class="staleness-banner" style="display:none;"></div>
 
 <!-- FIVE CLUSTER LIGHTS -->
 <div class="cluster-row" id="clusterRow">
@@ -1344,9 +1375,46 @@ function renderBracket() {
 function renderFooter() {
   const now = new Date();
   const nzt = now.toLocaleTimeString('en-NZ', { timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  const snapshotAge = STATE.snapshot && STATE.snapshot.generatedAt ?
-    formatAge(new Date(STATE.snapshot.generatedAt)) : 'mock data';
-  document.getElementById('footerUpdate').textContent = 'NZT ' + nzt + ' · Snapshot: ' + snapshotAge + ' · Market: ' + STATE.mode;
+
+  const el = document.getElementById('footerUpdate');
+  const banner = document.getElementById('stalenessBanner');
+  let snapshotAge = 'mock data';
+  let staleClass = '';
+  let bannerHtml = '';
+
+  if (STATE.snapshot && STATE.snapshot.generatedAt) {
+    const genDate = new Date(STATE.snapshot.generatedAt);
+    const ageMs = Date.now() - genDate.getTime();
+    const ageMins = Math.round(ageMs / 60000);
+    const ageHrs = ageMins / 60;
+    snapshotAge = formatAge(genDate);
+
+    if (ageHrs > 12) {
+      staleClass = 'stale-red';
+      bannerHtml = '⚠️ SNAPSHOT STALE — last updated ' + snapshotAge + '. Data may not reflect current session.';
+    } else if (ageHrs > 6) {
+      staleClass = 'stale-amber';
+      bannerHtml = 'Snapshot updated ' + snapshotAge + '. Next briefing will refresh.';
+    }
+  } else if (STATE.snapshot === MOCK_SNAPSHOT) {
+    staleClass = 'stale-red';
+    bannerHtml = '⚠️ SNAPSHOT UNAVAILABLE — showing demo data. Briefing has not run or GitHub fetch failed.';
+  }
+
+  // Market data status
+  let marketLabel = STATE.mode;
+  if (STATE.mode === 'demo') {
+    marketLabel = '⚠️ demo (worker offline)';
+  }
+
+  el.textContent = 'NZT ' + nzt + ' · Snapshot: ' + snapshotAge + ' · Market: ' + marketLabel;
+  el.className = staleClass;
+
+  if (banner) {
+    banner.innerHTML = bannerHtml;
+    banner.style.display = bannerHtml ? 'block' : 'none';
+    banner.className = 'staleness-banner ' + staleClass;
+  }
 }
 
 function formatAge(date) {
