@@ -698,44 +698,44 @@ let STATE = {
 };
 
 // ═══════════════════════════════════════════════════════════
-// MOCK DATA (realistic Week 8 values)
+// MOCK DATA (Week 10 fallback — updated 2026-06-08)
 // ═══════════════════════════════════════════════════════════
 
 const MOCK_MARKET = {
-  EURUSD:  { price: 1.1358, prevClose: 1.1372, change: -0.0014, changePct: -0.12 },
-  GBPUSD:  { price: 1.3520, prevClose: 1.3545, change: -0.0025, changePct: -0.18 },
-  DXY:     { price: 99.82, prevClose: 99.51, change: 0.31, changePct: 0.31 },
-  VIX:     { price: 22.40, prevClose: 21.90, change: 0.50, changePct: 2.28, avg20d: 19.80, aboveAvg: true },
-  US10Y:   { price: 4.52, prevClose: 4.55, change: -0.03, changePct: -0.66 },
-  BRENT:   { price: 61.20, prevClose: 62.80, change: -1.60, changePct: -2.55 },
-  WTI:     { price: 57.80, prevClose: 59.50, change: -1.70, changePct: -2.86 },
-  GOLD:    { price: 3340.50, prevClose: 3328.00, change: 12.50, changePct: 0.38 },
-  USDJPY:  { price: 142.35, prevClose: 142.80, change: -0.45, changePct: -0.32 },
-  COPPER:  { price: 4.65, prevClose: 4.72, change: -0.07, changePct: -1.48 },
-  SP500:   { price: 5820, prevClose: 5802, change: 18, changePct: 0.31 },
-  EVZ:     { price: 9.85, prevClose: 9.70, change: 0.15, changePct: 1.55 },
+  EURUSD:  { price: 1.1529, prevClose: 1.1613, change: -0.0084, changePct: -0.72 },
+  GBPUSD:  { price: 1.3336, prevClose: 1.3427, change: -0.0091, changePct: -0.68 },
+  DXY:     { price: 100.07, prevClose: 100.07, change: 0.00, changePct: 0.00 },
+  VIX:     { price: 21.51, prevClose: 15.40, change: 6.11, changePct: 39.68, avg20d: 17.12, aboveAvg: true },
+  US10Y:   { price: 4.536, prevClose: 4.477, change: 0.059, changePct: 1.32 },
+  BRENT:   { price: 95.83, prevClose: 93.09, change: 2.74, changePct: 2.94 },
+  WTI:     { price: 93.23, prevClose: 90.54, change: 2.69, changePct: 2.97 },
+  GOLD:    { price: 4350.80, prevClose: 4337.10, change: 13.70, changePct: 0.32 },
+  USDJPY:  { price: 160.34, prevClose: 159.99, change: 0.35, changePct: 0.22 },
+  COPPER:  { price: 6.281, prevClose: 6.264, change: 0.018, changePct: 0.28 },
+  SP500:   { price: 7407.25, prevClose: 7400.50, change: 6.75, changePct: 0.09 },
+  EVZ:     { price: null, error: 'delisted' },
 };
 
 const MOCK_SNAPSHOT = {
-  generatedAt: '2026-05-25T18:30:00+12:00',
+  generatedAt: '2026-06-08T13:45:00+12:00',
   sessionLabel: 'PRE-LONDON OPEN',
   pair: 'EUR/USD',
   lean: {
     direction: 'BEARISH',
     conviction: 'MODERATE',
-    bull: 4, bear: 7,
-    reasoning: 'COT 34th %ile AM, VIX above 20d avg, DXY uptrend. Warsh hawkish regime + stagflation backdrop. Oil collapse offers marginal EUR relief but refining asymmetry limits pass-through.',
-    catalyst: 'Tuesday open — first real session post-Memorial Day.'
+    bull: 3, bear: 8,
+    reasoning: 'NFP strong beat + 93K revisions. 72K OI build (institutional short). VIX 21.5 (risk-off). 200 EMA now ceiling (114 pips above). Warsh hawkish regime. Iran-Israel missile exchange + Hormuz combat = war premium reasserting. Brent back above $95. All forces bearish EUR.',
+    catalyst: 'Iran escalation overnight. CPI Thursday is the week\'s pivot — cool miss = 89% ride, hot = validates rate hike narrative.'
   },
   session: {
-    asianRange: 24.2,
-    asianHigh: 1.1380,
-    asianLow: 1.1356,
-    compression: 0.78,
-    bodyCoherence: 0.58,
+    asianRange: 0,
+    asianHigh: 0,
+    asianLow: 0,
+    compression: 0,
+    bodyCoherence: 0,
     dayOfWeek: 'Monday',
-    dayRule: 'MEMORIAL DAY — US CLOSED',
-    dayRuleStatus: 'AVOID'
+    dayRule: 'Monday — 75% directional match. Best directional day.',
+    dayRuleStatus: 'CLEAR'
   },
   positioning: {
     cotPercentile: 34,
@@ -747,15 +747,15 @@ const MOCK_SNAPSHOT = {
     divergence: false
   },
   terrain: {
-    nextEvent: null,
-    nextEventName: 'None',
+    nextEvent: '2026-06-12T00:30:00+12:00',
+    nextEventName: 'US CPI (Thu 12:30am NZT)',
     hoursToEvent: null,
-    pinRisk: null,
-    pinDistance: null,
-    pinStatus: 'NONE',
-    cleanAir: 45,
-    levelClusters: 0,
-    eventProtocol: null,
+    pinRisk: 1.1500,
+    pinDistance: 29,
+    pinStatus: 'ACTIVE',
+    cleanAir: 38,
+    levelClusters: 1,
+    eventProtocol: 'CPI cool miss = 89% directional. CPI hot = messy, stand aside.',
   },
   regime: {
     chainActive: 4,
@@ -763,27 +763,28 @@ const MOCK_SNAPSHOT = {
     chainStatus: 'ELEVATED'
   },
   gates: [
-    { name: 'Session',  status: 'blocked', detail: 'Memorial Day — US markets closed' },
-    { name: 'Convict',  status: 'clear',   detail: 'Bear 7 vs Bull 4' },
-    { name: 'Terrain',  status: 'clear',   detail: 'No structural obstruction' },
-    { name: 'Clear',    status: 'clear',   detail: 'No Tier 1 events within 4h' },
+    { name: 'Session',  status: 'waiting', detail: 'Asian range not yet formed — London open tonight' },
+    { name: 'Convict',  status: 'clear',   detail: 'Bear 8 vs Bull 3 — strong bearish conviction' },
+    { name: 'Terrain',  status: 'clear',   detail: '1.1618 resistance above, clean air to 1.1480' },
+    { name: 'Clear',    status: 'clear',   detail: 'CPI Thu 12:30am = 5.5h post-London — outside 4h window' },
     { name: 'Confirm',  status: 'waiting', detail: 'Awaiting London open' }
   ],
   levels: [
-    { price: 1.1643, label: '200 EMA', type: 'ema', note: "Tom's platform (May 24)" },
-    { price: 1.1400, label: 'Round / R2', type: 'round' },
-    { price: 1.1380, label: 'Asian High', type: 'asian' },
-    { price: 1.1370, label: 'R1', type: 'pivot' },
-    { price: 1.1358, label: '◆ PRICE', type: 'current' },
-    { price: 1.1356, label: 'Asian Low', type: 'asian' },
-    { price: 1.1345, label: 'Pivot', type: 'pivot' },
-    { price: 1.1320, label: 'S1', type: 'pivot' },
-    { price: 1.1300, label: 'Round', type: 'round' },
+    { price: 1.1641, label: '200 EMA', type: 'ema', note: "Tom's platform (Jun 7) — CEILING" },
+    { price: 1.1618, label: 'Fib 61.8% — Resistance', type: 'fib' },
+    { price: 1.1600, label: 'Round Number', type: 'round' },
+    { price: 1.1529, label: '◆ PRICE', type: 'current' },
+    { price: 1.1500, label: 'Round / Pin Risk', type: 'round' },
+    { price: 1.1480, label: 'S1 zone', type: 'pivot' },
+    { price: 1.1416, label: 'Fib swing low', type: 'fib' },
+    { price: 1.1400, label: 'Round Number', type: 'round' },
   ],
   dangerZones: [
-    { type: 'active', icon: '⚠️', title: 'MEMORIAL DAY', detail: 'US markets closed. Thin liquidity. Gates should filter.' },
-    { type: 'info', icon: 'ℹ️', title: 'Core PCE Friday 12:30am NZT', detail: 'PCE is historically non-event (46.5 pip avg, below clean day). 4+ hours from Thursday entry.' },
-    { type: 'nearby', icon: '⚡', title: '1.1400 — Round Number', detail: 'Weekly resistance. 42 pips above. Watch for rejection on any approach.' },
+    { type: 'active', icon: '🔴', title: 'IRAN-ISRAEL ESCALATION', detail: 'Four waves of Iranian missiles at Israel. Hormuz combat active — US struck radar sites, shot down 4 drones. War premium reasserting. Brent back above $95.' },
+    { type: 'active', icon: '🔴', title: '1.1500 PIN RISK — 29 pips', detail: 'Major round number. NY cut expiries likely clustered. Watch for gravitational pull.' },
+    { type: 'nearby', icon: '⚡', title: 'US CPI — Thursday 12:30am NZT', detail: 'Cool miss = 89% directional ride. Hot/inline = messy. 5.5h post-London = outside Gate 3 window. Week\'s pivot event.' },
+    { type: 'nearby', icon: '⚡', title: 'ECB Rate Decision — Friday 12:15am NZT', detail: 'Expected 2.40% (hike from 2.15%). ECB + PPI simultaneous = Friday session chaos.' },
+    { type: 'info', icon: 'ℹ️', title: 'OPEC-JMMC + OPEC Meetings', detail: 'Sunday-Monday. Any production response to Iran escalation moves oil further.' },
   ],
   bracket: {
     active: false,
