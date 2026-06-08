@@ -1,44 +1,44 @@
 {
-  "generatedAt": "2026-06-08T13:45:00+12:00",
+  "generatedAt": "2026-06-08T18:31:11.118165+12:00",
   "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "BEARISH",
-    "conviction": "MODERATE",
-    "bull": 3,
-    "bear": 8,
-    "reasoning": "NFP strong beat + 93K revisions. 72K OI build (institutional short). VIX 21.5 (risk-off). 200 EMA now ceiling (114 pips above). Warsh hawkish regime. Iran-Israel missile exchange + Hormuz combat = war premium reasserting. Brent back above $95. All forces bearish EUR.",
-    "catalyst": "Iran escalation overnight. CPI Thursday is the week's pivot — cool miss = 89% ride, hot = validates rate hike narrative."
+    "conviction": "HIGH",
+    "bull": 1,
+    "bear": 11,
+    "reasoning": "Price 90 pips below 200 EMA. VIX elevated 21.5 (avg 17.1) \u2014 risk-off. DXY strengthening \u2014 USD bid. COT AM 13th %ile \u2014 institutional bearish. Brent $97.42 \u2014 war premium. Iran / Hormuz / Oil Supply Risk.",
+    "catalyst": "Core CPI m/m \u2014 Thu 11 Jun 12:30AM NZT"
   },
   "session": {
-    "asianRange": 0,
-    "asianHigh": 0,
-    "asianLow": 0,
-    "compression": 0,
-    "bodyCoherence": 0,
+    "asianRange": 27,
+    "asianHigh": 1.15433,
+    "asianLow": 1.15154,
+    "compression": 0.0,
+    "bodyCoherence": 0.476,
     "dayOfWeek": "Monday",
-    "dayRule": "Monday — 75% directional match. Best directional day.",
+    "dayRule": "Monday \u2014 75% directional match. Best directional day.",
     "dayRuleStatus": "CLEAR"
   },
   "positioning": {
-    "cotPercentile": 34,
+    "cotPercentile": 13,
     "cotDirection": "bearish",
-    "riskReversal": -0.40,
-    "rrPrev": -0.61,
-    "rrTrend": "improving",
-    "oiChange": 2.3,
+    "riskReversal": -0.42,
+    "rrPrev": -0.35,
+    "rrTrend": "deteriorating",
+    "oiChange": 0.0,
     "divergence": false
   },
   "terrain": {
-    "nextEvent": "2026-06-12T00:30:00+12:00",
-    "nextEventName": "US CPI (Thu 12:30am NZT)",
-    "hoursToEvent": null,
-    "pinRisk": 1.1500,
-    "pinDistance": 29,
+    "nextEvent": "2026-06-11T00:30:00+12:00",
+    "nextEventName": "Core CPI m/m (Thu 11 Jun 12:30AM NZT)",
+    "hoursToEvent": 54.0,
+    "pinRisk": 1.155,
+    "pinDistance": 24,
     "pinStatus": "ACTIVE",
-    "cleanAir": 38,
-    "levelClusters": 1,
-    "eventProtocol": "CPI cool miss = 89% directional. CPI hot = messy, stand aside."
+    "cleanAir": 50,
+    "levelClusters": 0,
+    "eventProtocol": "No event protocol active."
   },
   "regime": {
     "chainActive": 4,
@@ -46,34 +46,141 @@
     "chainStatus": "ELEVATED"
   },
   "gates": [
-    { "name": "Session",  "status": "waiting", "detail": "Asian range not yet formed — London open tonight" },
-    { "name": "Convict",  "status": "clear",   "detail": "Bear 8 vs Bull 3 — strong bearish conviction" },
-    { "name": "Terrain",  "status": "clear",   "detail": "1.1618 resistance above, clean air to 1.1480" },
-    { "name": "Clear",    "status": "clear",   "detail": "CPI Thu 12:30am = 5.5h post-London — outside 4h window" },
-    { "name": "Confirm",  "status": "waiting", "detail": "Awaiting London open" }
+    {
+      "name": "Session",
+      "status": "waiting",
+      "detail": "Range 27 pips \u2014 QUALIFIED \u2705 (75% clean break) \u00b7 Structure 48% MIXED \u2014 read wicks carefully"
+    },
+    {
+      "name": "Convict",
+      "status": "waiting",
+      "detail": "COT AM 13th pct \u00b7 RR 1W -0.42 deteriorating \u00b7 DXY strengthening"
+    },
+    {
+      "name": "Terrain",
+      "status": "clear",
+      "detail": "82 pips to target \u00b7 path clear"
+    },
+    {
+      "name": "Clear",
+      "status": "clear",
+      "detail": "Next HIGH [TIER 2]: Core CPI m/m in 53h 58m"
+    },
+    {
+      "name": "Confirm",
+      "status": "waiting",
+      "detail": "In 73 min \u2014 monitor Asian range + candle character"
+    }
   ],
   "levels": [
-    { "price": 1.1641, "label": "200 EMA", "type": "ema", "note": "Tom's platform (Jun 7) — CEILING" },
-    { "price": 1.1618, "label": "Fib 61.8% — Resistance", "type": "fib" },
-    { "price": 1.1600, "label": "Round Number", "type": "round" },
-    { "price": 1.1529, "label": "◆ PRICE", "type": "current" },
-    { "price": 1.1500, "label": "Round / Pin Risk", "type": "round" },
-    { "price": 1.1480, "label": "S1 zone", "type": "pivot" },
-    { "price": 1.1416, "label": "Fib swing low", "type": "fib" },
-    { "price": 1.1400, "label": "Round Number", "type": "round" }
+    {
+      "price": 1.1748,
+      "label": "Fib 50%",
+      "type": "fib"
+    },
+    {
+      "price": 1.16601,
+      "label": "50 EMA Daily",
+      "type": "ema"
+    },
+    {
+      "price": 1.16161,
+      "label": "200 EMA",
+      "type": "ema",
+      "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
+    },
+    {
+      "price": 1.16,
+      "label": "Round Number",
+      "type": "round"
+    },
+    {
+      "price": 1.15473,
+      "label": "Pivot S1",
+      "type": "pivot"
+    },
+    {
+      "price": 1.15433,
+      "label": "Asian High",
+      "type": "asian"
+    },
+    {
+      "price": 1.1526,
+      "label": "\u25c6 PRICE",
+      "type": "current"
+    },
+    {
+      "price": 1.15154,
+      "label": "Asian Low",
+      "type": "asian"
+    },
+    {
+      "price": 1.15,
+      "label": "Round Number",
+      "type": "round"
+    },
+    {
+      "price": 1.1416,
+      "label": "Fib swing low",
+      "type": "fib"
+    },
+    {
+      "price": 1.14,
+      "label": "Round Number",
+      "type": "round"
+    }
   ],
   "dangerZones": [
-    { "type": "active", "icon": "🔴", "title": "IRAN-ISRAEL ESCALATION", "detail": "Four waves of Iranian missiles at Israel. Hormuz combat active — US struck radar sites, shot down 4 drones. War premium reasserting. Brent back above $95." },
-    { "type": "active", "icon": "🔴", "title": "1.1500 PIN RISK — 29 pips", "detail": "Major round number. NY cut expiries likely clustered. Watch for gravitational pull." },
-    { "type": "nearby", "icon": "⚡", "title": "US CPI — Thursday 12:30am NZT", "detail": "Cool miss = 89% directional ride. Hot/inline = messy. 5.5h post-London = outside Gate 3 window. Week's pivot event." },
-    { "type": "nearby", "icon": "⚡", "title": "ECB Rate Decision — Friday 12:15am NZT", "detail": "Expected 2.40% (hike from 2.15%). ECB + PPI simultaneous = Friday session chaos." },
-    { "type": "info", "icon": "ℹ️", "title": "OPEC-JMMC + OPEC Meetings", "detail": "Sunday-Monday. Any production response to Iran escalation moves oil further." }
+    {
+      "type": "active",
+      "icon": "\ud83d\udd34",
+      "title": "1.1550 PIN RISK \u2014 24 pips",
+      "detail": "Major round number. NY cut expiries likely clustered."
+    },
+    {
+      "type": "active",
+      "icon": "\ud83d\udd34",
+      "title": "VIX ELEVATED \u2014 21.5",
+      "detail": "Above 20-day average (17.1). Risk-off regime. Safe haven dollar bid."
+    },
+    {
+      "type": "info",
+      "icon": "\u2139\ufe0f",
+      "title": "Core CPI m/m \u2014 Thu 11 Jun 12:30AM NZT",
+      "detail": "In 54h. Forecast: 0.5%. Previous: 0.4%"
+    },
+    {
+      "type": "info",
+      "icon": "\u2139\ufe0f",
+      "title": "Core CPI y/y \u2014 Thu 11 Jun 12:30AM NZT",
+      "detail": "In 54h. Forecast: 2.9%. Previous: 2.8%"
+    },
+    {
+      "type": "info",
+      "icon": "\u2139\ufe0f",
+      "title": "CPI m/m \u2014 Thu 11 Jun 12:30AM NZT",
+      "detail": "In 54h. Forecast: 0.3%. Previous: 0.6%"
+    },
+    {
+      "type": "info",
+      "icon": "\u2139\ufe0f",
+      "title": "CPI y/y \u2014 Thu 11 Jun 12:30AM NZT",
+      "detail": "In 54h. Forecast: 4.2%. Previous: 3.8%"
+    }
   ],
   "bracket": {
     "active": false,
     "day": "Monday",
-    "reason": "Not Wed/Thu — directional system",
-    "eur": { "range": "25-40", "offset": "+5/-5", "tp": 35 },
-    "gbp": { "range": "20-25", "offset": "+7/-7", "tp": 35 }
+    "reason": "Not Wed/Thu \u2014 directional system",
+    "eur": {
+      "range": "25-40",
+      "offset": "+5/-5",
+      "tp": 35
+    },
+    "gbp": {
+      "range": "20-25",
+      "offset": "+7/-7",
+      "tp": 35
+    }
   }
 }
