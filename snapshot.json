@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-10T18:30:46.869714+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-06-10T23:01:07.284892+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "NEUTRAL",
     "conviction": "LOW",
     "bull": 5,
     "bear": 5,
-    "reasoning": "Price 55 pips below 200 EMA. VIX elevated 19.9 (avg 17.1) \u2014 risk-off. DXY weakening \u2014 EUR tailwind. COT AM 13th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
+    "reasoning": "Price 59 pips below 200 EMA. VIX elevated 20.9 (avg 17.3) \u2014 risk-off. DXY weakening \u2014 EUR tailwind. COT AM 13th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": "Core CPI m/m \u2014 Thu 11 Jun 12:30AM NZT"
   },
   "session": {
@@ -15,7 +15,7 @@
     "asianHigh": 1.15607,
     "asianLow": 1.15367,
     "compression": 0.6,
-    "bodyCoherence": 0.889,
+    "bodyCoherence": 0.778,
     "dayOfWeek": "Wednesday",
     "dayRule": "Wednesday \u2014 38% direction match. Low conviction. Bracket preferred.",
     "dayRuleStatus": "CONDITIONAL"
@@ -23,8 +23,8 @@
   "positioning": {
     "cotPercentile": 13,
     "cotDirection": "bearish",
-    "riskReversal": -0.7,
-    "rrPrev": -0.54,
+    "riskReversal": -0.71,
+    "rrPrev": -0.7,
     "rrTrend": "deteriorating",
     "oiChange": 0.0,
     "divergence": true
@@ -32,9 +32,9 @@
   "terrain": {
     "nextEvent": "2026-06-11T00:30:00+12:00",
     "nextEventName": "Core CPI m/m (Thu 11 Jun 12:30AM NZT)",
-    "hoursToEvent": 6.0,
+    "hoursToEvent": 1.5,
     "pinRisk": 1.155,
-    "pinDistance": 9,
+    "pinDistance": 5,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -49,12 +49,12 @@
     {
       "name": "Session",
       "status": "pending",
-      "detail": "Range 24 pips \u2014 MARGINAL \u26a1 (reduce size) \u00b7 Compression 60.0% standard session character \u00b7 Structure 89% CLEAN \u2014 levels reliable"
+      "detail": "Range 24 pips \u2014 MARGINAL \u26a1 (reduce size) \u00b7 Compression 60.0% standard session character \u00b7 Structure 78% CLEAN \u2014 levels reliable"
     },
     {
       "name": "Convict",
       "status": "waiting",
-      "detail": "COT AM 13th pct \u00b7 RR 1W -0.70 deteriorating \u00b7 DXY weakening"
+      "detail": "COT AM 13th pct \u00b7 RR 1W -0.71 deteriorating \u00b7 DXY weakening"
     },
     {
       "name": "Terrain",
@@ -63,13 +63,13 @@
     },
     {
       "name": "Clear",
-      "status": "clear",
-      "detail": "Next HIGH [TIER 2]: Core CPI m/m in 5h 59m"
+      "status": "blocked",
+      "detail": "Core CPI m/m in 88min \u2014 Thu 11 Jun 12:30AM NZT"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 74 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
@@ -84,7 +84,7 @@
       "type": "round"
     },
     {
-      "price": 1.1651,
+      "price": 1.16509,
       "label": "50 EMA Daily",
       "type": "ema"
     },
@@ -110,7 +110,7 @@
       "type": "asian"
     },
     {
-      "price": 1.15594,
+      "price": 1.15553,
       "label": "\u25c6 PRICE",
       "type": "current"
     },
@@ -139,32 +139,38 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1550 PIN RISK \u2014 9 pips",
+      "title": "1.1550 PIN RISK \u2014 5 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
       "type": "active",
       "icon": "\ud83d\udd34",
+      "title": "VIX ELEVATED \u2014 20.9",
+      "detail": "Above 20-day average (17.3). Risk-off regime. Safe haven dollar bid."
+    },
+    {
+      "type": "active",
+      "icon": "\ud83d\udd34",
       "title": "Core CPI m/m \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 6h. Forecast: 0.3%. Previous: 0.4%"
+      "detail": "In 1h. Forecast: 0.3%. Previous: 0.4%"
     },
     {
       "type": "active",
       "icon": "\ud83d\udd34",
       "title": "Core CPI y/y \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 6h. Forecast: 2.9%. Previous: 2.8%"
+      "detail": "In 1h. Forecast: 2.9%. Previous: 2.8%"
     },
     {
       "type": "active",
       "icon": "\ud83d\udd34",
       "title": "CPI m/m \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 6h. Forecast: 0.5%. Previous: 0.6%"
+      "detail": "In 1h. Forecast: 0.5%. Previous: 0.6%"
     },
     {
       "type": "active",
       "icon": "\ud83d\udd34",
       "title": "CPI y/y \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 6h. Forecast: 4.2%. Previous: 3.8%"
+      "detail": "In 1h. Forecast: 4.2%. Previous: 3.8%"
     }
   ],
   "bracket": {
