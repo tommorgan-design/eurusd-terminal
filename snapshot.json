@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-11T18:30:58.061393+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-06-11T23:01:07.705724+12:00",
+  "sessionLabel": "PRE-NY OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "BEARISH",
-    "conviction": "MODERATE",
-    "bull": 2,
-    "bear": 8,
-    "reasoning": "Price 66 pips below 200 EMA. VIX elevated 22.2 (avg 17.2) \u2014 risk-off. DXY strengthening \u2014 USD bid. COT AM 13th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
+    "conviction": "HIGH",
+    "bull": 1,
+    "bear": 9,
+    "reasoning": "Price 78 pips below 200 EMA. VIX elevated 20.8 (avg 17.6) \u2014 risk-off. DXY strengthening \u2014 USD bid. COT AM 13th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": ""
   },
   "session": {
@@ -23,9 +23,9 @@
   "positioning": {
     "cotPercentile": 13,
     "cotDirection": "bearish",
-    "riskReversal": -0.7,
-    "rrPrev": -0.7,
-    "rrTrend": "stable",
+    "riskReversal": -0.6,
+    "rrPrev": -0.71,
+    "rrTrend": "improving",
     "oiChange": 0.0,
     "divergence": false
   },
@@ -34,7 +34,7 @@
     "nextEventName": "None",
     "hoursToEvent": null,
     "pinRisk": 1.155,
-    "pinDistance": 3,
+    "pinDistance": 15,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -53,13 +53,13 @@
     },
     {
       "name": "Convict",
-      "status": "pending",
-      "detail": "COT AM 13th pct \u00b7 RR 1W -0.70 stable \u00b7 DXY strengthening"
+      "status": "waiting",
+      "detail": "COT AM 13th pct \u00b7 RR 1W -0.60 improving \u00b7 DXY strengthening"
     },
     {
       "name": "Terrain",
       "status": "clear",
-      "detail": "46 pips to target \u00b7 path clear"
+      "detail": "34 pips to target \u00b7 path clear"
     },
     {
       "name": "Clear",
@@ -69,7 +69,7 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 74 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
@@ -79,12 +79,12 @@
       "type": "fib"
     },
     {
-      "price": 1.16461,
+      "price": 1.16456,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.16137,
+      "price": 1.16135,
       "label": "200 EMA",
       "type": "ema",
       "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
@@ -105,7 +105,7 @@
       "type": "asian"
     },
     {
-      "price": 1.15473,
+      "price": 1.15354,
       "label": "\u25c6 PRICE",
       "type": "current"
     },
@@ -139,14 +139,14 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1550 PIN RISK \u2014 3 pips",
+      "title": "1.1550 PIN RISK \u2014 15 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "VIX ELEVATED \u2014 22.2",
-      "detail": "Above 20-day average (17.2). Risk-off regime. Safe haven dollar bid."
+      "title": "VIX ELEVATED \u2014 20.8",
+      "detail": "Above 20-day average (17.6). Risk-off regime. Safe haven dollar bid."
     }
   ],
   "bracket": {
