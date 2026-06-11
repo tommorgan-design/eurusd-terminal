@@ -1,40 +1,40 @@
 {
-  "generatedAt": "2026-06-10T23:01:07.284892+12:00",
-  "sessionLabel": "PRE-NEW YORK OPEN",
+  "generatedAt": "2026-06-11T18:30:58.061393+12:00",
+  "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
-    "direction": "NEUTRAL",
-    "conviction": "LOW",
-    "bull": 5,
-    "bear": 5,
-    "reasoning": "Price 59 pips below 200 EMA. VIX elevated 20.9 (avg 17.3) \u2014 risk-off. DXY weakening \u2014 EUR tailwind. COT AM 13th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
-    "catalyst": "Core CPI m/m \u2014 Thu 11 Jun 12:30AM NZT"
+    "direction": "BEARISH",
+    "conviction": "MODERATE",
+    "bull": 2,
+    "bear": 8,
+    "reasoning": "Price 66 pips below 200 EMA. VIX elevated 22.2 (avg 17.2) \u2014 risk-off. DXY strengthening \u2014 USD bid. COT AM 13th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
+    "catalyst": ""
   },
   "session": {
-    "asianRange": 24,
-    "asianHigh": 1.15607,
-    "asianLow": 1.15367,
-    "compression": 0.6,
-    "bodyCoherence": 0.778,
-    "dayOfWeek": "Wednesday",
-    "dayRule": "Wednesday \u2014 38% direction match. Low conviction. Bracket preferred.",
+    "asianRange": 29,
+    "asianHigh": 1.15594,
+    "asianLow": 1.153,
+    "compression": 0.806,
+    "bodyCoherence": 0.637,
+    "dayOfWeek": "Thursday",
+    "dayRule": "Thursday \u2014 31% direction match. Lowest conviction. Bracket preferred.",
     "dayRuleStatus": "CONDITIONAL"
   },
   "positioning": {
     "cotPercentile": 13,
     "cotDirection": "bearish",
-    "riskReversal": -0.71,
+    "riskReversal": -0.7,
     "rrPrev": -0.7,
-    "rrTrend": "deteriorating",
+    "rrTrend": "stable",
     "oiChange": 0.0,
-    "divergence": true
+    "divergence": false
   },
   "terrain": {
-    "nextEvent": "2026-06-11T00:30:00+12:00",
-    "nextEventName": "Core CPI m/m (Thu 11 Jun 12:30AM NZT)",
-    "hoursToEvent": 1.5,
+    "nextEvent": null,
+    "nextEventName": "None",
+    "hoursToEvent": null,
     "pinRisk": 1.155,
-    "pinDistance": 5,
+    "pinDistance": 3,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -49,27 +49,27 @@
     {
       "name": "Session",
       "status": "pending",
-      "detail": "Range 24 pips \u2014 MARGINAL \u26a1 (reduce size) \u00b7 Compression 60.0% standard session character \u00b7 Structure 78% CLEAN \u2014 levels reliable"
+      "detail": "Range 29 pips \u2014 QUALIFIED \u2705 (75% clean break) \u00b7 Compression 80.6% standard session character \u00b7 Structure 64% CLEAN \u2014 levels reliable"
     },
     {
       "name": "Convict",
-      "status": "waiting",
-      "detail": "COT AM 13th pct \u00b7 RR 1W -0.71 deteriorating \u00b7 DXY weakening"
+      "status": "pending",
+      "detail": "COT AM 13th pct \u00b7 RR 1W -0.70 stable \u00b7 DXY strengthening"
     },
     {
       "name": "Terrain",
       "status": "clear",
-      "detail": "No obstruction flagged"
+      "detail": "46 pips to target \u00b7 path clear"
     },
     {
       "name": "Clear",
-      "status": "blocked",
-      "detail": "Core CPI m/m in 88min \u2014 Thu 11 Jun 12:30AM NZT"
+      "status": "clear",
+      "detail": "No high-impact events this session"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "Asian range break + body close + volume \u2014 gate live now"
+      "detail": "In 74 min \u2014 monitor Asian range + candle character"
     }
   ],
   "levels": [
@@ -79,17 +79,12 @@
       "type": "fib"
     },
     {
-      "price": 1.17,
-      "label": "Round Number",
-      "type": "round"
-    },
-    {
-      "price": 1.16509,
+      "price": 1.16461,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.16146,
+      "price": 1.16137,
       "label": "200 EMA",
       "type": "ema",
       "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
@@ -100,27 +95,27 @@
       "type": "round"
     },
     {
-      "price": 1.15617,
+      "price": 1.15616,
       "label": "Pivot R1",
       "type": "pivot"
     },
     {
-      "price": 1.15607,
+      "price": 1.15594,
       "label": "Asian High",
       "type": "asian"
     },
     {
-      "price": 1.15553,
+      "price": 1.15473,
       "label": "\u25c6 PRICE",
       "type": "current"
     },
     {
-      "price": 1.15367,
+      "price": 1.153,
       "label": "Asian Low",
       "type": "asian"
     },
     {
-      "price": 1.15115,
+      "price": 1.15216,
       "label": "Pivot S1",
       "type": "pivot"
     },
@@ -133,50 +128,31 @@
       "price": 1.1416,
       "label": "Fib swing low",
       "type": "fib"
+    },
+    {
+      "price": 1.14,
+      "label": "Round Number",
+      "type": "round"
     }
   ],
   "dangerZones": [
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1550 PIN RISK \u2014 5 pips",
+      "title": "1.1550 PIN RISK \u2014 3 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "VIX ELEVATED \u2014 20.9",
-      "detail": "Above 20-day average (17.3). Risk-off regime. Safe haven dollar bid."
-    },
-    {
-      "type": "active",
-      "icon": "\ud83d\udd34",
-      "title": "Core CPI m/m \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 1h. Forecast: 0.3%. Previous: 0.4%"
-    },
-    {
-      "type": "active",
-      "icon": "\ud83d\udd34",
-      "title": "Core CPI y/y \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 1h. Forecast: 2.9%. Previous: 2.8%"
-    },
-    {
-      "type": "active",
-      "icon": "\ud83d\udd34",
-      "title": "CPI m/m \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 1h. Forecast: 0.5%. Previous: 0.6%"
-    },
-    {
-      "type": "active",
-      "icon": "\ud83d\udd34",
-      "title": "CPI y/y \u2014 Thu 11 Jun 12:30AM NZT",
-      "detail": "In 1h. Forecast: 4.2%. Previous: 3.8%"
+      "title": "VIX ELEVATED \u2014 22.2",
+      "detail": "Above 20-day average (17.2). Risk-off regime. Safe haven dollar bid."
     }
   ],
   "bracket": {
-    "active": false,
-    "day": "Wednesday",
-    "reason": "Range 24p \u2014 outside 25-40 bracket window",
+    "active": true,
+    "day": "Thursday",
+    "reason": "Bracket mode \u2014 range qualified",
     "eur": {
       "range": "25-40",
       "offset": "+5/-5",
