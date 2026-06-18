@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-18T19:11:18.224505+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-06-18T23:01:13.282617+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "BEARISH",
     "conviction": "HIGH",
-    "bull": 0,
-    "bear": 11,
-    "reasoning": "Price 95 pips below 200 EMA. VIX 18.4 (avg 17.4). DXY strengthening \u2014 USD bid. COT AM 12th %ile \u2014 institutional bearish. Brent $77.78 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
+    "bull": 1,
+    "bear": 10,
+    "reasoning": "Price 145 pips below 200 EMA. VIX 17.2 (avg 17.4). DXY strengthening \u2014 USD bid. COT AM 12th %ile \u2014 institutional bearish. Brent $78.91 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": ""
   },
   "session": {
@@ -33,8 +33,8 @@
     "nextEvent": null,
     "nextEventName": "None",
     "hoursToEvent": null,
-    "pinRisk": 1.15,
-    "pinDistance": 17,
+    "pinRisk": 1.145,
+    "pinDistance": 15,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 0,
@@ -59,7 +59,7 @@
     {
       "name": "Terrain",
       "status": "clear",
-      "detail": "15 pips to target \u00b7 path clear"
+      "detail": "2 pips to target \u00b7 path clear"
     },
     {
       "name": "Clear",
@@ -69,22 +69,17 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 33 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
     {
-      "price": 1.1748,
-      "label": "Fib 50%",
-      "type": "fib"
-    },
-    {
-      "price": 1.16335,
+      "price": 1.16315,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.16118,
+      "price": 1.16112,
       "label": "200 EMA",
       "type": "ema",
       "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
@@ -95,19 +90,9 @@
       "type": "round"
     },
     {
-      "price": 1.15915,
-      "label": "Pivot S1",
-      "type": "pivot"
-    },
-    {
       "price": 1.15314,
       "label": "Asian High",
       "type": "asian"
-    },
-    {
-      "price": 1.15168,
-      "label": "\u25c6 PRICE",
-      "type": "current"
     },
     {
       "price": 1.15075,
@@ -118,6 +103,11 @@
       "price": 1.15,
       "label": "Round Number",
       "type": "round"
+    },
+    {
+      "price": 1.14653,
+      "label": "\u25c6 PRICE",
+      "type": "current"
     },
     {
       "price": 1.1416,
@@ -134,7 +124,7 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1500 PIN RISK \u2014 17 pips",
+      "title": "1.1450 PIN RISK \u2014 15 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
