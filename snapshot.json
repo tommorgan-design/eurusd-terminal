@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-22T19:11:03.897785+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-06-22T23:01:30.493738+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "NEUTRAL",
     "conviction": "LOW",
     "bull": 0,
-    "bear": 0,
-    "reasoning": "Price 144 pips below 200 EMA. VIX 16.8 (avg 17.4). DXY strengthening \u2014 USD bid. COT AM 12th %ile \u2014 institutional bearish. Brent $79.05 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
+    "bear": 5,
+    "reasoning": "Price 150 pips below 200 EMA. VIX 17.4 (avg 17.4). DXY strengthening \u2014 USD bid. COT AM 12th %ile \u2014 institutional bearish. Brent $79.28 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": ""
   },
   "session": {
@@ -27,14 +27,14 @@
     "rrPrev": -0.85,
     "rrTrend": "improving",
     "oiChange": 0.0,
-    "divergence": false
+    "divergence": true
   },
   "terrain": {
     "nextEvent": null,
     "nextEventName": "None",
     "hoursToEvent": null,
     "pinRisk": 1.145,
-    "pinDistance": 14,
+    "pinDistance": 7,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 0,
@@ -49,37 +49,37 @@
     {
       "name": "Session",
       "status": "waiting",
-      "detail": "\u2014"
+      "detail": "Range 19 pips \u2014 CONDITIONAL \u26a1 (Monday 63% clean break \u2014 stop viable with caution) \u00b7 Structure 53% MIXED \u2014 read wicks carefully"
     },
     {
       "name": "Convict",
       "status": "waiting",
-      "detail": "\u2014"
+      "detail": "VIX regime: bullish (17.4 vs 17.4 avg) \u00b7 RR 1W -0.66 (improving) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (2th pct) \u2014 1.74x magnitude asymmetry"
     },
     {
       "name": "Terrain",
-      "status": "waiting",
-      "detail": "\u2014"
+      "status": "clear",
+      "detail": "No obstruction flagged"
     },
     {
       "name": "Clear",
-      "status": "waiting",
-      "detail": "\u2014"
+      "status": "clear",
+      "detail": "No high-impact events this session"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "\u2014"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
     {
-      "price": 1.162,
+      "price": 1.16197,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.16084,
+      "price": 1.16083,
       "label": "200 EMA",
       "type": "ema",
       "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
@@ -105,7 +105,7 @@
       "type": "asian"
     },
     {
-      "price": 1.14639,
+      "price": 1.14574,
       "label": "\u25c6 PRICE",
       "type": "current"
     },
@@ -134,7 +134,7 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1450 PIN RISK \u2014 14 pips",
+      "title": "1.1450 PIN RISK \u2014 7 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
