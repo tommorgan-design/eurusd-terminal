@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-23T19:11:27.993065+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-06-23T23:01:31.055753+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "NEUTRAL",
     "conviction": "LOW",
-    "bull": 1,
-    "bear": 4,
-    "reasoning": "Price 168 pips below 200 EMA. VIX 17.3 (avg 17.4). DXY strengthening \u2014 USD bid. COT AM 8th %ile \u2014 institutional bearish. Brent $76.77 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
+    "bull": 0,
+    "bear": 5,
+    "reasoning": "Price 201 pips below 200 EMA. VIX elevated 20.0 (avg 17.6) \u2014 risk-off. DXY strengthening \u2014 USD bid. COT AM 8th %ile \u2014 institutional bearish. Brent $77.85 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": ""
   },
   "session": {
@@ -33,8 +33,8 @@
     "nextEvent": null,
     "nextEventName": "None",
     "hoursToEvent": null,
-    "pinRisk": 1.145,
-    "pinDistance": 12,
+    "pinRisk": 1.14,
+    "pinDistance": 5,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -54,7 +54,7 @@
     {
       "name": "Convict",
       "status": "waiting",
-      "detail": "VIX regime: bullish (17.3 vs 17.4 avg) \u00b7 RR 1W -0.65 (improving) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (6th pct) \u2014 1.74x magnitude asymmetry"
+      "detail": "VIX regime: bearish (20.0 vs 17.6 avg) \u00b7 RR 1W -0.65 (improving) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (6th pct) \u2014 1.74x magnitude asymmetry"
     },
     {
       "name": "Terrain",
@@ -69,17 +69,17 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 33 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
     {
-      "price": 1.16128,
+      "price": 1.16115,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.16067,
+      "price": 1.16064,
       "label": "200 EMA",
       "type": "ema",
       "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
@@ -93,11 +93,6 @@
       "price": 1.14819,
       "label": "Pivot R1",
       "type": "pivot"
-    },
-    {
-      "price": 1.14377,
-      "label": "\u25c6 PRICE",
-      "type": "current"
     },
     {
       "price": 1.14364,
@@ -120,6 +115,11 @@
       "type": "fib"
     },
     {
+      "price": 1.14051,
+      "label": "\u25c6 PRICE",
+      "type": "current"
+    },
+    {
       "price": 1.14,
       "label": "Round Number",
       "type": "round"
@@ -134,7 +134,7 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1450 PIN RISK \u2014 12 pips",
+      "title": "1.1400 PIN RISK \u2014 5 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
