@@ -1,0 +1,42 @@
+═══════════════════════════════════════════════════════════
+  PRE-NY CHANGE ALERT — Thu 25 Jun 2026, 23:00 NZT
+═══════════════════════════════════════════════════════════
+
+STATUS: NO BIAS CHANGE — BEARISH EUR confirmed
+
+EUR/USD: 1.1348 (vs 1.1438 Monday → −90 pips in 2 sessions)
+DXY: 101.65 (vs 101.07)  |  VIX: 17.96 (vs 17.28)
+
+SCORING: 0 BULL / 9 BEAR — HIGH conviction
+  WITH: VWAP, 1H EMA50, D EMA50, D EMA200, MOMENTUM, VIX, COT LEV, COT AM, JPY_CONF
+
+MAVERICK: Range day (21 pips < 25p bracket minimum).
+  No directional setup — no trade. Neutral IS a signal.
+  Break above 1.1374 = long bias. Break below 1.1352 = short bias.
+
+CHAINS: Fert 🔴 · Sulfur 🔴 · Energy easing ✅ · Gold $4000
+  NEW: Europe heatwave pushing TTF/gas costs (Chain 3)
+  NEW: France intercepted Russian shadow fleet tanker (Chain 1)
+
+───────────────────────────────────────────────────────────
+  🛡️ PIPELINE INTEGRITY — FIRST LIVE RUN
+───────────────────────────────────────────────────────────
+
+Integrity system is LIVE. First run caught 3 real issues:
+
+  ✅ FIXED: Spread velocity cursor bug (c undefined after
+     verified_write refactor) — patched this session
+  ⚠️ KNOWN: CME 6E — openpyxl not in sandbox (cosmetic)
+  ⚠️ KNOWN: GBP 200 EMA — no platform_levels table yet
+
+verified_write: Active on price_snapshots, RR, spread_velocity, 6E OI
+error_log table: Capturing all of the above correctly
+post-brief integrity check: Running and logging FAILs
+
+Next: Spread velocity will log cleanly on the next run.
+The system that catches silent failures is itself working. 🎯
+
+───────────────────────────────────────────────────────────
+  US 2Y: 4.156% (CNBC, ts_age 0.0h) — PROVISIONAL ✓
+  Source health: Pre-brief check GREEN
+───────────────────────────────────────────────────────────
