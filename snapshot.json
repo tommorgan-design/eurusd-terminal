@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-13T19:10:51.547273+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-07-13T23:01:07.105639+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "BULLISH",
     "conviction": "MODERATE",
-    "bull": 1,
-    "bear": 4,
-    "reasoning": "Price 169 pips below 200 EMA. VIX calm 15.0 (avg 17.2). DXY strengthening \u2014 USD bid. COT AM 2th %ile \u2014 institutional bearish. Brent $78.81 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
+    "bull": 3,
+    "bear": 2,
+    "reasoning": "Price 142 pips below 200 EMA. VIX 16.3 (avg 17.0). DXY weakening \u2014 EUR tailwind. COT AM 2th %ile \u2014 institutional bearish. Brent $78.50 \u2014 easing. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": ""
   },
   "session": {
@@ -27,17 +27,17 @@
     "rrPrev": -0.46,
     "rrTrend": "deteriorating",
     "oiChange": 0.0,
-    "divergence": false
+    "divergence": true
   },
   "terrain": {
     "nextEvent": null,
     "nextEventName": "None",
     "hoursToEvent": null,
-    "pinRisk": 1.14,
-    "pinDistance": 12,
+    "pinRisk": 1.145,
+    "pinDistance": 11,
     "pinStatus": "ACTIVE",
-    "cleanAir": 11,
-    "levelClusters": 0,
+    "cleanAir": 86,
+    "levelClusters": 1,
     "eventProtocol": "No event protocol active."
   },
   "regime": {
@@ -54,12 +54,12 @@
     {
       "name": "Convict",
       "status": "pending",
-      "detail": "Spread 5d: -6.8bp (narrowing) \u00b7 VIX regime: bullish (15.0 vs 17.2 avg) \u00b7 \u2705 ENGINES AGREE \u00b7 RR 1W -0.50 (deteriorating) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (2th pct) \u2014 1.74x magnitude asymmetry"
+      "detail": "Spread 5d: -5.3bp (narrowing) \u00b7 VIX regime: bullish (16.3 vs 17.0 avg) \u00b7 \u2705 ENGINES AGREE \u00b7 RR 1W -0.50 (deteriorating) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (2th pct) \u2014 1.74x magnitude asymmetry"
     },
     {
       "name": "Terrain",
       "status": "pending",
-      "detail": "385 pips to target \u00b7 3 level(s) in path"
+      "detail": "357 pips to target \u00b7 2 level(s) in path"
     },
     {
       "name": "Clear",
@@ -69,18 +69,18 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 34 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
     {
-      "price": 1.15814,
+      "price": 1.15817,
       "label": "200 EMA",
       "type": "ema",
       "note": "yfinance (~30 pip variance \u2014 use platform value) \u2014 CEILING"
     },
     {
-      "price": 1.15246,
+      "price": 1.15257,
       "label": "50 EMA Daily",
       "type": "ema"
     },
@@ -93,6 +93,11 @@
       "price": 1.14579,
       "label": "Pivot R1",
       "type": "pivot"
+    },
+    {
+      "price": 1.1439,
+      "label": "\u25c6 PRICE",
+      "type": "current"
     },
     {
       "price": 1.1416,
@@ -108,11 +113,6 @@
       "price": 1.14116,
       "label": "Asian High",
       "type": "asian"
-    },
-    {
-      "price": 1.14116,
-      "label": "\u25c6 PRICE",
-      "type": "current"
     },
     {
       "price": 1.14,
@@ -134,7 +134,7 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 12 pips",
+      "title": "1.1450 PIN RISK \u2014 11 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
