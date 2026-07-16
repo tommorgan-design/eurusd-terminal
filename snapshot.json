@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-16T19:10:46.176475+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-07-16T23:01:09.036560+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
-    "direction": "WITHHELD",
-    "conviction": "PROVISIONAL",
-    "bull": 0,
-    "bear": 0,
-    "reasoning": "Gate 1 rate input stale or unavailable \u2014 direction and dependent synthesis withheld.",
+    "direction": "BULLISH",
+    "conviction": "MODERATE",
+    "bull": 3,
+    "bear": 2,
+    "reasoning": "Price 47 pips above 200 EMA. VIX 16.0 (avg 17.0). DXY strengthening \u2014 USD bid. COT AM 2th %ile \u2014 institutional bearish. Brent $84.75 \u2014 easing.",
     "catalyst": ""
   },
   "session": {
@@ -34,9 +34,9 @@
     "nextEventName": "None",
     "hoursToEvent": null,
     "pinRisk": 1.145,
-    "pinDistance": 22,
+    "pinDistance": 13,
     "pinStatus": "ACTIVE",
-    "cleanAir": 50,
+    "cleanAir": 6,
     "levelClusters": 0,
     "eventProtocol": "No event protocol active."
   },
@@ -53,13 +53,13 @@
     },
     {
       "name": "Convict",
-      "status": "blocked",
-      "detail": "WITHHELD \u2014 Gate 1 rate input stale or unavailable"
+      "status": "pending",
+      "detail": "Spread 5d: -7.4bp (narrowing) \u00b7 VIX regime: bullish (16.0 vs 17.0 avg) \u00b7 \u2705 ENGINES AGREE \u00b7 RR 1W -0.32 (improving) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (2th pct) \u2014 1.74x magnitude asymmetry"
     },
     {
       "name": "Terrain",
-      "status": "clear",
-      "detail": "No obstruction flagged"
+      "status": "pending",
+      "detail": "327 pips to target \u00b7 2 level(s) in path"
     },
     {
       "name": "Clear",
@@ -69,7 +69,7 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 34 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
@@ -79,7 +79,7 @@
       "type": "round"
     },
     {
-      "price": 1.15135,
+      "price": 1.15131,
       "label": "50 EMA Daily",
       "type": "ema"
     },
@@ -94,14 +94,14 @@
       "type": "asian"
     },
     {
-      "price": 1.14718,
-      "label": "\u25c6 PRICE",
-      "type": "current"
-    },
-    {
       "price": 1.14639,
       "label": "Asian Low",
       "type": "asian"
+    },
+    {
+      "price": 1.14626,
+      "label": "\u25c6 PRICE",
+      "type": "current"
     },
     {
       "price": 1.14446,
@@ -134,7 +134,7 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1450 PIN RISK \u2014 22 pips",
+      "title": "1.1450 PIN RISK \u2014 13 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
