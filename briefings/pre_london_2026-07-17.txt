@@ -1,0 +1,184 @@
+==============================================================
+  EUR/USD FOREX BRIEFING — PRE-LONDON OPEN
+  Friday 17 July 2026 | 19:10 NZT
+==============================================================
+
+⚡ FIVE-MINUTE DESK VIEW — FACT STATUS
+  What changed:     EUR/USD ▼ 0.16% (-18 pips)
+  Gate 1 data:      PROVISIONAL — stale/missing leg; no Gate 1 verdict
+  EMA:              Tom platform supplied 2026-07-12
+  Operating rule:   no trade in the first three 15-minute London candles; no weekend carry
+  Full sourced detail follows.
+
+📌 PRICE & FX
+  EUR/USD:       1.1452  |  Prev Close: 1.1470
+  Daily Change:  ▼ 0.16% (-18 pips)
+
+  🏯 ASIAN SESSION (London Open − 8hrs → London Open | live range)
+  Body High:  1.1453  |  Body Low: 1.1439
+  Wick High:  1.1455  |  Wick Low: 1.1439
+  Session Range: 15 pips
+  ❌ FRIDAY AVOID: 15 pips — 66% whipsaw rate (worst in dataset)
+     Friday narrow range = highest probability of London hunting both boundaries
+  🕖 London Open: 7PM NZT (08:00 BST) — OPEN  |  Gate 4: 7:45PM NZT
+  📊 COMPRESSION: 38.5% of prev London (39p) — COMPRESSED ⚠️ (50% whipsaw — London hunts both sides)
+  🎯 STRUCTURE: 92% — CLEAN (levels reliable — Gate 2 terrain assessment clean)
+
+  DXY:  100.663  ▼ 0.07%
+  Session High: 100.800 at 16:00 NZT | Low: 100.650 at 18:00 NZT
+  USD/CNY:  6.7739
+  USD/JPY:  162.201 ▲ (+0.13) → genuine USD strength ✅
+
+🛢️  COMMODITIES
+  Brent Crude:  $84.43  ▲ 0.24%
+  Brent Session:  H $85.48  /  L $83.71
+  WTI Crude:    $78.70  ▼ 0.32%
+  Gold Spot:    $4003.00  ▲ 0.44%
+  TTF Nat Gas:  €55.30/MWh  ▲ 1.74%
+  Heating Oil:  $3.9476/gal  ▼ 2.06%  (jet fuel proxy)
+
+⛓️  COMMODITY CHAIN MONITOR
+  Source: Chief/Claude framework — 13 chains ranked by EUR/USD impact
+  🔴 #1 FERTILISER/FOOD CPI — TTF €55.30/MWh (elevated)
+  🔴 #2 SULFUR/PHOSPHATE — 3 supply shocks active (Hormuz + China halt + Russia ban)
+     S&P Platts CFR Mejillones doubled in 7 weeks — EUR food CPI locked in
+  🟠 #3 LAKE MEAD / WATER — HOLD (transmission mechanism under review)
+  🟠 #4 Jet fuel/Aviation — Heating oil stable (-2.1%)
+  🟠 #5 Naphtha/Plastics — Brent $84.43 (watching for surcharge triggers)
+  🟠 #6 Cape Rerouting — Suez/Hormuz diversions (transit cost premium embedded)
+  🟠 #7 Pharma API — not mainstream, highest remaining edge
+  🟠 #8 Copper Smelting — $6.23 (TC/RCs negative → sulfuric acid byproduct constrained)
+     Copper -1.0% WoW — smelter squeeze holding
+  🟠 #9 VLCC Tanker Rates | #10 Insurance/Risk Cascade | #11 China Coal/Urea Lock
+
+  ⛽ ENERGY: Brent $84.43 — easing (peace signal?)
+     ⚠️ ASYMMETRY: Energy reverses fast. Food CPI does NOT. Planting shortfall locked in.
+     ⚠️ REFINING GAP: EU capacity gutted — crude drop ≠ full consumer relief (HO spread confirms)
+  📈 USD debasement — Gold $4003 (structural EUR tailwind)
+
+  🇨🇳 CHINA STRATEGIC LAYER
+     1. Coal→urea lock: protecting Chinese farmers (Chain 1 modifier)
+     2. Sulphuric acid export halt: protecting Chinese fertiliser industry (Chain 2 + 5 modifier)
+     3. Currency management: yuan appreciation while others absorb inflation
+     USD/CNY: 6.7739 — yuan strengthening
+
+  ━━ NET: 2 chains 🔴 ACTIVE, 7 🟠 warm — EUR inflation pressure building
+
+  📡 LIVE INTELLIGENCE (last 7 days)
+  🟠 Pakistan Pays Highest Spot LNG Price in Four Years as Qatar Supply Falters
+     → OilPrice, citing Bloomberg-reported trader information, says Pakistan LNG Ltd procured an early-next...
+  🟠 Yemen's Houthis Threaten New Oil Shock as Civil War Reignites
+     → OilPrice reports renewed conflict in Yemen and describes Houthi threats alongside prior alignment rh...
+  🟠 Asian LNG Spot Prices Jump 10% as Hormuz Crisis Reignites Supply Fears
+     → OilPrice reports renewed Hormuz disruption and a near-halt in shipping are raising Asian LNG supply ...
+
+📊 RATES & SENTIMENT
+  US 10Y Yield:       4.569%  (▲ 0.024bps)
+  German Bund 10Y:    3.154%  (▲ 0.008bps)
+
+  ── GATE 1 DIRECTION ENGINE ──  [Validated: 69% OOS, 71 sessions | Pre-Warsh calibration]
+  US 2Y:              4.122%
+  German 2Y:          2.676%
+  Gate 1 status:      PROVISIONAL — stale or unavailable rate leg
+  German-leg output:  historical comparison only — not a current German-leg move
+  Spread / velocity / leg dominance / Gate 1 verdict: WITHHELD
+  VIX Regime:         BULLISH (VIX 16.7 < 17.0 avg)
+  VIX:  16.73  ▲ 1.06  |  20d Avg: 17.00  |  -0.27 vs 20d avg
+
+📊 MULTI-TIMEFRAME TECHNICALS
+  Weekly (last 10 candles):  H 1.1790  /  L 1.1325
+  Daily  (last 30 candles):  H 1.1623  /  L 1.1325
+  Daily 50 EMA:   1.1511  |  Price is BELOW by 58 pips
+  Daily 200 EMA:  1.1416  |  Price is ABOVE by 36 pips  (Tom platform supplied 2026-07-12)
+  Daily ATR(14):  0.0056  (55 pips avg daily range)
+  1H 50 EMA:      1.1447  |  Price is ABOVE by 4 pips
+  1H VWAP:        1.1445  |  Price is ABOVE by 6 pips
+
+⚙️  6E FUTURES  [CME — Previous Day Settlement]
+  Data date: 2026-07-15 (T-1 lag)
+  Open Interest:  796,852  |  WoW Change: +7,667  ↑ Building
+  Daily Volume:   186,782  |  MTD ADV: 170,454  |  110% of MTD ADV
+
+📋 COT — CFTC COMMITMENT OF TRADERS
+  Report Date: 2026-07-07
+  Leveraged Money:  -45,461 (NET SHORT)  WoW: -12,817 | 52-wk Pctile: 2th ⚠️ EXTREME POSITIONING
+  Asset Managers:   +253,918 (NET LONG)  WoW: -1,240 | 52-wk Pctile: 2th
+
+  📌 FRIDAY COT RELEASE — Extended Summary:
+  Total OI: 794,833
+  Lev Money positioning: EXTREMELY LIGHT (52-week sample)
+
+🎯 OPTIONS DATA
+
+  📊 OTC 25-DELTA RISK REVERSAL  [Saxo Bank OTC — 17 Jul 2026, 0700 GMT]
+  ℹ️  Negative = puts > calls (downside protection more expensive = bearish skew)
+  1W: -0.41 (-0.09) | 1M: -0.44 (-0.1) | 3M: -0.44 (-0.08) | 6M: -0.42 (-0.07)
+  Skew: Puts > calls across near-term tenors — bearish options positioning
+
+  CME 6E Monthly Options  [Exchange-traded ~20% of total EUR/USD flow]
+  Options OI: 371,414  |  Daily Vol: 15,549
+  ℹ️  Strike-level OI clusters: CME DataMine subscription required for full data
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📅 ECONOMIC CALENDAR — USD & EUR | MED + HIGH IMPACT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⏰ NEXT 24 HOURS: No medium/high impact events
+
+  ✅ RELEASED THIS WEEK:
+  🔴 20:45                          GBP  BOE Gov Bailey Speaks
+  🔴 00:30                          USD  Core CPI m/m  Fore: 0.2%  |  Prev: 0.2%
+  🔴 00:30                          USD  Core CPI y/y  Fore: 2.8%  |  Prev: 2.9%
+  🔴 00:30                          USD  CPI m/m  Fore: -0.1%  |  Prev: 0.5%
+  🔴 00:30                          USD  CPI y/y  Fore: 3.8%  |  Prev: 4.2%
+  🔴 02:00                          USD  Fed Chairman Warsh Testifies
+  🔴 08:00                          GBP  BOE Gov Bailey Speaks
+  🔴 00:30                          USD  Core PPI m/m  Fore: 0.3%  |  Prev: 0.4%
+  🔴 00:30                          USD  PPI m/m  Fore: 0.0%  |  Prev: 1.1%
+  🔴 02:00                          USD  Fed Chairman Warsh Testifies
+  🔴 18:00                          GBP  GDP m/m  Fore: 0.1%  |  Prev: -0.1%
+  🟠 00:30                          USD  Core Retail Sales m/m  Fore: -0.1%  |  Prev: 0.8%
+  🟠 00:30                          USD  Philly Fed Manufacturing Index  Fore: 12.1  |  Prev: 10.3
+  🟠 00:30                          USD  Retail Sales m/m  Fore: 0.3%  |  Prev: 0.9%
+  🟠 00:30                          USD  Unemployment Claims  Fore: 215K  |  Prev: 215K
+  🟠 02:00                          USD  Prelim UoM Consumer Sentiment  Fore: 51.4  |  Prev: 49.5
+  🟠 02:00                          USD  Prelim UoM Inflation Expectations  Prev: 4.6%
+
+  ──────────────────────────────────────────────────────────
+  🥇 EVENT REACTION PROTOCOL — CPI (GOLDEN PRINT)
+  ──────────────────────────────────────────────────────────
+  CPI cool miss → 89% EUR bullish | Avg 87 pips | RIDE THE WAVE
+  CPI hot beat  → DON'T FADE | 78% go 'wrong' way | Already priced in
+  Avg London range: 59 pips | 2.84× expansion | 42% exceed 3× expansion
+  ⚠️ TIGHT ASIAN + CPI: 56% whipsaw — consider bracket model
+
+══════════════════════════════════════════════════════════════
+  ⚡ CHIEF'S ANALYSIS & LEAN — PRE-LONDON OPEN
+══════════════════════════════════════════════════════════════
+
+  BIAS:        WITHHELD — Gate 1 rate input stale or unavailable
+  CONVICTION:  PROVISIONAL  [░░░░░░░░░░]
+  SIGNALS:     4 BULL / 5 BEAR  (9 factors scored)
+
+  ENTRY:       WITHHELD — no directional setup while Gate 1 is provisional
+  TARGET:      WITHHELD
+  STOP:        WITHHELD
+  ATR(14):     55 pips avg daily range — size accordingly
+
+  RISK:        German-leg comparison is historical only — not a current German-leg move; Gate 1 verdict withheld
+               Counter signals: VWAP, 1H EMA50, D EMA200
+
+  ⚡ CONFLUENCE: Daily S1 (1.1446) within 1 pip of 1H EMA50 — watch for reaction
+  ⚡ CONFLUENCE: Daily S1 (1.1446) within 1 pip of VWAP — watch for reaction
+══════════════════════════════════════════════════════════════
+
+==============================================================
+  ⚠️ SOURCE HEALTH:
+    ❌ ⚠️ German 2Y (Bund) source last updated 2026-07-15 — 2 business days behind. Feed may be frozen; treat spread/velocity as provisional.
+  US 2Y source timestamp: 2026-07-17T03:07:35.000-0400 (age: 0.1h)
+  German 2Y source date: 2026-07-15 [ECB SDW] (2 business days behind)
+  Data sources: yfinance, CNBC/Tradeweb, CME FTP (T-1), CFTC, ECB | Calendar: Tom/ForexFactory NZT (manual weekly)
+  Generated: 19:10 NZT | Tasklet Automated Briefing
+  Chief collects · Claude analyses · Tom decides
+==============================================================
+
+— END —
