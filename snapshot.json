@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-17T19:10:58.988954+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-07-17T23:01:17.321261+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
-    "direction": "WITHHELD",
-    "conviction": "PROVISIONAL",
-    "bull": 0,
-    "bear": 0,
-    "reasoning": "Gate 1 rate input stale or unavailable \u2014 direction and dependent synthesis withheld.",
+    "direction": "NEUTRAL",
+    "conviction": "LOW",
+    "bull": 1,
+    "bear": 4,
+    "reasoning": "Price 14 pips above 200 EMA. VIX 18.1 (avg 17.0). DXY strengthening \u2014 USD bid. COT AM 2th %ile \u2014 institutional bearish. Iran / Hormuz / Oil Supply Risk.",
     "catalyst": ""
   },
   "session": {
@@ -34,7 +34,7 @@
     "nextEventName": "None",
     "hoursToEvent": null,
     "pinRisk": 1.145,
-    "pinDistance": 2,
+    "pinDistance": 20,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -49,12 +49,12 @@
     {
       "name": "Session",
       "status": "clear",
-      "detail": "Range 15 pips \u2014 FRIDAY AVOID \u274c (66% whipsaw \u2014 worst in dataset) \u00b7 Compression 38.5% quiet Asian session \u00b7 Structure 92% CLEAN \u2014 levels reliable"
+      "detail": "Range 15 pips \u2014 FRIDAY AVOID \u274c (66% whipsaw, n=47 Friday sub-20 sessions \u2014 worst weekday subset in 509-session study) \u00b7 Compression 38.5% quiet Asian session \u00b7 Structure 92% CLEAN \u2014 levels reliable"
     },
     {
       "name": "Convict",
-      "status": "blocked",
-      "detail": "WITHHELD \u2014 Gate 1 rate input stale or unavailable"
+      "status": "waiting",
+      "detail": "Spread 5d: -19.5bp (narrowing) \u00b7 VIX regime: bearish (18.1 vs 17.0 avg) \u00b7 \u26a0\ufe0f ENGINES DISAGREE \u2014 no call \u00b7 RR 1W -0.41 (deteriorating) [Engine 2 \u2014 logging] \u00b7 \u26a1 COT EXTREME (2th pct) \u2014 1.74x magnitude asymmetry"
     },
     {
       "name": "Terrain",
@@ -69,17 +69,12 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 34 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
     {
-      "price": 1.16,
-      "label": "Round Number",
-      "type": "round"
-    },
-    {
-      "price": 1.1511,
+      "price": 1.15101,
       "label": "50 EMA Daily",
       "type": "ema"
     },
@@ -99,11 +94,6 @@
       "type": "asian"
     },
     {
-      "price": 1.14521,
-      "label": "\u25c6 PRICE",
-      "type": "current"
-    },
-    {
       "price": 1.14463,
       "label": "Pivot S1",
       "type": "pivot"
@@ -112,6 +102,11 @@
       "price": 1.1439,
       "label": "Asian Low",
       "type": "asian"
+    },
+    {
+      "price": 1.14299,
+      "label": "\u25c6 PRICE",
+      "type": "current"
     },
     {
       "price": 1.1416,
@@ -128,13 +123,18 @@
       "price": 1.14,
       "label": "Round Number",
       "type": "round"
+    },
+    {
+      "price": 1.13,
+      "label": "Round Number",
+      "type": "round"
     }
   ],
   "dangerZones": [
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1450 PIN RISK \u2014 2 pips",
+      "title": "1.1450 PIN RISK \u2014 20 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
