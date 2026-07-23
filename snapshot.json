@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-22T23:02:35.030155+12:00",
-  "sessionLabel": "PRE-NEW YORK OPEN",
+  "generatedAt": "2026-07-23T19:10:42.094780+12:00",
+  "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "WITHHELD",
@@ -11,21 +11,21 @@
     "catalyst": ""
   },
   "session": {
-    "asianRange": 15,
-    "asianHigh": 1.14168,
-    "asianLow": 1.14012,
-    "compression": 0.625,
-    "bodyCoherence": 0.583,
-    "dayOfWeek": "Wednesday",
-    "dayRule": "Wednesday \u2014 38% direction match. Low conviction. Bracket preferred.",
+    "asianRange": 27,
+    "asianHigh": 1.1439,
+    "asianLow": 1.14116,
+    "compression": 1.421,
+    "bodyCoherence": 0.81,
+    "dayOfWeek": "Thursday",
+    "dayRule": "Thursday \u2014 31% direction match. Lowest conviction. Bracket preferred.",
     "dayRuleStatus": "CONDITIONAL"
   },
   "positioning": {
     "cotPercentile": 2,
     "cotDirection": "bearish",
-    "riskReversal": -0.47,
+    "riskReversal": -0.38,
     "rrPrev": -0.47,
-    "rrTrend": "stable",
+    "rrTrend": "improving",
     "oiChange": 0.0,
     "divergence": false
   },
@@ -33,8 +33,8 @@
     "nextEvent": null,
     "nextEventName": "None",
     "hoursToEvent": null,
-    "pinRisk": 1.14,
-    "pinDistance": 6,
+    "pinRisk": 1.145,
+    "pinDistance": 24,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -48,8 +48,8 @@
   "gates": [
     {
       "name": "Session",
-      "status": "pending",
-      "detail": "Range 15 pips \u2014 WHIPSAW RISK \u26a0\ufe0f (52% whipsaw) \u00b7 Compression 62.5% standard session character \u00b7 Structure 58% MIXED \u2014 read wicks carefully"
+      "status": "blocked",
+      "detail": "Range 27 pips \u2014 QUALIFIED \u2705 (75% clean break) \u00b7 Compression 142.1% Asia > London range \u2014 watching session \u00b7 Structure 81% CLEAN \u2014 levels reliable"
     },
     {
       "name": "Convict",
@@ -69,7 +69,7 @@
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "Asian range break + body close + volume \u2014 gate live now"
+      "detail": "In 34 min \u2014 monitor Asian range + candle character"
     }
   ],
   "levels": [
@@ -80,24 +80,29 @@
       "note": "Tom platform supplied 2026-07-19 \u2014 CEILING"
     },
     {
-      "price": 1.15001,
-      "label": "50 EMA Daily",
-      "type": "ema"
-    },
-    {
       "price": 1.15,
       "label": "Round Number",
       "type": "round"
     },
     {
-      "price": 1.143,
-      "label": "Pivot R1",
-      "type": "pivot"
+      "price": 1.14971,
+      "label": "50 EMA Daily",
+      "type": "ema"
     },
     {
-      "price": 1.14168,
+      "price": 1.1439,
       "label": "Asian High",
       "type": "asian"
+    },
+    {
+      "price": 1.1426,
+      "label": "\u25c6 PRICE",
+      "type": "current"
+    },
+    {
+      "price": 1.14167,
+      "label": "Pivot R1",
+      "type": "pivot"
     },
     {
       "price": 1.1416,
@@ -105,17 +110,7 @@
       "type": "fib"
     },
     {
-      "price": 1.14064,
-      "label": "\u25c6 PRICE",
-      "type": "current"
-    },
-    {
-      "price": 1.14048,
-      "label": "Pivot S1",
-      "type": "pivot"
-    },
-    {
-      "price": 1.14012,
+      "price": 1.14116,
       "label": "Asian Low",
       "type": "asian"
     },
@@ -123,6 +118,11 @@
       "price": 1.14,
       "label": "Round Number",
       "type": "round"
+    },
+    {
+      "price": 1.13953,
+      "label": "Pivot S1",
+      "type": "pivot"
     },
     {
       "price": 1.13,
@@ -134,14 +134,14 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 6 pips",
+      "title": "1.1450 PIN RISK \u2014 24 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
   "bracket": {
-    "active": false,
-    "day": "Wednesday",
-    "reason": "Range 15p \u2014 outside 25-40 bracket window",
+    "active": true,
+    "day": "Thursday",
+    "reason": "Bracket mode \u2014 range qualified",
     "eur": {
       "range": "25-40",
       "offset": "+5/-5",
