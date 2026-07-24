@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T23:02:22.214536+12:00",
+  "generatedAt": "2026-07-24T23:02:20.027135+12:00",
   "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
@@ -11,21 +11,21 @@
     "catalyst": ""
   },
   "session": {
-    "asianRange": 27,
-    "asianHigh": 1.1439,
-    "asianLow": 1.14116,
-    "compression": 1.421,
-    "bodyCoherence": 0.81,
-    "dayOfWeek": "Thursday",
-    "dayRule": "Thursday \u2014 31% direction match. Lowest conviction. Bracket preferred.",
-    "dayRuleStatus": "CONDITIONAL"
+    "asianRange": 11,
+    "asianHigh": 1.13908,
+    "asianLow": 1.13792,
+    "compression": 0.177,
+    "bodyCoherence": 0.778,
+    "dayOfWeek": "Friday",
+    "dayRule": "Friday \u2014 trade to structural level. Hard exit Saturday NZT.",
+    "dayRuleStatus": "CLEAR"
   },
   "positioning": {
     "cotPercentile": 2,
     "cotDirection": "bearish",
-    "riskReversal": -0.38,
-    "rrPrev": -0.47,
-    "rrTrend": "improving",
+    "riskReversal": -0.55,
+    "rrPrev": -0.38,
+    "rrTrend": "deteriorating",
     "oiChange": 0.0,
     "divergence": false
   },
@@ -34,7 +34,7 @@
     "nextEventName": "None",
     "hoursToEvent": null,
     "pinRisk": 1.14,
-    "pinDistance": 8,
+    "pinDistance": 14,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -48,8 +48,8 @@
   "gates": [
     {
       "name": "Session",
-      "status": "blocked",
-      "detail": "Range 27 pips \u2014 QUALIFIED \u2705 (75% clean break) \u00b7 Compression 142.1% Asia > London range \u2014 watching session \u00b7 Structure 81% CLEAN \u2014 levels reliable"
+      "status": "clear",
+      "detail": "Range 11 pips \u2014 FRIDAY AVOID \u274c (66% whipsaw, n=47 Friday sub-20 sessions \u2014 worst weekday subset in 509-session study) \u00b7 Compression 17.7% quiet Asian session \u00b7 Structure 78% CLEAN \u2014 levels reliable"
     },
     {
       "name": "Convict",
@@ -85,17 +85,12 @@
       "type": "round"
     },
     {
-      "price": 1.14964,
+      "price": 1.14922,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.1439,
-      "label": "Asian High",
-      "type": "asian"
-    },
-    {
-      "price": 1.14167,
+      "price": 1.14446,
       "label": "Pivot R1",
       "type": "pivot"
     },
@@ -105,22 +100,27 @@
       "type": "fib"
     },
     {
-      "price": 1.14116,
-      "label": "Asian Low",
-      "type": "asian"
-    },
-    {
-      "price": 1.14077,
-      "label": "\u25c6 PRICE",
-      "type": "current"
-    },
-    {
       "price": 1.14,
       "label": "Round Number",
       "type": "round"
     },
     {
-      "price": 1.13953,
+      "price": 1.13908,
+      "label": "Asian High",
+      "type": "asian"
+    },
+    {
+      "price": 1.13856,
+      "label": "\u25c6 PRICE",
+      "type": "current"
+    },
+    {
+      "price": 1.13792,
+      "label": "Asian Low",
+      "type": "asian"
+    },
+    {
+      "price": 1.1372,
       "label": "Pivot S1",
       "type": "pivot"
     },
@@ -134,14 +134,14 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 8 pips",
+      "title": "1.1400 PIN RISK \u2014 14 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     }
   ],
   "bracket": {
-    "active": true,
-    "day": "Thursday",
-    "reason": "Bracket mode \u2014 range qualified",
+    "active": false,
+    "day": "Friday",
+    "reason": "Not Wed/Thu \u2014 directional system",
     "eur": {
       "range": "25-40",
       "offset": "+5/-5",
