@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-24T23:02:20.027135+12:00",
-  "sessionLabel": "PRE-NEW YORK OPEN",
+  "generatedAt": "2026-07-27T19:15:37.737048+12:00",
+  "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "WITHHELD",
@@ -8,36 +8,36 @@
     "bull": 0,
     "bear": 0,
     "reasoning": "Gate 1 rate input stale or unavailable \u2014 direction and dependent synthesis withheld.",
-    "catalyst": ""
+    "catalyst": "Federal Funds Rate \u2014 Wed 06:00 NZT"
   },
   "session": {
-    "asianRange": 11,
-    "asianHigh": 1.13908,
-    "asianLow": 1.13792,
-    "compression": 0.177,
-    "bodyCoherence": 0.778,
-    "dayOfWeek": "Friday",
-    "dayRule": "Friday \u2014 trade to structural level. Hard exit Saturday NZT.",
+    "asianRange": 28,
+    "asianHigh": 1.14207,
+    "asianLow": 1.13921,
+    "compression": 0.0,
+    "bodyCoherence": 0.637,
+    "dayOfWeek": "Monday",
+    "dayRule": "Monday \u2014 75% directional match. Best directional day.",
     "dayRuleStatus": "CLEAR"
   },
   "positioning": {
     "cotPercentile": 2,
     "cotDirection": "bearish",
-    "riskReversal": -0.55,
-    "rrPrev": -0.38,
-    "rrTrend": "deteriorating",
+    "riskReversal": -0.49,
+    "rrPrev": -0.55,
+    "rrTrend": "improving",
     "oiChange": 0.0,
     "divergence": false
   },
   "terrain": {
-    "nextEvent": null,
-    "nextEventName": "None",
-    "hoursToEvent": null,
+    "nextEvent": "2026-07-30T06:00:00+12:00",
+    "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
+    "hoursToEvent": 58.7,
     "pinRisk": 1.14,
-    "pinDistance": 14,
+    "pinDistance": 12,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
-    "levelClusters": 1,
+    "levelClusters": 0,
     "eventProtocol": "No event protocol active."
   },
   "regime": {
@@ -48,8 +48,8 @@
   "gates": [
     {
       "name": "Session",
-      "status": "clear",
-      "detail": "Range 11 pips \u2014 FRIDAY AVOID \u274c (66% whipsaw, n=47 Friday sub-20 sessions \u2014 worst weekday subset in 509-session study) \u00b7 Compression 17.7% quiet Asian session \u00b7 Structure 78% CLEAN \u2014 levels reliable"
+      "status": "waiting",
+      "detail": "Range 28 pips \u2014 QUALIFIED \u2705 (75% clean break) \u00b7 Structure 64% CLEAN \u2014 levels reliable"
     },
     {
       "name": "Convict",
@@ -64,20 +64,20 @@
     {
       "name": "Clear",
       "status": "clear",
-      "detail": "No high-impact events this session"
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 58h 44m"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "Asian range break + body close + volume \u2014 gate live now"
+      "detail": "In 29 min \u2014 monitor Asian range + candle character"
     }
   ],
   "levels": [
     {
-      "price": 1.15866,
+      "price": 1.15753,
       "label": "200 EMA",
       "type": "ema",
-      "note": "Tom platform supplied 2026-07-19 \u2014 CEILING"
+      "note": "Tom platform supplied 2026-07-26 \u2014 CEILING"
     },
     {
       "price": 1.15,
@@ -85,14 +85,14 @@
       "type": "round"
     },
     {
-      "price": 1.14922,
+      "price": 1.14887,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.14446,
-      "label": "Pivot R1",
-      "type": "pivot"
+      "price": 1.14207,
+      "label": "Asian High",
+      "type": "asian"
     },
     {
       "price": 1.1416,
@@ -100,27 +100,27 @@
       "type": "fib"
     },
     {
+      "price": 1.14116,
+      "label": "\u25c6 PRICE",
+      "type": "current"
+    },
+    {
       "price": 1.14,
       "label": "Round Number",
       "type": "round"
     },
     {
-      "price": 1.13908,
-      "label": "Asian High",
-      "type": "asian"
+      "price": 1.13953,
+      "label": "Pivot R1",
+      "type": "pivot"
     },
     {
-      "price": 1.13856,
-      "label": "\u25c6 PRICE",
-      "type": "current"
-    },
-    {
-      "price": 1.13792,
+      "price": 1.13921,
       "label": "Asian Low",
       "type": "asian"
     },
     {
-      "price": 1.1372,
+      "price": 1.13629,
       "label": "Pivot S1",
       "type": "pivot"
     },
@@ -134,13 +134,25 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 14 pips",
+      "title": "1.1400 PIN RISK \u2014 12 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
+    },
+    {
+      "type": "info",
+      "icon": "\u2139\ufe0f",
+      "title": "Federal Funds Rate \u2014 Wed 06:00 NZT",
+      "detail": "In 59h. Forecast: 3.75%. Previous: 3.75%"
+    },
+    {
+      "type": "info",
+      "icon": "\u2139\ufe0f",
+      "title": "FOMC Press Conference \u2014 Wed 06:30 NZT",
+      "detail": "In 59h"
     }
   ],
   "bracket": {
     "active": false,
-    "day": "Friday",
+    "day": "Monday",
     "reason": "Not Wed/Thu \u2014 directional system",
     "eur": {
       "range": "25-40",
