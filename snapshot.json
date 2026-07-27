@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T19:19:07.646829+12:00",
+  "generatedAt": "2026-07-27T19:21:57.350025+12:00",
   "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
@@ -32,7 +32,7 @@
   "terrain": {
     "nextEvent": "2026-07-30T06:00:00+12:00",
     "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
-    "hoursToEvent": 58.7,
+    "hoursToEvent": 58.6,
     "pinRisk": 1.14,
     "pinDistance": 10,
     "pinStatus": "ACTIVE",
@@ -64,12 +64,12 @@
     {
       "name": "Clear",
       "status": "clear",
-      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 58h 40m"
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 58h 38m"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 25 min \u2014 monitor Asian range + candle character"
+      "detail": "In 23 min \u2014 monitor Asian range + candle character"
     }
   ],
   "levels": [
