@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-27T19:21:57.350025+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-07-27T23:05:35.926943+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "WITHHELD",
@@ -32,12 +32,12 @@
   "terrain": {
     "nextEvent": "2026-07-30T06:00:00+12:00",
     "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
-    "hoursToEvent": 58.6,
+    "hoursToEvent": 54.9,
     "pinRisk": 1.14,
-    "pinDistance": 10,
+    "pinDistance": 3,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
-    "levelClusters": 0,
+    "levelClusters": 1,
     "eventProtocol": "No event protocol active."
   },
   "regime": {
@@ -64,12 +64,12 @@
     {
       "name": "Clear",
       "status": "clear",
-      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 58h 38m"
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 54h 54m"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 23 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
@@ -85,7 +85,7 @@
       "type": "round"
     },
     {
-      "price": 1.14887,
+      "price": 1.14882,
       "label": "50 EMA Daily",
       "type": "ema"
     },
@@ -100,14 +100,9 @@
       "type": "fib"
     },
     {
-      "price": 1.14103,
+      "price": 1.13973,
       "label": "\u25c6 PRICE",
       "type": "current"
-    },
-    {
-      "price": 1.14,
-      "label": "Round Number",
-      "type": "round"
     },
     {
       "price": 1.13953,
@@ -134,20 +129,20 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 10 pips",
+      "title": "1.1400 PIN RISK \u2014 3 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
       "type": "info",
       "icon": "\u2139\ufe0f",
       "title": "Federal Funds Rate \u2014 Wed 06:00 NZT",
-      "detail": "In 59h. Forecast: 3.75%. Previous: 3.75%"
+      "detail": "In 55h. Forecast: 3.75%. Previous: 3.75%"
     },
     {
       "type": "info",
       "icon": "\u2139\ufe0f",
       "title": "FOMC Press Conference \u2014 Wed 06:30 NZT",
-      "detail": "In 59h"
+      "detail": "In 55h"
     }
   ],
   "bracket": {
