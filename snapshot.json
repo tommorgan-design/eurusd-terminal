@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-27T19:15:37.737048+12:00",
+  "generatedAt": "2026-07-27T19:19:07.646829+12:00",
   "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
@@ -34,7 +34,7 @@
     "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
     "hoursToEvent": 58.7,
     "pinRisk": 1.14,
-    "pinDistance": 12,
+    "pinDistance": 10,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 0,
@@ -64,12 +64,12 @@
     {
       "name": "Clear",
       "status": "clear",
-      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 58h 44m"
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 58h 40m"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 29 min \u2014 monitor Asian range + candle character"
+      "detail": "In 25 min \u2014 monitor Asian range + candle character"
     }
   ],
   "levels": [
@@ -77,7 +77,7 @@
       "price": 1.15753,
       "label": "200 EMA",
       "type": "ema",
-      "note": "Tom platform supplied 2026-07-26 \u2014 CEILING"
+      "note": "Tom/platform-supplied \u2014 week ended 24 Jul 2026; received 26 Jul 2026 at 13:09 NZT \u2014 CEILING"
     },
     {
       "price": 1.15,
@@ -100,7 +100,7 @@
       "type": "fib"
     },
     {
-      "price": 1.14116,
+      "price": 1.14103,
       "label": "\u25c6 PRICE",
       "type": "current"
     },
@@ -134,7 +134,7 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 12 pips",
+      "title": "1.1400 PIN RISK \u2014 10 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
