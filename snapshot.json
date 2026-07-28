@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-27T23:05:35.926943+12:00",
-  "sessionLabel": "PRE-NEW YORK OPEN",
+  "generatedAt": "2026-07-28T19:11:27.486574+12:00",
+  "sessionLabel": "PRE-LONDON OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "WITHHELD",
@@ -11,30 +11,30 @@
     "catalyst": "Federal Funds Rate \u2014 Wed 06:00 NZT"
   },
   "session": {
-    "asianRange": 28,
-    "asianHigh": 1.14207,
-    "asianLow": 1.13921,
-    "compression": 0.0,
-    "bodyCoherence": 0.637,
-    "dayOfWeek": "Monday",
-    "dayRule": "Monday \u2014 75% directional match. Best directional day.",
+    "asianRange": 18,
+    "asianHigh": 1.1383,
+    "asianLow": 1.13649,
+    "compression": 0.45,
+    "bodyCoherence": 0.572,
+    "dayOfWeek": "Tuesday",
+    "dayRule": "Tuesday \u2014 strong directional day.",
     "dayRuleStatus": "CLEAR"
   },
   "positioning": {
     "cotPercentile": 2,
     "cotDirection": "bearish",
-    "riskReversal": -0.49,
-    "rrPrev": -0.55,
-    "rrTrend": "improving",
+    "riskReversal": -0.72,
+    "rrPrev": -0.49,
+    "rrTrend": "deteriorating",
     "oiChange": 0.0,
     "divergence": false
   },
   "terrain": {
     "nextEvent": "2026-07-30T06:00:00+12:00",
     "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
-    "hoursToEvent": 54.9,
-    "pinRisk": 1.14,
-    "pinDistance": 3,
+    "hoursToEvent": 34.8,
+    "pinRisk": 1.135,
+    "pinDistance": 25,
     "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
@@ -48,8 +48,8 @@
   "gates": [
     {
       "name": "Session",
-      "status": "waiting",
-      "detail": "Range 28 pips \u2014 QUALIFIED \u2705 (75% clean break) \u00b7 Structure 64% CLEAN \u2014 levels reliable"
+      "status": "clear",
+      "detail": "Range 18 pips \u2014 WHIPSAW RISK \u26a0\ufe0f (52% whipsaw) \u00b7 Compression 45.0% quiet Asian session \u00b7 Structure 57% MIXED \u2014 read wicks carefully"
     },
     {
       "name": "Convict",
@@ -64,12 +64,12 @@
     {
       "name": "Clear",
       "status": "clear",
-      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 54h 54m"
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 34h 48m"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "Asian range break + body close + volume \u2014 gate live now"
+      "detail": "In 33 min \u2014 monitor Asian range + candle character"
     }
   ],
   "levels": [
@@ -85,14 +85,14 @@
       "type": "round"
     },
     {
-      "price": 1.14882,
+      "price": 1.14836,
       "label": "50 EMA Daily",
       "type": "ema"
     },
     {
-      "price": 1.14207,
-      "label": "Asian High",
-      "type": "asian"
+      "price": 1.14187,
+      "label": "Pivot R1",
+      "type": "pivot"
     },
     {
       "price": 1.1416,
@@ -100,24 +100,29 @@
       "type": "fib"
     },
     {
-      "price": 1.13973,
+      "price": 1.14,
+      "label": "Round Number",
+      "type": "round"
+    },
+    {
+      "price": 1.1383,
+      "label": "Asian High",
+      "type": "asian"
+    },
+    {
+      "price": 1.13753,
       "label": "\u25c6 PRICE",
       "type": "current"
     },
     {
-      "price": 1.13953,
-      "label": "Pivot R1",
-      "type": "pivot"
-    },
-    {
-      "price": 1.13921,
-      "label": "Asian Low",
-      "type": "asian"
-    },
-    {
-      "price": 1.13629,
+      "price": 1.13706,
       "label": "Pivot S1",
       "type": "pivot"
+    },
+    {
+      "price": 1.13649,
+      "label": "Asian Low",
+      "type": "asian"
     },
     {
       "price": 1.13,
@@ -129,25 +134,25 @@
     {
       "type": "active",
       "icon": "\ud83d\udd34",
-      "title": "1.1400 PIN RISK \u2014 3 pips",
+      "title": "1.1350 PIN RISK \u2014 25 pips",
       "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
-      "type": "info",
-      "icon": "\u2139\ufe0f",
+      "type": "nearby",
+      "icon": "\u26a1",
       "title": "Federal Funds Rate \u2014 Wed 06:00 NZT",
-      "detail": "In 55h. Forecast: 3.75%. Previous: 3.75%"
+      "detail": "In 35h. Forecast: 3.75%. Previous: 3.75%"
     },
     {
-      "type": "info",
-      "icon": "\u2139\ufe0f",
+      "type": "nearby",
+      "icon": "\u26a1",
       "title": "FOMC Press Conference \u2014 Wed 06:30 NZT",
-      "detail": "In 55h"
+      "detail": "In 35h"
     }
   ],
   "bracket": {
     "active": false,
-    "day": "Monday",
+    "day": "Tuesday",
     "reason": "Not Wed/Thu \u2014 directional system",
     "eur": {
       "range": "25-40",
