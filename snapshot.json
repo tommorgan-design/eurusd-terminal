@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-29T19:11:56.669372+12:00",
-  "sessionLabel": "PRE-LONDON OPEN",
+  "generatedAt": "2026-07-29T23:02:09.295573+12:00",
+  "sessionLabel": "PRE-NEW YORK OPEN",
   "pair": "EUR/USD",
   "lean": {
     "direction": "WITHHELD",
@@ -32,10 +32,10 @@
   "terrain": {
     "nextEvent": "2026-07-30T06:00:00+12:00",
     "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
-    "hoursToEvent": 10.8,
-    "pinRisk": 1.135,
-    "pinDistance": 50,
-    "pinStatus": "NEARBY",
+    "hoursToEvent": 7.0,
+    "pinRisk": 1.14,
+    "pinDistance": 10,
+    "pinStatus": "ACTIVE",
     "cleanAir": 50,
     "levelClusters": 1,
     "eventProtocol": "No event protocol active."
@@ -64,12 +64,12 @@
     {
       "name": "Clear",
       "status": "clear",
-      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 10h 48m"
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 6h 57m"
     },
     {
       "name": "Confirm",
       "status": "waiting",
-      "detail": "In 33 min \u2014 monitor Asian range + candle character"
+      "detail": "Asian range break + body close + volume \u2014 gate live now"
     }
   ],
   "levels": [
@@ -85,7 +85,7 @@
       "type": "round"
     },
     {
-      "price": 1.14801,
+      "price": 1.14797,
       "label": "50 EMA Daily",
       "type": "ema"
     },
@@ -100,14 +100,19 @@
       "type": "asian"
     },
     {
-      "price": 1.13999,
-      "label": "\u25c6 PRICE",
-      "type": "current"
+      "price": 1.14,
+      "label": "Round Number",
+      "type": "round"
     },
     {
       "price": 1.1396,
       "label": "Pivot R1",
       "type": "pivot"
+    },
+    {
+      "price": 1.13895,
+      "label": "\u25c6 PRICE",
+      "type": "current"
     },
     {
       "price": 1.13856,
@@ -127,22 +132,22 @@
   ],
   "dangerZones": [
     {
-      "type": "nearby",
-      "icon": "\u26a1",
-      "title": "1.1350 PIN RISK \u2014 50 pips",
-      "detail": "Round number nearby. Monitor for gravitational effect."
+      "type": "active",
+      "icon": "\ud83d\udd34",
+      "title": "1.1400 PIN RISK \u2014 10 pips",
+      "detail": "Major round number. NY cut expiries likely clustered."
     },
     {
       "type": "nearby",
       "icon": "\u26a1",
       "title": "Federal Funds Rate \u2014 Wed 06:00 NZT",
-      "detail": "In 11h. Forecast: 3.75%. Previous: 3.75%"
+      "detail": "In 7h. Forecast: 3.75%. Previous: 3.75%"
     },
     {
       "type": "nearby",
       "icon": "\u26a1",
       "title": "FOMC Press Conference \u2014 Wed 06:30 NZT",
-      "detail": "In 11h"
+      "detail": "In 7h"
     }
   ],
   "bracket": {
