@@ -1,200 +1,163 @@
-==============================================================
-  EUR/USD FOREX BRIEFING — PRE-LONDON OPEN
-  Wednesday 29 July 2026 | 19:11 NZT
-  ⚠️  WEDNESDAY — MID-WEEK EVENT DAY: Direction conviction reduced.
-  Backtested 64 sessions: Wed 38% / Thu 31% direction match.
-  Pre-positioning uncertainty elevated. Exceptional setup required.
-==============================================================
-
-⚡ FIVE-MINUTE DESK VIEW — FACT STATUS
-  What changed:     EUR/USD ▲ 0.27% (+30 pips)
-  Gate 1 data:      PROVISIONAL — stale/missing leg; no Gate 1 verdict
-  EMA:              Tom/platform-supplied — week ended 24 Jul 2026; received 26 Jul 2026 at 13:09 NZT
-  Operating rule:   no trade in the first three 15-minute London candles; no weekend carry
-  Full sourced detail follows.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📡 MACRO INTELLIGENCE CONSENSUS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  Primary Theme:  China / Asia Macro
-  Consensus:      5/11 sources aligned
-  Confidence:     5/10  [█████░░░░░]  MODERATE
-  Dissent:
-    → Iran / Hormuz / Oil Supply Risk  [Guardian Business, ForexLive, Al Jazeera, Deutsche Welle]
-  Supporting Headlines:
-    • Trump administration bans new Chinese humanoid robots
-    • Micron’s stock sinks toward worst monthly drop in 11 years as China fears escalate
-    • Shanghai Clearing House targets global growth with expanded offshore yuan push
-  Sources (11): BBC Business, Guardian Business, CNBC Markets, MarketWatch, ForexLive, Al Jazeera, Deutsche Welle, EuroNews, SCMP Business, Nikkei Asia, Visual Capitalist
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📌 PRICE & FX
-  EUR/USD:       1.1400  |  Prev Close: 1.1369
-  Daily Change:  ▲ 0.27% (+30 pips)
-
-  🏯 ASIAN SESSION (London Open − 8hrs → London Open | live range)
-  Body High:  1.1405  |  Body Low: 1.1388
-  Wick High:  1.1406  |  Wick Low: 1.1386
-  Session Range: 20 pips
-  ⚡ RANGE MARGINAL: 20 pips — reduce position size or widen stop
-     Whipsaw risk elevated — London may hunt both boundaries
-  📐 STRUCTURAL STOPS: Bull stop 1.1381 (25p risk) | Bear stop 1.1411 (25p risk)
-
-  ⚠️ BRACKET NEAR-MISS — WEDNESDAY: Range 20 pips (min 25p required)
-  Directional only — low conviction day (Wed/Thu 38%/31% direction match; small 64-session study)
-
-  🔀 GBP/USD BRACKET — SHADOW TRACKING
-  ─────────────────────────────────────────────
-  723-session backtest: 20-25p range sweet spot | +7/-7 offset | 35p TP
-  58.8% win rate | 2.4% overlap with EUR/USD = genuine diversification
-  
-  📈 PENDING BUY:  1.3311  (Asian high +7p)
-     TP:  1.3346  (+35 pips)
-  📉 PENDING SELL: 1.3274  (Asian low -7p)
-     TP:  1.3239  (-35 pips)
-  
-  GBP/USD Asian range: 22 pips (1.3281 — 1.3304)
-  200 EMA: 1.3397 (95p below — Tom platform supplied 2026-07-26)
-  ⚙️  When one triggers → cancel the other | Risk if whipsawed: 36p
-  ─────────────────────────────────────────────
-  🕖 London Open: 7PM NZT (08:00 BST) — OPEN  |  Gate 4: 7:45PM NZT
-  📊 COMPRESSION: 42.6% of prev London (47p) — COMPRESSED ⚠️ (informational; no validated probability)
-  🎯 BODY/WICK COHERENCE: 81% — CLEAN (descriptive ratio, not probability; no directional edge)
-
-  DXY:  101.337  ▼ 0.04%
-  Session High: 101.448 at 12:00 NZT | Low: 101.243 at 16:00 NZT
-  USD/CNY:  6.7677
-  USD/JPY:  163.526 ▼ (-0.24) → genuine USD weakness ✅
-
-🛢️  COMMODITIES
-  Brent Crude:  $87.15  ▲ 3.64%
-  Brent Session:  H $88.15  /  L $86.58
-  WTI Crude:    $82.05  ▲ 3.52%
-  Gold Spot:    $4040.20  ▲ 0.10%
-  TTF Nat Gas:  €56.50/MWh  ▼ 3.01%
-  Heating Oil:  $4.1081/gal  ▼ 1.03%  (jet fuel proxy)
-
-⛓️  COMMODITY CHAIN MONITOR
-  Source: Chief/Claude framework — 13 chains ranked by EUR/USD impact
-  🔴 #1 FERTILISER/FOOD CPI — TTF €56.50/MWh (elevated)
-  🔴 #2 SULFUR/PHOSPHATE — 3 supply shocks active (Hormuz + China halt + Russia ban)
-     S&P Platts CFR Mejillones doubled in 7 weeks — EUR food CPI locked in
-  🟠 #3 LAKE MEAD / WATER — HOLD (transmission mechanism under review)
-  🟠 #4 Jet fuel/Aviation — Heating oil stable (-1.0%)
-  🟠 #5 Naphtha/Plastics — Brent $87.15 (watching for surcharge triggers)
-  🟠 #6 Cape Rerouting — Suez/Hormuz diversions (transit cost premium embedded)
-  🟠 #7 Pharma API — not mainstream, highest remaining edge
-  🟠 #8 Copper Smelting — $6.34 (TC/RCs negative → sulfuric acid byproduct constrained)
-     Copper +0.3% WoW — smelter squeeze holding
-  🟠 #9 VLCC Tanker Rates | #10 Insurance/Risk Cascade | #11 China Coal/Urea Lock
-
-  ⛽ ENERGY: Brent $87.15 (+3.6% vs prior close)
-  📈 USD debasement — Gold $4040 (structural EUR tailwind)
-
-  🇨🇳 CHINA STRATEGIC LAYER
-     1. Coal→urea lock: protecting Chinese farmers (Chain 1 modifier)
-     2. Sulphuric acid export halt: protecting Chinese fertiliser industry (Chain 2 + 5 modifier)
-     3. Currency management: yuan appreciation while others absorb inflation
-     USD/CNY: 6.7677 — yuan strengthening
-
-  ━━ NET: 2 chains 🔴 ACTIVE, 7 🟠 warm — EUR inflation pressure building
-
-  📡 LIVE INTELLIGENCE (last 7 days)
-  🔴 The Middle East War Has Entered Its Most Dangerous Phase Yet
-     → REPORTED CLAIMS: Iranian attacks on US military infrastructure (Bahrain, Kuwait, Jordan, Fifth Fleet...
-  🟠 Kazakhstan Restarts CPC Oil Exports After Week-Long Black Sea Shutdown
-     → REPORTED OPERATIONAL RECOVERY: OilPrice.com reports that Kazakhstan resumed CPC crude exports after ...
-  🟠 Standard Chartered: Oil Markets Must Now Price Two Middle East Chokepoints
-     → BANK ANALYSIS & REPORTED CLAIMS (OilPrice.com RSS, authored by Alex Kimani; citing Standard Chartere...
-
-📊 RATES & SENTIMENT
-  US 10Y Yield:       4.604%  (▼ 3.7 bps)  [context only; series not core-validated]
-  German Bund 10Y:    3.166%  (▼ 4.1 bps)  [context only; series not core-validated]
-
-  ── GATE 1 DIRECTION ENGINE ──  [Validated: 69% OOS, 71 sessions | Pre-Warsh calibration]
-  US 2Y:              4.289%
-  German 2Y:          2.730%
-  Gate 1 status:      PROVISIONAL — stale or unavailable rate leg
-  German-leg output:  historical comparison only — not a current German-leg move
-  Spread / velocity / leg dominance / Gate 1 verdict: WITHHELD
-  VIX Regime:         BEARISH (VIX 18.2 > 17.0 avg)
-  Brent Modifier:     +3.6% → EUR headwind ⚠️
-  VIX:  18.21  ▼ 0.46  |  20d Avg: 17.00  |  +1.21 vs 20d avg
-
-📊 MULTI-TIMEFRAME TECHNICALS
-  Weekly (last 10 candles):  H 1.1686  /  L 1.1325
-  Daily  (last 30 candles):  H 1.1530  /  L 1.1325
-  Daily 50 EMA:   1.1480  |  Price is BELOW by 80 pips
-  Daily 200 EMA:  1.1575  |  Price is BELOW by 175 pips  (Tom/platform-supplied — week ended 24 Jul 2026; received 26 Jul 2026 at 13:09 NZT)
-  Daily ATR(14):  0.0048  (47 pips avg daily range)
-  1H 50 EMA:      1.1389  |  Price is ABOVE by 11 pips
-  1H VWAP:        1.1398  |  Price is ABOVE by 2 pips
-
-⚙️  6E FUTURES  [CME — Previous Day Settlement]
-  Data date: 2026-07-27 (T-1 lag)
-  Open Interest:  812,864  |  WoW Change: +12,664  ↑ Building
-  Daily Volume:   145,678  |  MTD ADV: 151,985  |  96% of MTD ADV
-
-📋 COT — CFTC COMMITMENT OF TRADERS
-  Report Date: 2026-07-21
-  Leveraged Money:  -56,671 (NET SHORT)  WoW: -2,980 | 52-wk Pctile: 2nd ⚠️ EXTREME POSITIONING
-  Asset Managers:   +228,927 (NET LONG)  WoW: -18,389 | 52-wk Pctile: 2nd
-
-🎯 OPTIONS DATA
-
-  📊 OTC 25-DELTA RISK REVERSAL  [Saxo Bank OTC — 29 Jul 2026, 0700 GMT]
-  ℹ️  Negative = puts > calls (downside protection more expensive = bearish skew)
-  1W: -0.87 (-0.15) | 1M: -0.65 (-0.01) | 3M: -0.60 (-0.04) | 6M: -0.58 (-0.06)
-  Skew: Puts > calls across near-term tenors — bearish options positioning
-
-  📍 OTC PIN RISK — EUR/USD  [Saxo OTC, large expiries near spot]
-  ℹ️  Red = sizeable OI close to spot — gravitational pull into NY cut
-  Wed 29-Jul-2026: 1.1225
-
-  CME 6E Monthly Options  [Exchange-traded ~20% of total EUR/USD flow]
-  Options OI: 416,211  |  Daily Vol: 9,091
-  ℹ️  Strike-level OI clusters: CME DataMine subscription required for full data
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📅 ECONOMIC CALENDAR — USD & EUR | MED + HIGH IMPACT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  ⏰ NEXT 24 HOURS:
-  🔴 Wed 06:00 NZT                  USD  Federal Funds Rate  Fore: 3.75%  |  Prev: 3.75%
-  🔴 Wed 06:30 NZT                  USD  FOMC Press Conference
-
-  ✅ RELEASED THIS WEEK:
-  🟠 Tue 02:00 NZT                  USD  CB Consumer Confidence  Act: 90.8  |  Fore: 92.4  |  Prev: 92.2
-  🔴 TIME UNAVAILABLE               USD  FOMC Statement
-
-══════════════════════════════════════════════════════════════
-  ⚡ CHIEF'S ANALYSIS & LEAN — PRE-LONDON OPEN
-══════════════════════════════════════════════════════════════
-
-  BIAS:        WITHHELD — Gate 1 rate input stale or unavailable
-  CONVICTION:  PROVISIONAL  [░░░░░░░░░░]
-  CONTEXT TALLY: 4 BULL / 6 BEAR  (10 overlapping factors; descriptive only, not Gate 1 confirmation)
-
-  ENTRY:       WITHHELD — no directional setup while Gate 1 is provisional
-  TARGET:      WITHHELD
-  STOP:        WITHHELD
-  ATR(14):     47 pips avg daily range — size accordingly
-
-  RISK:        German-leg comparison is historical only — not a current German-leg move; Gate 1 verdict withheld
-               Counter signals: VWAP, 1H EMA50, MOMENTUM
-
-  NEXT EVENT:  🔴 Federal Funds Rate  —  Wed 06:00 NZT
-
-  ⚡ CONFLUENCE [A]: Daily R1 (1.1396) within 2 pips of VWAP — descriptive research tag; watch for reaction
-══════════════════════════════════════════════════════════════
-
-==============================================================
-  ⚠️ SOURCE HEALTH:
-    ❌ ⚠️ German 2Y ECB model-curve observation 2026-07-27 — 2 business-date gap at pre-London. The series is advancing but is not current enough for Gate 1; this may reflect ECB publication cadence, not a frozen feed. Withhold spread/velocity/verdict.
-  US 2Y source timestamp: 2026-07-29T03:10:47.000-0400 (age: 0.0h)
-  German 2Y source date: 2026-07-27 [ECB SDW] (2 business days behind)
-  Data sources: yfinance, CNBC/Tradeweb, CME FTP (T-1), CFTC, ECB | Calendar: ForexFactory (browser refresh, week=next)
-  Generated: 19:11 NZT | Tasklet Automated Briefing
-  Chief collects · Claude analyses · Tom decides
-==============================================================
-
-— END —
+{
+  "generatedAt": "2026-07-29T19:11:56.669372+12:00",
+  "sessionLabel": "PRE-LONDON OPEN",
+  "pair": "EUR/USD",
+  "lean": {
+    "direction": "WITHHELD",
+    "conviction": "PROVISIONAL",
+    "bull": 0,
+    "bear": 0,
+    "reasoning": "Gate 1 rate input stale or unavailable \u2014 direction and dependent synthesis withheld.",
+    "catalyst": "Federal Funds Rate \u2014 Wed 06:00 NZT"
+  },
+  "session": {
+    "asianRange": 20,
+    "asianHigh": 1.14064,
+    "asianLow": 1.13856,
+    "compression": 0.426,
+    "bodyCoherence": 0.813,
+    "dayOfWeek": "Wednesday",
+    "dayRule": "Wednesday \u2014 38% direction match. Low conviction. Bracket preferred.",
+    "dayRuleStatus": "CONDITIONAL"
+  },
+  "positioning": {
+    "cotPercentile": 2,
+    "cotDirection": "bearish",
+    "riskReversal": -0.87,
+    "rrPrev": -0.72,
+    "rrTrend": "deteriorating",
+    "oiChange": 0.0,
+    "divergence": true
+  },
+  "terrain": {
+    "nextEvent": "2026-07-30T06:00:00+12:00",
+    "nextEventName": "Federal Funds Rate (Wed 06:00 NZT)",
+    "hoursToEvent": 10.8,
+    "pinRisk": 1.135,
+    "pinDistance": 50,
+    "pinStatus": "NEARBY",
+    "cleanAir": 50,
+    "levelClusters": 1,
+    "eventProtocol": "No event protocol active."
+  },
+  "regime": {
+    "chainActive": 3,
+    "chainTotal": 13,
+    "chainStatus": "ELEVATED"
+  },
+  "gates": [
+    {
+      "name": "Session",
+      "status": "clear",
+      "detail": "Range 20 pips \u2014 MARGINAL \u26a1 (reduce size) \u00b7 Compression 42.6% quiet Asian session \u00b7 Structure 81% CLEAN \u2014 levels reliable"
+    },
+    {
+      "name": "Convict",
+      "status": "blocked",
+      "detail": "WITHHELD \u2014 Gate 1 rate input stale or unavailable"
+    },
+    {
+      "name": "Terrain",
+      "status": "clear",
+      "detail": "No obstruction flagged"
+    },
+    {
+      "name": "Clear",
+      "status": "clear",
+      "detail": "Next HIGH [TIER 2]: Federal Funds Rate in 10h 48m"
+    },
+    {
+      "name": "Confirm",
+      "status": "waiting",
+      "detail": "In 33 min \u2014 monitor Asian range + candle character"
+    }
+  ],
+  "levels": [
+    {
+      "price": 1.15753,
+      "label": "200 EMA",
+      "type": "ema",
+      "note": "Tom/platform-supplied \u2014 week ended 24 Jul 2026; received 26 Jul 2026 at 13:09 NZT \u2014 CEILING"
+    },
+    {
+      "price": 1.15,
+      "label": "Round Number",
+      "type": "round"
+    },
+    {
+      "price": 1.14801,
+      "label": "50 EMA Daily",
+      "type": "ema"
+    },
+    {
+      "price": 1.1416,
+      "label": "Fib swing low",
+      "type": "fib"
+    },
+    {
+      "price": 1.14064,
+      "label": "Asian High",
+      "type": "asian"
+    },
+    {
+      "price": 1.13999,
+      "label": "\u25c6 PRICE",
+      "type": "current"
+    },
+    {
+      "price": 1.1396,
+      "label": "Pivot R1",
+      "type": "pivot"
+    },
+    {
+      "price": 1.13856,
+      "label": "Asian Low",
+      "type": "asian"
+    },
+    {
+      "price": 1.13487,
+      "label": "Pivot S1",
+      "type": "pivot"
+    },
+    {
+      "price": 1.13,
+      "label": "Round Number",
+      "type": "round"
+    }
+  ],
+  "dangerZones": [
+    {
+      "type": "nearby",
+      "icon": "\u26a1",
+      "title": "1.1350 PIN RISK \u2014 50 pips",
+      "detail": "Round number nearby. Monitor for gravitational effect."
+    },
+    {
+      "type": "nearby",
+      "icon": "\u26a1",
+      "title": "Federal Funds Rate \u2014 Wed 06:00 NZT",
+      "detail": "In 11h. Forecast: 3.75%. Previous: 3.75%"
+    },
+    {
+      "type": "nearby",
+      "icon": "\u26a1",
+      "title": "FOMC Press Conference \u2014 Wed 06:30 NZT",
+      "detail": "In 11h"
+    }
+  ],
+  "bracket": {
+    "active": false,
+    "day": "Wednesday",
+    "reason": "Range 20p \u2014 outside 25-40 bracket window",
+    "eur": {
+      "range": "25-40",
+      "offset": "+5/-5",
+      "tp": 35
+    },
+    "gbp": {
+      "range": "20-25",
+      "offset": "+7/-7",
+      "tp": 35
+    }
+  }
+}
